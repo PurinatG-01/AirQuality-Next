@@ -1,8 +1,12 @@
-import Head from 'next/head'
-import MainPage from '../components/MainPage'
+import Head from "next/head";
+import PageLayout from "../components/PageLayout";
+import Dashboard from "../components/Dashboard";
+
 
 export default function Home() {
   return (
-      <MainPage />
-  )
+    <PageLayout>
+      <Dashboard/>
+    </PageLayout>
+  );
 }

@@ -14,7 +14,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import InfoIcon from '@material-ui/icons/Info';
 
 
-const DashboardRoot = styled.div`
+
+const DrawerRoot = styled.div`
   width: 100%;
   height: 100%;
   margin: 0;
@@ -50,14 +51,14 @@ export default function PersistentDrawerLeft(props) {
   );
 
   return (
-    <DashboardRoot>
+    <DrawerRoot>
       <IconButton
         style={{ color: "#fefefe" }}
         onClick={() => setOpen(true)}
       >
         <MenuIcon />
       </IconButton>
-
+      
       <SwipeableDrawer
         anchor="left"
         open={open}
@@ -66,6 +67,6 @@ export default function PersistentDrawerLeft(props) {
       >
         {list()}
       </SwipeableDrawer>
-    </DashboardRoot>
+    </DrawerRoot>
   );
 }

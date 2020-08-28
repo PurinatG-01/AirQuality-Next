@@ -9,7 +9,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+      <Head/>
         <body style={{margin:0,}}>
           <Main />
           <NextScript />
