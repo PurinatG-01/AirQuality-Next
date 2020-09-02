@@ -33,7 +33,7 @@ const defaultOptions = {
       },
     ],
   },
-}
+};
 
 const ChartJS = (props) => {
   const { newData, color, areaColor, label, options } = props;
@@ -46,6 +46,7 @@ const ChartJS = (props) => {
         backgroundColor: areaColor,
         borderColor: color,
         borderWidth: 1,
+        fontSize: 8,
       },
     ],
     showTooltips: false,
@@ -66,7 +67,7 @@ const ChartJS = (props) => {
             label: label ?? "Value",
             data: temp_data,
             backgroundColor: areaColor,
-
+            fontSize: 8,
           },
         ],
       });
@@ -77,7 +78,8 @@ const ChartJS = (props) => {
     <div>
       <Line
         data={state ?? defaultData}
-        width={300}
+        style={{ minWidth: 320 }}
+        width={320}
         height={200}
         options={{
           maintainAspectRatio: false,

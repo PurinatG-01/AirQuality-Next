@@ -22,6 +22,9 @@ export default function useAirData() {
         );
         let resCheck = await checkHardware.json();
 
+        let checkApp = await fetch(`http://blynk-cloud.com/${auth_token}/isAppConnected`);
+        let resApp = await checkApp.json();
+
         let res0 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v0`);
         let v0 = await res0.json();
 
@@ -52,6 +55,7 @@ export default function useAirData() {
           v6: v6[0],
           v7: v7[0],
           resCheck: resCheck,
+          resApp: resApp,
         });
       } catch (error) {
         console.error(`> error : ${error}`);

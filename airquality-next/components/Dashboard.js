@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Grid, Chip } from "@material-ui/core";
-import TestChart from "./ChartJS";
+import { Grid, Chip, Divider } from "@material-ui/core";
+import LineChart from "./ChartJS";
 import useAirData from "./hooks/useAirData";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,6 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { THEME } from "./variable";
 import NetworkCellIcon from "@material-ui/icons/NetworkCell";
+import DnsIcon from "@material-ui/icons/Dns";
 import Typography from "@material-ui/core/Typography";
 
 const ItemGrid = styled(Grid)`
@@ -29,6 +30,7 @@ const ItemGrid = styled(Grid)`
   align-items: center;
   flex-direction: column;
   min-height: 200px;
+  overflow-x: scroll;
 `;
 
 const RawDataWrapper = styled(Grid)`
@@ -49,9 +51,10 @@ const StyleTableCell = styled(TableCell)`
     border: none;
   }
 `;
-
-const H1Title = styled.h3`
-  background: ${THEME.primary};
+const FlexBreak = styled.div`
+  flex-basis: 100%;
+  width: 100%;
+  height: 0;
 `;
 
 const Dashboard = () => {
@@ -59,7 +62,7 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      <ItemGrid width="50px" borderRadius="40px">
+      <ItemGrid width="50px" borderradius="40px">
         <Typography>
           <NetworkCellIcon
             style={{
@@ -76,6 +79,23 @@ const Dashboard = () => {
             }}
           />
         </Typography>
+        <Typography>
+          <DnsIcon
+            style={{
+              border: "1px solid ",
+              borderRadius: "50%",
+              borderColor: airData.resApp
+                ? "rgba(70, 206, 115, 1)"
+                : "rgba(206, 70, 70, 1)",
+
+              padding: 8,
+              fill: airData.resApp
+                ? "rgba(70, 206, 115, 1)"
+                : "rgba(206, 70, 70, 1)",
+            }}
+          />
+        </Typography>
+        <Divider style={{ width: "100%" }} />
       </ItemGrid>
       <ItemGrid width="300px" item>
         <TableContainer
@@ -89,11 +109,17 @@ const Dashboard = () => {
           >
             <TableHead>
               <TableRow>
-                <StyleTableCell style={{fontSize: 24}}>Raw Data</StyleTableCell>
-                <StyleTableCell style={{fontSize: 24}} align="right">Value</StyleTableCell>
+                <StyleTableCell style={{ fontSize: 24 }}>
+                  Raw Data
+                </StyleTableCell>
+                <StyleTableCell style={{ fontSize: 24 }} align="right">
+                  Value
+                </StyleTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody
+              style={{ borderBottom: `1px solid ${THEME.dividerColor}` }}
+            >
               <TableRow key={0}>
                 <StyleTableCell component="th" scope="row">
                   CO2
@@ -106,7 +132,9 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Temperature
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v1} &#xb0;C</StyleTableCell>
+                <StyleTableCell align="right">
+                  {airData.v1} &#xb0;C
+                </StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -122,10 +150,14 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Pressure
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v3} &#xb5;A</StyleTableCell>
+                <StyleTableCell align="right">
+                  {airData.v3} &#xb5;A
+                </StyleTableCell>
               </TableRow>
             </TableBody>
-            <TableBody>
+            <TableBody
+              style={{ borderBottom: `1px solid ${THEME.dividerColor}` }}
+            >
               <TableRow key={4}>
                 <StyleTableCell component="th" scope="row">
                   Gas
@@ -133,12 +165,15 @@ const Dashboard = () => {
                 <StyleTableCell align="right">{airData.v4} mA</StyleTableCell>
               </TableRow>
             </TableBody>
+            <FlexBreak />
             <TableBody>
               <TableRow key={5}>
                 <StyleTableCell component="th" scope="row">
                   PM 1.0
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v5} &#xb5;g/m3</StyleTableCell>
+                <StyleTableCell align="right">
+                  {airData.v5} &#xb5;g/m3
+                </StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -146,7 +181,9 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   PM 2.5
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v6} &#xb5;g/m3</StyleTableCell>
+                <StyleTableCell align="right">
+                  {airData.v6} &#xb5;g/m3
+                </StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -154,53 +191,87 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   PM 10.0
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v7} &#xb5;g/m3</StyleTableCell>
+                <StyleTableCell align="right">
+                  {airData.v7} &#xb5;g/m3
+                </StyleTableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       </ItemGrid>
       <ItemGrid width="600px" bg="#515070"></ItemGrid>
-      <ItemGrid>
-        <TestChart
-          label="CO2"
-          color="rgb(230,230,230)"
-          areaColor="rgba(230,230,230,0.2)"
-          newData={airData.v0}
-        ></TestChart>
-      </ItemGrid>
-      <ItemGrid>
-        <TestChart
-          label="Temperature"
-          color="rgb(40, 200, 184)"
-          areaColor="rgba(40, 200, 184, 0.2)"
-          newData={airData.v1}
-        ></TestChart>
-      </ItemGrid>
-      <ItemGrid>
-        <TestChart
-          label="Humidity"
-          color="rgb(40, 200, 93)"
-          areaColor="rgba(40, 200, 93, 0.2)"
-          newData={airData.v2}
-        ></TestChart>
-      </ItemGrid>
-      <ItemGrid>
-        <TestChart
-          label="Pressure"
-          color="rgb(117, 40, 200)"
-          areaColor="rgba(117, 40, 200,  0.2)"
-          newData={airData.v3}
-        ></TestChart>
-      </ItemGrid>
-      <ItemGrid>
-        <TestChart
-          label="Gas"
-          color="rgb(200, 40, 53)"
-          areaColor="rgba(200, 40, 53, 0.2)"
-          newData={airData.v4}
-        ></TestChart>
-      </ItemGrid>
+
+      <div>
+        <ItemGrid>
+          <LineChart
+            label="CO2"
+            color="rgb(230,230,230)"
+            areaColor="rgba(230,230,230,0.2)"
+            newData={airData.v0}
+          ></LineChart>
+        </ItemGrid>
+        <ItemGrid>
+          <LineChart
+            label="Gas"
+            color="rgb(200, 40, 53)"
+            areaColor="rgba(200, 40, 53, 0.2)"
+            newData={airData.v4}
+          ></LineChart>
+        </ItemGrid>
+      </div>
+
+      <div>
+        <ItemGrid>
+          <LineChart
+            label="Temperature"
+            color="rgb(40, 200, 184)"
+            areaColor="rgba(40, 200, 184, 0.2)"
+            newData={airData.v1}
+          ></LineChart>
+        </ItemGrid>
+        <ItemGrid>
+          <LineChart
+            label="Humidity"
+            color="rgb(40, 200, 93)"
+            areaColor="rgba(40, 200, 93, 0.2)"
+            newData={airData.v2}
+          ></LineChart>
+        </ItemGrid>
+        <ItemGrid>
+          <LineChart
+            label="Pressure"
+            color="rgb(117, 40, 200)"
+            areaColor="rgba(117, 40, 200,  0.2)"
+            newData={airData.v3}
+          ></LineChart>
+        </ItemGrid>
+      </div>
+      <div>
+        <ItemGrid>
+          <LineChart
+            label="PM 1.0"
+            color="rgb(0, 20, 10)"
+            areaColor="rgba(0, 20, 10, 0.2)"
+            newData={airData.v5}
+          ></LineChart>
+        </ItemGrid>
+        <ItemGrid>
+          <LineChart
+            label="PM 2.5"
+            color="rgb(0, 20, 10)"
+            areaColor="rgba(0, 20, 10, 0.2)"
+            newData={airData.v6}
+          ></LineChart>
+        </ItemGrid>
+        <ItemGrid>
+          <LineChart
+            label="PM 10.0"
+            color="rgb(0, 20, 10)"
+            areaColor="rgba(0, 20, 10, 0.2)"
+            newData={airData.v7}
+          ></LineChart>
+        </ItemGrid>
+      </div>
     </React.Fragment>
   );
 };
