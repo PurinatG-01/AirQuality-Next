@@ -12,21 +12,22 @@ import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import InfoIcon from '@material-ui/icons/Info';
-
+import {THEME} from './variable'
 
 
 const DrawerRoot = styled.div`
   width: 100%;
   height: 100%;
   margin: 0;
-  color: #fefefe;
+  color: ${THEME.secondary};
 `;
 
 const DrawerListRoot = styled(List)`
   min-width: 240px;
-  background: #232323;
+  background: ${THEME.primary};
   height: 100%;
-  color: #fefefe;
+  color: ${THEME.secondary};
+  border-radius: 0 30px 30px 0;
 `;
 
 export default function PersistentDrawerLeft(props) {

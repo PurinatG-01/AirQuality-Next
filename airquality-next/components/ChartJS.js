@@ -66,8 +66,7 @@ const ChartJS = (props) => {
             label: label ?? "Value",
             data: temp_data,
             backgroundColor: areaColor,
-            borderColor: color,
-            borderWidth: 1,
+
           },
         ],
       });
@@ -78,7 +77,7 @@ const ChartJS = (props) => {
     <div>
       <Line
         data={state ?? defaultData}
-        width={500}
+        width={300}
         height={200}
         options={{
           maintainAspectRatio: false,

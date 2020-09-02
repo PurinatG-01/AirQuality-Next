@@ -10,18 +10,25 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { THEME } from "./variable";
+import NetworkCellIcon from "@material-ui/icons/NetworkCell";
+import Typography from "@material-ui/core/Typography";
 
 const ItemGrid = styled(Grid)`
   && {
     margin: 10px;
     ${(props) => props.width && `width : ${props.width};`}
+    ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}`}
   }
-  // height: 500px;
-  min-width: 300px;
-  background: transparent;
-  color: #232323;
-  border: 1px solid #232323;
+  padding: 10px;
+  background: ${(props) => (props.bg ? props.bg : THEME.primary)};
+  color: ${THEME.secondary};
   border-radius: 10px;
+  ${THEME.boxShadow}
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 200px;
 `;
 
 const RawDataWrapper = styled(Grid)`
@@ -30,19 +37,21 @@ const RawDataWrapper = styled(Grid)`
   }
   display: flex;
   flex-direction: column;
-  // height: 500px;
   min-width: 400px;
-  background: #232323;
-  color: #232323;
-  border: 1px solid #232323;
+  background: ${THEME.primary};
+  color: ${THEME.secondary};
   border-radius: 10px;
 `;
 
 const StyleTableCell = styled(TableCell)`
   && {
-    color: #fefefe;
+    color: ${THEME.secondary};
     border: none;
   }
+`;
+
+const H1Title = styled.h3`
+  background: ${THEME.primary};
 `;
 
 const Dashboard = () => {
@@ -50,23 +59,38 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      <Chip
-        variant="outlined"
-        size="medium"
-        color={airData.resCheck ? "primary" : "secondary"}
-        label="Online"
-      />
+      <ItemGrid width="50px" borderRadius="40px">
+        <Typography>
+          <NetworkCellIcon
+            style={{
+              border: "1px solid ",
+              borderRadius: "50%",
+              borderColor: airData.resCheck
+                ? "rgba(70, 206, 115, 1)"
+                : "rgba(206, 70, 70, 1)",
 
-      <ItemGrid width="100%" item>
+              padding: 8,
+              fill: airData.resCheck
+                ? "rgba(70, 206, 115, 1)"
+                : "rgba(206, 70, 70, 1)",
+            }}
+          />
+        </Typography>
+      </ItemGrid>
+      <ItemGrid width="300px" item>
         <TableContainer
           component={Paper}
-          style={{ backgroundColor: "#232323" }}
+          style={{ boxShadow: "none", backgroundColor: "transparent" }}
         >
-          <Table size="small" aria-label="Raw data table">
+          <Table
+            size="small"
+            aria-label="Raw data table"
+            style={{ border: "none" }}
+          >
             <TableHead>
               <TableRow>
-                <StyleTableCell>Raw Data</StyleTableCell>
-                <StyleTableCell align="right">Value</StyleTableCell>
+                <StyleTableCell style={{fontSize: 24}}>Raw Data</StyleTableCell>
+                <StyleTableCell style={{fontSize: 24}} align="right">Value</StyleTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -74,7 +98,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   CO2
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v0}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v0} ppm</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -82,7 +106,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Temperature
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v1}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v1} &#xb0;C</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -90,7 +114,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Humidity
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v2}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v2} %</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -98,7 +122,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Pressure
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v3}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v3} &#xb5;A</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -106,7 +130,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   Gas
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v4}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v4} mA</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -114,7 +138,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   PM 1.0
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v5}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v5} &#xb5;g/m3</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -122,7 +146,7 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   PM 2.5
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v6}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v6} &#xb5;g/m3</StyleTableCell>
               </TableRow>
             </TableBody>
             <TableBody>
@@ -130,17 +154,18 @@ const Dashboard = () => {
                 <StyleTableCell component="th" scope="row">
                   PM 10.0
                 </StyleTableCell>
-                <StyleTableCell align="right">{airData.v7}</StyleTableCell>
+                <StyleTableCell align="right">{airData.v7} &#xb5;g/m3</StyleTableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       </ItemGrid>
+      <ItemGrid width="600px" bg="#515070"></ItemGrid>
       <ItemGrid>
         <TestChart
           label="CO2"
-          color="rgb(254,254,254)"
-          areaColor="rgba(254,254,254,0.2)"
+          color="rgb(230,230,230)"
+          areaColor="rgba(230,230,230,0.2)"
           newData={airData.v0}
         ></TestChart>
       </ItemGrid>

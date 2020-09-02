@@ -18,27 +18,27 @@ export default function useAirData() {
     const getAirData = async () => {
       try {
         let checkHardware = await fetch(
-          `http://blynk-cloud.com/${auth_token}/isHardwareConnected`
+          `https://blynk-cloud.com/${auth_token}/isHardwareConnected`
         );
         let resCheck = await checkHardware.json();
 
-        let res0 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v0`);
+        let res0 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v0`);
         let v0 = await res0.json();
 
-        let res1 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v1`);
+        let res1 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v1`);
         let v1 = await res1.json();
-        let res2 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v2`);
+        let res2 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v2`);
         let v2 = await res2.json();
-        let res3 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v3`);
+        let res3 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v3`);
         let v3 = await res3.json();
-        let res4 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v4`);
+        let res4 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v4`);
         let v4 = await res4.json();
 
-        let res5 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v5`);
+        let res5 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v5`);
         let v5 = await res5.json();
-        let res6 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v6`);
+        let res6 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v6`);
         let v6 = await res6.json();
-        let res7 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v7`);
+        let res7 = await fetch(`https://blynk-cloud.com/${auth_token}/get/v7`);
         let v7 = await res7.json();
 
         console.log("-------------");
