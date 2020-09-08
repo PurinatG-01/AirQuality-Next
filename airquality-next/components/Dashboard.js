@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo } from "react";
 import styled from "styled-components";
 import { Grid, Chip, Divider } from "@material-ui/core";
 import LineChart from "./ChartJS";
@@ -14,12 +14,17 @@ import { THEME } from "./variable";
 import NetworkCellIcon from "@material-ui/icons/NetworkCell";
 import DnsIcon from "@material-ui/icons/Dns";
 import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 
 const ItemGrid = styled(Grid)`
   && {
     margin: 10px;
     ${(props) => props.width && `width : ${props.width};`}
-    ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}`}
+    ${(props) =>
+      props.borderradius && `border-radius: ${props.borderradius};`}
+    ${(
+      props
+    ) => props.flexdirection && `flex-direction: ${props.flexdirection};`}
   }
   padding: 10px;
   background: ${(props) => (props.bg ? props.bg : THEME.primary)};
@@ -27,8 +32,8 @@ const ItemGrid = styled(Grid)`
   border-radius: 10px;
   ${THEME.boxShadow}
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   min-height: 200px;
   overflow-x: scroll;
 `;
@@ -58,11 +63,14 @@ const FlexBreak = styled.div`
 `;
 
 const Dashboard = () => {
+  const [counter,setCounter] = useState("");
   const airData = useAirData();
+
 
   return (
     <React.Fragment>
-      <ItemGrid width="50px" borderradius="40px">
+    
+      <ItemGrid width="50px" borderradius="40px" flexdirection="column">
         <Typography>
           <NetworkCellIcon
             style={{
@@ -200,78 +208,74 @@ const Dashboard = () => {
         </TableContainer>
       </ItemGrid>
       <ItemGrid width="600px" bg="#515070"></ItemGrid>
+{ // ---------- Graph ----------
+}
+      <ItemGrid>
+        <LineChart
+          label="CO2"
+          color="rgb(230,230,230)"
+          areaColor="rgba(230,230,230,0.2)"
+          newData={{value:airData.v0,label: counter}}
+        ></LineChart>
+      </ItemGrid>
+      <ItemGrid>
+        <LineChart
+          label="Gas"
+          color="rgb(200, 40, 53)"
+          areaColor="rgba(200, 40, 53, 0.2)"
+          newData={{value:airData.v4,label: counter}}
+        ></LineChart>
+      </ItemGrid>
 
-      <div>
-        <ItemGrid>
-          <LineChart
-            label="CO2"
-            color="rgb(230,230,230)"
-            areaColor="rgba(230,230,230,0.2)"
-            newData={airData.v0}
-          ></LineChart>
-        </ItemGrid>
-        <ItemGrid>
-          <LineChart
-            label="Gas"
-            color="rgb(200, 40, 53)"
-            areaColor="rgba(200, 40, 53, 0.2)"
-            newData={airData.v4}
-          ></LineChart>
-        </ItemGrid>
-      </div>
+      <ItemGrid>
+        <LineChart
+          label="Temperature"
+          color="rgb(40, 200, 184)"
+          areaColor="rgba(40, 200, 184, 0.2)"
+          newData={{value:airData.v1,label: counter}}
+        ></LineChart>
+      </ItemGrid>
+      <ItemGrid>
+        <LineChart
+          label="Humidity"
+          color="rgb(40, 200, 93)"
+          areaColor="rgba(40, 200, 93, 0.2)"
+          newData={{value:airData.v2,label: counter}}
+        ></LineChart>
+      </ItemGrid>
+      <ItemGrid>
+        <LineChart
+          label="Pressure"
+          color="rgb(117, 40, 200)"
+          areaColor="rgba(117, 40, 200,  0.2)"
+          newData={{value:airData.v3,label: counter}}
+        ></LineChart>
+      </ItemGrid>
 
-      <div>
-        <ItemGrid>
-          <LineChart
-            label="Temperature"
-            color="rgb(40, 200, 184)"
-            areaColor="rgba(40, 200, 184, 0.2)"
-            newData={airData.v1}
-          ></LineChart>
-        </ItemGrid>
-        <ItemGrid>
-          <LineChart
-            label="Humidity"
-            color="rgb(40, 200, 93)"
-            areaColor="rgba(40, 200, 93, 0.2)"
-            newData={airData.v2}
-          ></LineChart>
-        </ItemGrid>
-        <ItemGrid>
-          <LineChart
-            label="Pressure"
-            color="rgb(117, 40, 200)"
-            areaColor="rgba(117, 40, 200,  0.2)"
-            newData={airData.v3}
-          ></LineChart>
-        </ItemGrid>
-      </div>
-      <div>
-        <ItemGrid>
-          <LineChart
-            label="PM 1.0"
-            color="rgb(0, 20, 10)"
-            areaColor="rgba(0, 20, 10, 0.2)"
-            newData={airData.v5}
-          ></LineChart>
-        </ItemGrid>
-        <ItemGrid>
-          <LineChart
-            label="PM 2.5"
-            color="rgb(0, 20, 10)"
-            areaColor="rgba(0, 20, 10, 0.2)"
-            newData={airData.v6}
-          ></LineChart>
-        </ItemGrid>
-        <ItemGrid>
-          <LineChart
-            label="PM 10.0"
-            color="rgb(0, 20, 10)"
-            areaColor="rgba(0, 20, 10, 0.2)"
-            newData={airData.v7}
-          ></LineChart>
-        </ItemGrid>
-      </div>
+      <ItemGrid>
+        <LineChart
+          label="PM 1.0"
+          color="rgb(0, 20, 10)"
+          areaColor="rgba(0, 20, 10, 0.2)"
+          newData={{value:airData.v5,label: counter}}
+        ></LineChart>
+      </ItemGrid>
+      <ItemGrid>
+        <LineChart
+          label="PM 2.5"
+          color="rgb(0, 20, 10)"
+          areaColor="rgba(0, 20, 10, 0.2)"
+          newData={{value:airData.v6,label: counter}}
+        ></LineChart>
+      </ItemGrid>
+      <ItemGrid>
+        <LineChart
+          label="PM 10.0"
+          color="rgb(0, 20, 10)"
+          areaColor="rgba(0, 20, 10, 0.2)"
+          newData={{value:airData.v7,label: counter}}
+        ></LineChart>
+      </ItemGrid>
     </React.Fragment>
   );
 };

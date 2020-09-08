@@ -38,7 +38,7 @@ const defaultOptions = {
 const ChartJS = (props) => {
   const { newData, color, areaColor, label, options } = props;
   const [state, setState] = useState({
-    labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+    labels: [],
     datasets: [
       {
         label: label,
@@ -55,13 +55,20 @@ const ChartJS = (props) => {
   useEffect(() => {
     if (newData) {
       let temp_data = state.datasets[0].data;
-      temp_data.push(newData);
+      temp_data.push(newData.value);
       if (temp_data.length > 16) {
         temp_data.shift();
       }
 
+      let temp_label = state.labels;
+      temp_label.push(newData.label);
+      if(temp_label.length> 16){
+        temp_label.shift();
+      }
+
       setState({
         ...state,
+        label: temp_label,
         datasets: [
           {
             label: label ?? "Value",

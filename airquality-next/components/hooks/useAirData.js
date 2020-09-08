@@ -12,6 +12,9 @@ export default function useAirData() {
     v5: 0,
     v6: 0,
     v7: 0,
+    resCheck: false,
+    resApp: false,
+    counter: "",
   });
 
   useEffect(() => {
@@ -56,13 +59,13 @@ export default function useAirData() {
           v7: v7[0],
           resCheck: resCheck,
           resApp: resApp,
+          counter: ""
         });
       } catch (error) {
         console.error(`> error : ${error}`);
       }
       const time1 = setTimeout(getAirData, 5000);
     };
-
     const time2 = setTimeout(getAirData, 5000);
 
   }, []);
