@@ -34,7 +34,7 @@ function PageLayout(props) {
       <Drawer />
       <DashBoardTitle>Air Quality Sensor</DashBoardTitle>
       <Container maxWidth="lg" style={{ marginBottom: 100 }}>
-        <Grid container justify="center" style={{ width: "100%", flexGrow: 1 }}>
+        <Grid container justify="center" style={{ width: "100%"}}>
           {props.children}
         </Grid>
       </Container>

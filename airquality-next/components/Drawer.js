@@ -9,11 +9,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import MenuIcon from '@material-ui/icons/Menu';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import InfoIcon from '@material-ui/icons/Info';
-import {THEME} from './variable'
-
+import MenuIcon from "@material-ui/icons/Menu";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import InfoIcon from "@material-ui/icons/Info";
+import { THEME } from "./variable";
 
 const DrawerRoot = styled.div`
   width: 100%;
@@ -35,31 +34,27 @@ export default function PersistentDrawerLeft(props) {
 
   const list = () => (
     <DrawerListRoot style={{ minWidth: 240 }}>
-        <ListItem button key={"Dashboard"}>
-          <ListItemIcon>
-            <DashboardIcon style={{ color: "#fefefe" }} />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem button key={"About"}>
-          <ListItemIcon>
-            <InfoIcon style={{ color: "#fefefe" }} />
-          </ListItemIcon>
-          <ListItemText primary="About us" />
-        </ListItem>
-
+      <ListItem button key={"Dashboard"}>
+        <ListItemIcon>
+          <DashboardIcon style={{ color: "#fefefe" }} />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+      <ListItem button key={"About"}>
+        <ListItemIcon>
+          <InfoIcon style={{ color: "#fefefe" }} />
+        </ListItemIcon>
+        <ListItemText primary="About us" />
+      </ListItem>
     </DrawerListRoot>
   );
 
   return (
     <DrawerRoot>
-      <IconButton
-        style={{ color: "#fefefe" }}
-        onClick={() => setOpen(true)}
-      >
+      <IconButton style={{ color: "#fefefe" }} onClick={() => setOpen(true)}>
         <MenuIcon />
       </IconButton>
-      
+
       <SwipeableDrawer
         anchor="left"
         open={open}
