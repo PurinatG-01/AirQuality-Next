@@ -42,7 +42,7 @@ function PageLayout(props) {
         {`
           * {
             font-family: ${THEME.fontFam};
-            color: ${THEME.secondary};
+           
             font-weight: 100;
             letter-spacing: 5px;
           }

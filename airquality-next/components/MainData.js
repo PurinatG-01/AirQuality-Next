@@ -13,6 +13,7 @@ import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 import Score from "./Score";
 import { THEME } from "./variable";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const StyleTableCell = styled(TableCell)`
   && {
@@ -29,26 +30,30 @@ const FlexBreak = styled.div`
 
 const MainData = (props) => {
   const { airData } = props;
+  const collapse = useMediaQuery("(min-width:552px)");
   return (
-    <Container
-      maxWidth="lg"
-      style={{ display: `flex`}}
-    >
-      <Grid item container justify="center" style={{ width: "100%", flexGrow: 1 }}>
-        <ItemGrid  width="50px" borderradius="40px" flexdirection="column">
+    <Container maxWidth="lg" style={{ display: `flex` }}>
+      <Grid
+        item
+        container
+        justify="center"
+        style={{ width: "100%", flexGrow: 1 }}
+      >
+        <ItemGrid
+          width={collapse ? "50px" : "100%"}
+          height={collapse ? "auto" : "50px"}
+          borderradius="40px"
+          flexdirection={collapse ? "column" : "row"}
+        >
           <Typography>
             <NetworkCellIcon
               style={{
                 border: "1px solid ",
                 borderRadius: "50%",
-                borderColor: airData.resCheck
-                  ? "rgba(70, 206, 115, 1)"
-                  : "rgba(206, 70, 70, 1)",
-
+                borderColor: airData.resApp ? THEME.green : THEME.red,
                 padding: 8,
-                fill: airData.resCheck
-                  ? "rgba(70, 206, 115, 1)"
-                  : "rgba(206, 70, 70, 1)",
+                fill: airData.resApp ? THEME.green : THEME.red,
+                marginRight: collapse ? 0:8 
               }}
             />
           </Typography>
@@ -57,18 +62,21 @@ const MainData = (props) => {
               style={{
                 border: "1px solid ",
                 borderRadius: "50%",
-                borderColor: airData.resApp
-                  ? "rgba(70, 206, 115, 1)"
-                  : "rgba(206, 70, 70, 1)",
-
+                borderColor: airData.resApp ? THEME.green : THEME.red,
                 padding: 8,
-                fill: airData.resApp
-                  ? "rgba(70, 206, 115, 1)"
-                  : "rgba(206, 70, 70, 1)",
+                fill: airData.resApp ? THEME.green : THEME.red,
+                marginRight: collapse ? 0:8 
               }}
             />
           </Typography>
-          <Divider style={{ width: "100%" }} />
+          <Divider
+            orientation={collapse ? "horizontal" : "collapse"}
+            style={{
+              width: collapse ? "100%" : "1px",
+              height: collapse ? "1px" : "100%",
+              marginRight: collapse ? 0:8 
+            }}
+          />
         </ItemGrid>
         <ItemGrid width="300px" item>
           <TableContainer
@@ -178,8 +186,8 @@ const MainData = (props) => {
         {
           //  ---------- Score ----------
         }
-        <ItemGrid width="600px" >
-          <Score overallScore={20} />
+        <ItemGrid width="600px">
+          <Score overallScore={74} />
         </ItemGrid>
       </Grid>
     </Container>

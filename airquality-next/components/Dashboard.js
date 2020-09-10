@@ -8,16 +8,20 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import MainData from "./MainData";
 
-
 export const ItemGrid = styled(Grid)`
   && {
     margin: 10px;
-    ${(props) => props.width && `width : ${props.width};`}
+    ${(props) => props.width && `width : ${props.width} !important;`}
     ${(props) =>
       props.borderradius && `border-radius: ${props.borderradius};`}
     ${(
       props
-    ) => props.flexdirection && `flex-direction: ${props.flexdirection};`}
+    ) =>
+      props.flexdirection && `flex-direction: ${props.flexdirection};`}
+      ${(
+      props
+    ) => props.height && `height: ${props.height} !important;
+    min-height: ${props.height} !important`}
   }
   padding: 10px;
   background: ${(props) => (props.bg ? props.bg : THEME.primary)};
@@ -41,7 +45,6 @@ const RawDataWrapper = styled(Grid)`
   color: ${THEME.secondary};
   border-radius: 10px;
 `;
-
 
 const Dashboard = () => {
   const [counter, setCounter] = useState("");
