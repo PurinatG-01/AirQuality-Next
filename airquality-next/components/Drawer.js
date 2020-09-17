@@ -19,13 +19,15 @@ const DrawerRoot = styled.div`
   height: 100%;
   margin: 0;
   color: ${THEME.secondary};
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(254,254,254,1) 30%, rgba(254,254,254,0) 100%);
 `;
 
 const DrawerListRoot = styled(List)`
   min-width: 240px;
   background: ${THEME.primary};
   height: 100%;
-  color: ${THEME.secondary};
+  color: ${THEME.secondary} !important;
   border-radius: 0 30px 30px 0;
 `;
 
@@ -36,13 +38,13 @@ export default function PersistentDrawerLeft(props) {
     <DrawerListRoot style={{ minWidth: 240 }}>
       <ListItem button key={"Dashboard"}>
         <ListItemIcon>
-          <DashboardIcon style={{ color: "#fefefe" }} />
+          <DashboardIcon style={{ color: THEME.secondary }} />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
       <ListItem button key={"About"}>
         <ListItemIcon>
-          <InfoIcon style={{ color: "#fefefe" }} />
+          <InfoIcon style={{ color: THEME.secondary }} />
         </ListItemIcon>
         <ListItemText primary="About us" />
       </ListItem>
@@ -50,8 +52,11 @@ export default function PersistentDrawerLeft(props) {
   );
 
   return (
-    <DrawerRoot>
-      <IconButton style={{ color: "#fefefe" }} onClick={() => setOpen(true)}>
+    <DrawerRoot style={{  width: "100vw", height: 50 , position: "fixed" }}>
+      <IconButton
+        style={{ color: THEME.secondary}}
+        onClick={() => setOpen(true)}
+      >
         <MenuIcon />
       </IconButton>
 

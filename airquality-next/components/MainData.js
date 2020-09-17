@@ -50,9 +50,9 @@ const MainData = (props) => {
               style={{
                 border: "1px solid ",
                 borderRadius: "50%",
-                borderColor: airData.resApp ? THEME.green : THEME.red,
+                borderColor: airData.resCheck ? THEME.green : THEME.red,
                 padding: 8,
-                fill: airData.resApp ? THEME.green : THEME.red,
+                fill: airData.resCheck ? THEME.green : THEME.red,
                 marginRight: collapse ? 0:8 
               }}
             />
