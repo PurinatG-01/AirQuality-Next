@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const auth_token = "GS3mZFpy8AJTO97oFDyxUd8d_sujg_d_";
+const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
+const server_address = "34.69.148.234"
+
 
 export default function useAirData() {
   const [dataState, setDataState] = useState({
@@ -21,30 +23,30 @@ export default function useAirData() {
     const getAirData = async () => {
       try {
         let checkHardware = await fetch(
-          `http://blynk-cloud.com/${auth_token}/isHardwareConnected`
+          `http://${server_address}/${auth_token}/isHardwareConnected`
         );
         let resCheck = await checkHardware.json();
 
-        let checkApp = await fetch(`http://blynk-cloud.com/${auth_token}/isAppConnected`);
+        let checkApp = await fetch(`http://${server_address}/${auth_token}/isAppConnected`);
         let resApp = await checkApp.json();
 
-        let res0 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v0`);
+        let res0 = await fetch(`http://${server_address}/${auth_token}/get/v0`);
         let v0 = await res0.json();
 
-        let res1 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v1`);
+        let res1 = await fetch(`http://${server_address}/${auth_token}/get/v1`);
         let v1 = await res1.json();
-        let res2 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v2`);
+        let res2 = await fetch(`http://${server_address}/${auth_token}/get/v2`);
         let v2 = await res2.json();
-        let res3 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v3`);
+        let res3 = await fetch(`http://${server_address}/${auth_token}/get/v3`);
         let v3 = await res3.json();
-        let res4 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v4`);
+        let res4 = await fetch(`http://${server_address}/${auth_token}/get/v4`);
         let v4 = await res4.json();
 
-        let res5 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v5`);
+        let res5 = await fetch(`http://${server_address}/${auth_token}/get/v5`);
         let v5 = await res5.json();
-        let res6 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v6`);
+        let res6 = await fetch(`http://${server_address}/${auth_token}/get/v6`);
         let v6 = await res6.json();
-        let res7 = await fetch(`http://blynk-cloud.com/${auth_token}/get/v7`);
+        let res7 = await fetch(`http://${server_address}/${auth_token}/get/v7`);
         let v7 = await res7.json();
 
         console.log("-------------");
