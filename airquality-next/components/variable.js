@@ -33,3 +33,8 @@ export const THEME2 = {
     
 
 }
+
+export const Dialog = {
+
+welcome : "Hello Mr. Purinat welcome to AIRADAR",
+}
