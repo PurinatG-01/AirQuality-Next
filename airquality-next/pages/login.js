@@ -1,12 +1,11 @@
 import React from "react"
 import Head from "next/head";
-import Dashboard from "../components/Dashboard";
 import PageLayout2 from "../components/PageLayout2"
 
-export default function New(){
+export default function Login(){
     return (
         <PageLayout2>
-        sdfdsf
+            Login
         </PageLayout2>
     )
 }
