@@ -8,11 +8,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from "@material-ui/icons/Menu";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import InfoIcon from "@material-ui/icons/Info";
 import { THEME } from "./variable";
+import useUsers from "./hooks/useUsers"
+import {useRouter} from "next/router"
 
 const DrawerRoot = styled.div`
   width: 100%;
@@ -34,6 +36,9 @@ const DrawerListRoot = styled(List)`
 export default function PersistentDrawerLeft(props) {
   const [open, setOpen] = React.useState(false);
 
+  const { signOut } = useUsers();
+  const router = useRouter();
+
   const list = () => (
     <DrawerListRoot style={{ minWidth: 240 }}>
       <ListItem button key={"Dashboard"}>
@@ -47,6 +52,21 @@ export default function PersistentDrawerLeft(props) {
           <InfoIcon style={{ color: THEME.secondary }} />
         </ListItemIcon>
         <ListItemText primary="About us" />
+      </ListItem>
+      <ListItem onClick={()=>{
+        
+        
+        signOut(()=>{
+          router.push("/")
+        })
+    
+    }
+  }
+     button key={"Logout"}>
+        <ListItemIcon>
+          <ExitToAppIcon style={{ color: THEME.red }} />
+        </ListItemIcon>
+        <ListItemText style={{ color: THEME.red }}  primary="Logout" />
       </ListItem>
     </DrawerListRoot>
   );

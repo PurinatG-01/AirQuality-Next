@@ -1,19 +1,22 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { TextField, Container, Button, Typography, Divider } from '@material-ui/core'
 import { THEME2 } from '../components/variable'
 import useUsers from "../components/hooks/useUsers"
-
 const LoginWrapper = styled.div`
 
     width: 100vw;
     height: 100vh;
+    background: url("../static/undraw_air_support_wy1q.png");
+    background-repeat: no-repeat;
+    // background-size: 1000px 500px;
+    background-position: bottom;
 
 `
 const MainContainer = styled(Container)`
 &&{
-    background: ${THEME2.white};
+    background: transparent;
     min-height: 100vh;
     display: flex ;
     justify-content: center;
@@ -42,33 +45,55 @@ const InputTextField = styled(TextField)`
 
 const SubmitButton = styled(Button)`
 height: 42px;
+span{letter-spacing: 4px;}
 `
 const RegisterButton = styled(Button)`
 height: 42px;
+span{letter-spacing: 4px;}
 `
 
 
 
 export default function Login() {
-    const { isLoggedIn, signIn } = useUsers()
+    const { isLoggedIn, signIn, error } = useUsers()
     const [user, setUser] = useState({ email: null, password: null })
     const router = useRouter()
 
+    
+    useEffect(()=>{
+        if(error){
+            console.error(`> + ${error.message}`)
+        }
+
+    },[error])
+
+    useEffect(()=> {
+       if(isLoggedIn){
+           router.push("/main")
+           console.log("Yes I am log in")
+       } 
+    },[isLoggedIn])
 
 
     return (
-        <LoginWrapper>
+        isLoggedIn ? <></> : 
+            <LoginWrapper>
             <MainContainer maxWidth="md">
-                <Typography align="center" style={{marginBottom: 32, letterSpacing: 8}} variant="h3" component="h1" color="primary">
+                <Typography align="center" style={{marginBottom: 10, letterSpacing: 8}} variant="h3" component="h1" color="primary">
                     AIRADAR
                 </Typography>
+                <Typography variant="body2" style={{color: THEME2.red, height: 10, marginBottom: 32}}>{ error.message ?? "" }</Typography>
+
                 <LoginForm onSubmit={(event) => {
                     event.preventDefault();
-                    signIn(user)
+                    console.log(user)
+                    
+                    signIn(user, ()=>{router.push("/main")})
                 }}>
 
-                    <InputTextField fullWidth color="primary" label="email" variant="outlined"></InputTextField>
-                    <InputTextField fullWidth color="primary" label="password" variant="outlined"></InputTextField>
+            
+                    <InputTextField required value={user.email ?? ""} onChange={(event)=>setUser({...user, email: event.currentTarget.value})} fullWidth color="primary" label="email" variant="outlined"></InputTextField>
+                    <InputTextField required value={user.password ?? ""} onChange={(event)=>setUser({...user, password: event.currentTarget.value})} fullWidth color="primary" label="password" variant="outlined"></InputTextField>
                     <SubmitButton color="primary" type="submit" fullWidth variant="contained">Login</SubmitButton>
                     <Divider style={{ margin: '16px 0', backgroundColor: THEME2.dividerColor, width: '100%' }} ></Divider>
                     <RegisterButton color="primary" variant="contained" fullWidth >Register</RegisterButton>
@@ -77,7 +102,9 @@ export default function Login() {
                 </LoginForm>
 
             </MainContainer>
+            {/* <Background /> */}
 
         </LoginWrapper>
-    )
+     )
+        
 }

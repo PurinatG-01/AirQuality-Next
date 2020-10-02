@@ -1,46 +1,46 @@
 import { FirebaseContext } from "../../utils/firebase/firebase"
 import React, { useContext, useEffect, useState } from 'react'
 
-const defaultError = { operation: null, error: null }
+const defaultError = {}
 
 export default function useUsers() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [user, setUser] = useState({})
     const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
+    
 
-    const signUp = ({ email, password }) => {
+    const signUp = ({ email, password }, callback) => {
         return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
             .then((response) => {
                 setError(defaultError)
+                callback()
             })
             .catch((error) => {
-                console.dir(error);
-                setError({ operation: 'signUp', error: error })
+                setError(error)
             })
     }
 
-    const signOut = () => {
+    const signOut = (callback) => {
         return firebase.auth().signOut()
             .then(() => {
                 setIsLoggedIn(false)
                 setError(defaultError)
+                callback()
             })
             .catch((error) => {
-                console.dir(error)
-                setError({ operation: 'signOut', error: error })
+                setError(error)
             })
     }
 
-    const signIn = ({ email, password }) => {
+    const signIn = ({ email, password },callback) => {
         return firebase.auth().signInWithEmailAndPassword(email, password)
         .then((response) => {
-            alert("Login Successful")
             setIsLoggedIn(true)
             setError(defaultError)
+            callback()
         }).catch((error) => {
-            console.dir(error)
-            alert(`Login Failed : ` + error.message)
-            setError({ operation: 'signIn', error: error })
+            setError(error)
         })
 
     }
@@ -49,12 +49,14 @@ export default function useUsers() {
         const unSubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 setIsLoggedIn(true)
+                setUser(user)
             } else {
                 setIsLoggedIn(false)
             }
+
         })
         return () => unSubscribe()
     }, [])
 
-    return { isLoggedIn, signOut, signIn, signUp , error}
+    return { user ,isLoggedIn, signOut, signIn, signUp , error}
 }
