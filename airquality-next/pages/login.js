@@ -4,10 +4,12 @@ import styled from 'styled-components'
 import { TextField, Container, Button, Typography, Divider } from '@material-ui/core'
 import { THEME2 } from '../components/variable'
 import useUsers from "../components/hooks/useUsers"
-const LoginWrapper = styled.div`
+import { motion } from "framer-motion"
+
+const LoginWrapper = styled(motion.div)`
 
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: url("../static/undraw_air_support_wy1q.png");
     background-repeat: no-repeat;
     // background-size: 1000px 500px;
@@ -22,6 +24,7 @@ const MainContainer = styled(Container)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 0 30px;
 }
 `
 
@@ -52,8 +55,6 @@ height: 42px;
 span{letter-spacing: 4px;}
 `
 
-
-
 export default function Login() {
     const { isLoggedIn, signIn, error } = useUsers()
     const [user, setUser] = useState({ email: null, password: null })
@@ -77,8 +78,9 @@ export default function Login() {
 
     return (
         isLoggedIn ? <></> : 
-            <LoginWrapper>
+            <LoginWrapper initial={{opacity: 0}} animate={{opacity: 1}}>
             <MainContainer maxWidth="md">
+                <motion.div initial={{opacity: 0, y: 40}} animate={{opacity: 1, y: 0}}>
                 <Typography align="center" style={{marginBottom: 10, letterSpacing: 8}} variant="h3" component="h1" color="primary">
                     AIRADAR
                 </Typography>
@@ -87,7 +89,6 @@ export default function Login() {
                 <LoginForm onSubmit={(event) => {
                     event.preventDefault();
                     console.log(user)
-                    
                     signIn(user, ()=>{router.push("/main")})
                 }}>
 
@@ -100,7 +101,7 @@ export default function Login() {
 
 
                 </LoginForm>
-
+                </motion.div>
             </MainContainer>
             {/* <Background /> */}
 
