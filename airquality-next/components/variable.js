@@ -16,7 +16,7 @@ export const THEME = {
 
 export const THEME2 = {
 
-    primary: "#79BD9A",
+    primary: "rgb(111, 207, 151)",
     secondary: "#3B8686",
     highlight: "#A8DBA8",
     base: "#0B486B",
