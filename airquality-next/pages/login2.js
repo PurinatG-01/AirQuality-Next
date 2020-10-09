@@ -123,15 +123,15 @@ export default function Login() {
                             <Typography align="center" style={{ marginBottom: 10 }} variant="h3" component="h1" color="primary">
                                 AIRADAR
                         </Typography>
-                            <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error.message ?? ""}</Typography>
+                            <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error.message ?? "" }</Typography>
                             <LoginForm onSubmit={(event) => {
                                 event.preventDefault();
                                 console.log(user)
                                 setLoading(true)
                                 signIn(user, () => { router.push("/main"); setLoading(false) }, () => { setLoading(false) })
                             }}>
-                                <InputTextField error={error ?? false} required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="Email" ></InputTextField>
-                                <InputTextField error={error ?? false} required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="Password" label="password" ></InputTextField>
+                                <InputTextField error={error.message ?? false} required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="Email" ></InputTextField>
+                                <InputTextField error={error.message ?? false} required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="Password" label="password" ></InputTextField>
                                 <SubmitButton disabled={loading} color="primary" type="submit" fullWidth variant="contained">SIGN IN</SubmitButton>
                                 <RegisterButton disabled={loading} color="primary" variant="outlined" fullWidth >SIGN UP</RegisterButton>
                             </LoginForm>
