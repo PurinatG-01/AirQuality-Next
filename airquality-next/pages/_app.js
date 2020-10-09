@@ -22,7 +22,6 @@ const theme = createMuiTheme({
       overrides: {
         MuiInput: {
             underline:{
-                color: THEME2.primary,
                 '&:before':{
                     color: THEME2.dividerColor,
                     borderBottomColor: THEME2.dividerColor,

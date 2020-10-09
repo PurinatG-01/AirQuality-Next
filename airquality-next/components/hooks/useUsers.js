@@ -6,7 +6,7 @@ const defaultError = {}
 export default function useUsers() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [user, setUser] = useState({})
-    const [error, setError] = useState(defaultError)
+    const [error, setError] = useState(null)
     const firebase = useContext(FirebaseContext)
     
 

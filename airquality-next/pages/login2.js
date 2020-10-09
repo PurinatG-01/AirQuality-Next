@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { TextField, Container, Button, Typography, Divider } from '@material-ui/core'
+import { TextField, Container, Button, Typography, Snackbar } from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert';
 import { THEME2 } from '../components/variable'
 import useUsers from "../components/hooks/useUsers"
 import { motion } from "framer-motion"
@@ -90,6 +91,9 @@ display: flex;
 flex-direction: column;
 align-items: center;
 `
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Login() {
     const { isLoggedIn, signIn, error } = useUsers()
@@ -97,6 +101,7 @@ export default function Login() {
     const router = useRouter()
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
     const [loading, setLoading] = useState(false)
+    const [snackClose, setSnackClose] = useState(false)
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -104,7 +109,7 @@ export default function Login() {
         }
     }, [isLoggedIn])
 
-
+    console.log(error)
 
     return (
         isLoggedIn ? <></> :
@@ -116,21 +121,20 @@ export default function Login() {
                 </LeftContainerWrapper>
                 <MainContainerWrapper mobile={matches}>
                     <MainContainer maxWidth="md"  >
-                        
                         <LoginFormWrapper initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}>
-                        <Logo size="86px" margin="0 0 41px 0" />
+                            <Logo size="86px" margin="0 0 41px 0" />
                             <Typography align="center" style={{ marginBottom: 10 }} variant="h3" component="h1" color="primary">
                                 AIRADAR
                         </Typography>
-    <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error.message ?? ""}</Typography>
+                            <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error?.message ?? ""}</Typography>
                             <LoginForm onSubmit={(event) => {
                                 event.preventDefault();
                                 console.log(user)
                                 setLoading(true)
-                                signIn(user, () => { router.push("/main");setLoading(false)}, ()=>{setLoading(false)})
+                                signIn(user, () => { router.push("/main"); setLoading(false) }, () => { setLoading(false) })
                             }}>
-                                <InputTextField required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="Email" ></InputTextField>
-                                <InputTextField required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="Password" label="password" ></InputTextField>
+                                <InputTextField error={error ?? false} required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="Email" ></InputTextField>
+                                <InputTextField error={error ?? false} required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="Password" label="password" ></InputTextField>
                                 <SubmitButton disabled={loading} color="primary" type="submit" fullWidth variant="contained">SIGN IN</SubmitButton>
                                 <RegisterButton disabled={loading} color="primary" variant="outlined" fullWidth >SIGN UP</RegisterButton>
                             </LoginForm>
