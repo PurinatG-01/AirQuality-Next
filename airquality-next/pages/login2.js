@@ -101,15 +101,12 @@ export default function Login() {
     const router = useRouter()
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
     const [loading, setLoading] = useState(false)
-    const [snackClose, setSnackClose] = useState(false)
-
     useEffect(() => {
         if (isLoggedIn) {
             router.push("/main")
         }
     }, [isLoggedIn])
 
-    console.log(error)
 
     return (
         isLoggedIn ? <></> :
