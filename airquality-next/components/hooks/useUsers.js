@@ -10,7 +10,7 @@ export default function useUsers() {
     const firebase = useContext(FirebaseContext)
     
 
-    const signUp = ({ email, password }, callback) => {
+    const signUp = ({ email, password }, callback,callback2) => {
         return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
             .then((response) => {
                 setError(defaultError)
@@ -18,10 +18,11 @@ export default function useUsers() {
             })
             .catch((error) => {
                 setError(error)
+                callback2()
             })
     }
 
-    const signOut = (callback) => {
+    const signOut = (callback,callback2) => {
         return firebase.auth().signOut()
             .then(() => {
                 setIsLoggedIn(false)
@@ -30,10 +31,11 @@ export default function useUsers() {
             })
             .catch((error) => {
                 setError(error)
+                callback2()
             })
     }
 
-    const signIn = ({ email, password },callback) => {
+    const signIn = ({ email, password },callback,callback2) => {
         return firebase.auth().signInWithEmailAndPassword(email, password)
         .then((response) => {
             setIsLoggedIn(true)
@@ -41,6 +43,7 @@ export default function useUsers() {
             callback()
         }).catch((error) => {
             setError(error)
+            callback2()
         })
 
     }

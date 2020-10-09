@@ -16,7 +16,7 @@ export const THEME = {
 
 export const THEME2 = {
 
-    primary: "rgb(111, 207, 151)",
+    primary: "#6FCF97",
     secondary: "#3B8686",
     highlight: "#A8DBA8",
     base: "#0B486B",
@@ -24,13 +24,12 @@ export const THEME2 = {
     white: "#FEFEFE",
     red: "#BB4D4D",
     yellow: "#FF8800",
-    
-    fontFam: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontFam: 'Roboto',
     boxShadow: `-webkit-box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);
     -moz-box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);
     box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);`,
-    dividerColor: "rgba(0, 0, 0, 0.12)",
-    
+    dividerColor: "#c2c2c2",
+    breakpointM: "1024", 
 
 }
 
