@@ -123,7 +123,7 @@ export default function Login() {
                             <Typography align="center" style={{ marginBottom: 10 }} variant="h3" component="h1" color="primary">
                                 AIRADAR
                         </Typography>
-                            <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error ? error.message : ""}</Typography>
+                            <Typography variant="body2" style={{ color: THEME2.red, height: 10, marginBottom: 32 }}>{error.message ?? ""}</Typography>
                             <LoginForm onSubmit={(event) => {
                                 event.preventDefault();
                                 console.log(user)

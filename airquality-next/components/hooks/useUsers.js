@@ -1,12 +1,12 @@
 import { FirebaseContext } from "../../utils/firebase/firebase"
 import React, { useContext, useEffect, useState } from 'react'
 
-const defaultError = null
+const defaultError = {message: null}
 
 export default function useUsers() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [user, setUser] = useState({})
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
     
 
