@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { Container, Typography } from '@material-ui/core'
-import { THEME2 } from '../components/variable'
-import useUsers from "../components/hooks/useUsers"
+import { THEME2 } from './variable'
+import useUsers from "./hooks/useUsers"
 import { motion } from "framer-motion"
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Logo from '../components/Logo'
-import UserForm from "../components/Form/UserForm"
+import Logo from './Logo'
+import UserForm from "./Form/UserForm"
 
 
 const LoginWrapper = styled(motion.div)`

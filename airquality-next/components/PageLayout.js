@@ -28,10 +28,7 @@ function PageLayout(props) {
   const [state, setState] = React.useState(0);
   return (
     <PageRoot>
-      <Head>
-        <title>MUICT Senior 2020 : Air Quality </title>∏
-        <link rel="shortcut icon" href="/static/muict_logo.ico" />
-      </Head>
+      
       <Drawer />
       <DashBoardTitle >Air Quality Sensor</DashBoardTitle>
       <Container maxWidth="lg" style={{ marginBottom: 100 }}>

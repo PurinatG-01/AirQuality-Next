@@ -5,7 +5,7 @@ import { TextField, Button, Typography } from '@material-ui/core'
 import { motion } from "framer-motion"
 import { useRouter } from 'next/router'
 import { defaultError } from '../hooks/useUsers'
-import { defaultUser, defaultAccount } from '../../pages/login2'
+import { defaultUser, defaultAccount } from '../login2'
 
 
 const SignInFormWrapper = styled(motion.form)`

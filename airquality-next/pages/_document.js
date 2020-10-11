@@ -9,7 +9,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-      <Head/>
+      <Head>
+        <title>MUICT Senior 2020 : Air Quality </title>∏
+        <link rel="shortcut icon" href="/static/muict_logo.ico" />
+      </Head>
         <body style={{margin:0,}}>
           <Main />
           <NextScript />
