@@ -1,7 +1,7 @@
 import { FirebaseContext } from "../../utils/firebase/firebase"
 import React, { useContext, useEffect, useState } from 'react'
 
-const defaultError = {message: null}
+export const defaultError = {message: null}
 
 export default function useUsers() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -10,8 +10,8 @@ export default function useUsers() {
     const firebase = useContext(FirebaseContext)
     
 
-    const signUp = ({ email, password }, callback,callback2) => {
-        return firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+    const signUp = ({ email, password,firstname,surname }, callback,callback2) => {
+        return firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 setError(defaultError)
                 callback()

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const LogoWrapper = styled.div`
-
     ${props => props.size ? `width: ${props.size};height: ${props.size};` : `width: 86px;
     height: 86px;`}
     ${props => props.margin ? `margin: ${props.margin};` : `margin: auto`}
