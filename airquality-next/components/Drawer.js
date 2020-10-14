@@ -54,19 +54,16 @@ export default function PersistentDrawerLeft(props) {
         <ListItemText primary="About us" />
       </ListItem>
       <ListItem onClick={()=>{
-        
-        
         signOut(()=>{
           router.push("/")
         })
-    
     }
   }
-     button key={"Logout"}>
+     button key={"Sign out"}>
         <ListItemIcon>
           <ExitToAppIcon style={{ color: THEME.red }} />
         </ListItemIcon>
-        <ListItemText style={{ color: THEME.red }}  primary="Logout" />
+        <ListItemText style={{ color: THEME.red }}  primary="Sign out" />
       </ListItem>
     </DrawerListRoot>
   );

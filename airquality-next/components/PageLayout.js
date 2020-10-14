@@ -28,7 +28,6 @@ function PageLayout(props) {
   const [state, setState] = React.useState(0);
   return (
     <PageRoot>
-      
       <Drawer />
       <DashBoardTitle >Air Quality Sensor</DashBoardTitle>
       <Container maxWidth="lg" style={{ marginBottom: 100 }}>
@@ -36,16 +35,6 @@ function PageLayout(props) {
           {props.children}
         </Grid>
       </Container>
-      <style jsx global>
-        {`
-          * {
-            font-family: ${THEME.fontFam};
-           
-            font-weight: 100;
-            letter-spacing: 5px;
-          }
-        `}
-      </style>
     </PageRoot>
   );
 }

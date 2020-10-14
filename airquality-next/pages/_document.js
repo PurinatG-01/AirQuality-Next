@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head,  Main, NextScript } from 'next/document'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -9,10 +9,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-      <Head>
-        <title>MUICT Senior 2020 : Air Quality </title>∏
-        <link rel="shortcut icon" href="/static/muict_logo.ico" />
-      </Head>
+        <Head>
+          <title>MUICT Senior 2020 : Air Quality </title>
+          <link rel="shortcut icon" href="/static/muict_logo.ico" />
+        </Head>
         <body style={{margin:0,}}>
           <Main />
           <NextScript />

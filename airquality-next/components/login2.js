@@ -101,7 +101,6 @@ export default function Login() {
                             {!register ? <UserForm.SignInForm setError={setLocalError} setRegister={setRegister} setLoading={setLoading} setUser={setUser} error={localError} user={user} signIn={signIn} loading={loading} router={router} />
                                 : <UserForm.SignUpForm setError={setLocalError} setRegister={setRegister} setLoading={setLoading} setAccount={setAccount} error={localError} account={account} signUp={signUp} loading={loading} router={router} />
                             }
-
                         </FormWrapper>
                     </MainContainer>
                 </MainContainerWrapper>
