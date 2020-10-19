@@ -11,7 +11,7 @@ export default function main() {
 
     return (
         <>
-            { isLoggedIn ? <PageLayout2>Dashboard</PageLayout2>: <>No Permission Na !! </> } 
+            { isLoggedIn ? <PageLayout2> </PageLayout2>: <>No Permission Na !! </> } 
             
         </>
     )

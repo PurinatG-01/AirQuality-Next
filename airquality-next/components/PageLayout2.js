@@ -17,7 +17,8 @@ const PageLayout2 = (props) => {
   return (
     <LayoutWrapper>
       <Appbar matches={matches}></Appbar>
-      <Container maxWidth="lg" style={{ width: "100vw",backgroundColor: THEME2.transColor,margin: "120px auto 30px auto",borderRadius: 30 }}>
+      <Container maxWidth="lg" style={{ width: "100vw",margin: "120px auto 30px auto"}}>
+      {props.children}
       </Container>
     </LayoutWrapper>
   );
