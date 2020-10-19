@@ -11,7 +11,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <title>MUICT Senior 2020 : Air Quality </title>
-          <link rel="shortcut icon" href="/static/muict_logo.ico" />
+          <link rel="shortcut icon" href="/static/Logo_1.svg" />
         </Head>
         <body style={{margin:0,}}>
           <Main />

@@ -61,8 +61,8 @@ export function SignInForm(props) {
             setLoading(true)
             signIn(user, () => { router.push("/main"); setLoading(false); setRegister(false); }, () => { setLoading(false); })
         }} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} >
-            <InputTextField error={error.message ?? false} required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="Email" ></InputTextField>
-            <InputTextField error={error.message ?? false} required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="password" label="Password" ></InputTextField>
+            <InputTextField error={error.message ?? false} required value={user.email ?? ""} onChange={(event) => setUser({ ...user, email: event.currentTarget.value })} fullWidth color="primary" label="email" ></InputTextField>
+            <InputTextField error={error.message ?? false} required value={user.password ?? ""} onChange={(event) => setUser({ ...user, password: event.currentTarget.value })} fullWidth color="primary" type="password" label="password" ></InputTextField>
             <SubmitButton disabled={loading} color="primary" type="submit" fullWidth variant="contained">SIGN IN</SubmitButton>
             <RegisterButton disabled={loading} color="primary" onClick={() => { setRegister(true); setError(defaultError); setUser(defaultUser) }} fullWidth variant="outlined">SIGN UP</RegisterButton>
 

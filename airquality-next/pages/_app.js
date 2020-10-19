@@ -18,6 +18,19 @@ const theme = createMuiTheme({
             fontSize: 48,
             fontWeight: 500,
             letterSpacing: 20,
+        },
+        h4: {
+            fontSize: 24,
+            fontWeight: 500,
+            letterSpacing: 8,
+        },
+        body1:{
+            fontSize: 12,
+            fontWeight: 400,
+            color: THEME2.dividerColor,
+        },
+        body2:{
+            fontWeight: 400,
         }
     },
     overrides: {
@@ -34,6 +47,7 @@ const theme = createMuiTheme({
         MuiButton: {
             root: {
                 borderRadius: 10,
+                fontSize:11,
             }
 
 

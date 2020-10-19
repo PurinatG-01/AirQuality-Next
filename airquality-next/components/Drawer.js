@@ -1,6 +1,4 @@
 import React from "react";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";

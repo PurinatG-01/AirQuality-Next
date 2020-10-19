@@ -22,6 +22,7 @@ export const THEME2 = {
     base: "#0B486B",
     black: "#333337",
     white: "#FEFEFE",
+    transColor: "rgba(111,207,151,0.2)",
     red: "#BB4D4D",
     yellow: "#FF8800",
     fontFam: "'Roboto', sans-serif",
