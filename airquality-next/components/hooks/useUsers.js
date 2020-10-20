@@ -4,17 +4,22 @@ import React, { useContext, useEffect, useState } from 'react'
 export const defaultError = {message: null}
 
 export default function useUsers() {
+
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [user, setUser] = useState({})
     const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
     
-
     const signUp = ({ email, password,firstname,surname }, callback,callback2) => {
         return firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 setError(defaultError)
-                callback()
+                firebase.database().ref('users/').push({
+                    firstname: firstname,
+                    surname: surname,
+                    email: email,
+                });
+                callback(firstname,surname,email)
             })
             .catch((error) => {
                 setError(error)

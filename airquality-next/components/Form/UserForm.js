@@ -77,7 +77,6 @@ export function SignUpForm(props) {
     const [confirmPassword, setConfirmPassword] = useState("")
 
     return (
-
         <SignUpFormWrapper onSubmit={(event) => {
             event.preventDefault();
             setLoading(true)
@@ -86,7 +85,6 @@ export function SignUpForm(props) {
                 setLoading(false)
             } else {
                 signUp(account, () => { router.push("/main"); setLoading(false); setRegister(false); }, () => { setLoading(false); })
-
             }
         }} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} >
             <InputTextField error={error.message ?? false} required value={account.firstname ?? ""} onChange={(event) => setAccount({ ...account, firstname: event.currentTarget.value })} fullWidth color="primary" label="First name" ></InputTextField>

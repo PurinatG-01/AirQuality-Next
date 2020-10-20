@@ -62,7 +62,7 @@ export const defaultUser = { email: null, password: null }
 export const defaultAccount = { email: null, password: null, firstname: null, surname: null }
 
 export default function Login() {
-    const { isLoggedIn, signIn, signUp, error } = useUsers()
+    const { isLoggedIn, signIn, signUp, error} = useUsers()
     const [user, setUser] = useState(defaultUser)
     const [account, setAccount] = useState(defaultAccount)
     const router = useRouter()
