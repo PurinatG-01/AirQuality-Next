@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { Grid, Chip, Divider } from "@material-ui/core";
-import LineChart from "./ChartJS";
-import useAirData from "./hooks/useAirData";
-import { THEME } from "./variable";
+import LineChart from "../ChartJS";
+import useAirData from "../hooks/useAirData";
+import { THEME } from "../variable";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import MainData from "./MainData";
+import MainData from "../MainData";
 
 export const ItemGrid = styled(Grid)`
   && {

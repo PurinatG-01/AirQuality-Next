@@ -1,9 +1,9 @@
 import React from "react";
-import Drawer from "./Drawer";
+import Drawer from "../Drawer";
 import styled from "styled-components";
 import Head from "next/head";
 import { Container, Typography, Grid } from "@material-ui/core";
-import { THEME } from "./variable";
+import { THEME } from "../variable";
 
 const PageRoot = styled.div`
   min-height: 100vh;

@@ -12,8 +12,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import InfoIcon from "@material-ui/icons/Info";
+
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
 import { useRouter } from "next/router"
@@ -45,6 +44,8 @@ const UsernameWrapper = styled.div`
   display: flex;
   align-items:center;
   flex-direction: column;
+  max-width: 100px;
+  
 `
 const Circle = styled.div`
   background-color: ${THEME2.primary};
@@ -72,7 +73,7 @@ const CenterWrapper = styled.div`
 `
 
 export default function Appbar(props) {
-  const { matches, userData } = props
+  const { matches, userData, setPage, PAGE } = props
   const [open, setOpen] = React.useState(false);
   const { signOut } = useUsers();
   const router = useRouter();
@@ -81,32 +82,34 @@ export default function Appbar(props) {
     return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
   }
 
+
   const list = () => (
     <DrawerListRoot style={{ minWidth: 240 }}>
-      <ListItem button key={"Dashboard"}>
-        <ListItemIcon>
-          <DashboardIcon style={{ color: THEME2.primary }} />
-        </ListItemIcon>
-        <ListItemText style={{ color: THEME2.primary }} primary={LabelItem(THEME2.primary, "Overview")} />
-      </ListItem>
-      <ListItem button key={"About"}>
-        <ListItemIcon>
-          <InfoIcon style={{ color: THEME2.primary }} />
-        </ListItemIcon>
-        <ListItemText primary={LabelItem(THEME2.primary, "Info")} />
-      </ListItem>
-      <ListItem onClick={() => {
-        signOut(() => {
-          router.push("/")
-        })
-      }
-      }
-        button key={"Sign out"}>
-        <ListItemIcon>
-          <ExitToAppIcon style={{ color: THEME.red }} />
-        </ListItemIcon>
-        <ListItemText primary={LabelItem(THEME2.red, "Sign out")} />
-      </ListItem>
+
+      {PAGE.map((el) => {
+        return (<motion.div whileHover={{ scale: 1.2, x: 30 }} key={el.tag}><ListItem onClick={() => { setPage(el.tag); setOpen(false); }} button key={el.tag}>
+          <ListItemIcon>
+            <el.icon style={{ color: THEME2.primary }} />
+          </ListItemIcon>
+          <ListItemText primary={LabelItem(THEME2.primary, el.tag)} />
+        </ListItem>
+        </motion.div>
+        )
+      })}
+      <motion.div whileHover={{ scale: 1.2, x: 30}} >
+        <ListItem onClick={() => {
+          signOut(() => {
+            router.push("/")
+          })
+        }
+        }
+          button key={"Sign out"}>
+          <ListItemIcon>
+            <ExitToAppIcon style={{ color: THEME.red }} />
+          </ListItemIcon>
+          <ListItemText primary={LabelItem(THEME2.red, "Sign out")} />
+        </ListItem>
+      </motion.div>
     </DrawerListRoot>
   );
 
@@ -124,9 +127,8 @@ export default function Appbar(props) {
           <Typography style={{ display: !matches ? "none" : "block", marginTop: 8 }} variant="h4" color="primary">AIRADAR</Typography>
         </CenterWrapper>
         <UsernameWrapper>
-  <Typography variant="body1" align="center">{ (userData[1]?.firstname ?? "")+ " "+ (userData[1]?.surname ?? "") }</Typography>
-          <EmailWrapper>
-            <Circle /><Typography variant="body1" align="center">{userData[1]?.email ?? "Anonymous"}</Typography>
+           <EmailWrapper>
+            <Circle /><Typography style={{overflow: "hidden",textOverflow:  "ellipsis", maxWidth: 60}} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
           </EmailWrapper>
         </UsernameWrapper>
         <SwipeableDrawer
@@ -141,3 +143,17 @@ export default function Appbar(props) {
     </AppbarWrapper>
   )
 }
+
+
+{/* <ListItem onClick={() => { setPage(PAGE.Dashboard); setOpen(false); }} button key={"Dashboard"}>
+        <ListItemIcon>
+          <DashboardIcon style={{ color: THEME2.primary }} />
+        </ListItemIcon>
+        <ListItemText style={{ color: THEME2.primary }} primary={LabelItem(THEME2.primary, "Dashboard")} />
+      </ListItem>
+      <ListItem onClick={() => { setPage(PAGE.AboutUs); setOpen(false); }} button key={"About us"}>
+        <ListItemIcon>
+          <InfoIcon style={{ color: THEME2.primary }} />
+        </ListItemIcon>
+        <ListItemText primary={LabelItem(THEME2.primary, "About us")} />
+      </ListItem> */}
