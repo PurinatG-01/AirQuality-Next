@@ -32,10 +32,11 @@ const RenderComponentPage = [
 
 export default function main() {
 
-    const { isLoggedIn } = useUsers()
+    const { isLoggedIn,user,userData } = useUsers()
     const [page, setPage] = useState(PAGE[0].tag)
     const [currentComponent, setCurrentComponent] = useState(RenderComponentPage[0])
     
+
     useEffect(()=>{
         setCurrentComponent(RenderComponentPage.find((el)=> el.tag == page))
     },[page])

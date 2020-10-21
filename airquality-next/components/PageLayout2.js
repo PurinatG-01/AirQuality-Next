@@ -19,7 +19,7 @@ const LayoutWrapper = styled.div`
 
 const PageLayout2 = (props) => {
   const matches = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
-  const { userData } = useUsers()
+  const { userData} = useUsers()
   const { setPage, PAGE } = props
 
 

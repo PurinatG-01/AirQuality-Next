@@ -12,6 +12,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
@@ -70,6 +71,17 @@ const CenterWrapper = styled.div`
   height: 100px;
   justify-content:center;
   align-items: center;
+  position: fixed;
+  width: 100vw;
+  left:0;
+  z-index: -1;
+`
+
+const ProfileIcon = styled(AccountCircleIcon)`
+
+  margin-right: 8px;
+  font-size: 32px !important;
+  color: ${THEME2.primary};
 `
 
 export default function Appbar(props) {
@@ -85,7 +97,6 @@ export default function Appbar(props) {
 
   const list = () => (
     <DrawerListRoot style={{ minWidth: 240 }}>
-
       {PAGE.map((el) => {
         return (<motion.div whileHover={{ scale: 1.2, x: 30 }} key={el.tag}><ListItem onClick={() => { setPage(el.tag); setOpen(false); }} button key={el.tag}>
           <ListItemIcon>
@@ -128,7 +139,8 @@ export default function Appbar(props) {
         </CenterWrapper>
         <UsernameWrapper>
            <EmailWrapper>
-            <Circle /><Typography style={{overflow: "hidden",textOverflow:  "ellipsis", maxWidth: 60}} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
+              <ProfileIcon />
+            <Typography style={{display: !matches ? "none" : "block"}} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
           </EmailWrapper>
         </UsernameWrapper>
         <SwipeableDrawer

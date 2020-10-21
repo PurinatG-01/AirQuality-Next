@@ -63,13 +63,13 @@ export default function useUsers() {
                     var result = Object.keys(snapshot.val()).map((key) => [String(key), snapshot.val()[key]]);
                     result.forEach((el)=>{
                             
-                            if(user.email == el[1].email){
+                            if(user.email.toLowerCase() == el[1].email.toLowerCase()){
                                 setUserData(el)
                             }
                         
                     })
                     setUser(user)
-
+                    
                 }).catch((err)=>{
                     setError({...error, getUserError: err})
                 })
@@ -77,8 +77,9 @@ export default function useUsers() {
                 
             } else {
                 setIsLoggedIn(false)
+                setUser({})
+                setUserData({})
             }
-
         })
         return () => unSubscribe()
     }, [])

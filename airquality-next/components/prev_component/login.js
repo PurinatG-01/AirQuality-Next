@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { TextField, Container, Button, Typography, Divider } from '@material-ui/core'
-import { THEME2 } from './variable'
-import useUsers from "./hooks/useUsers"
+import { THEME2 } from '../variable'
+import useUsers from "../hooks/useUsers"
 import { motion } from "framer-motion"
 
 const LoginWrapper = styled(motion.div)`
