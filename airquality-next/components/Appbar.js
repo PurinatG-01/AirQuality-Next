@@ -16,7 +16,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import InfoIcon from "@material-ui/icons/Info";
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
-import {useRouter} from "next/router"
+import { useRouter } from "next/router"
 
 const AppbarWrapper = styled(motion.div)`
   height: 100px;
@@ -35,19 +35,16 @@ const AppbarContentWrapper = styled(motion.div)`
   align-items: center;
 `
 
-const LogoWrapper = styled(motion.div)`
-  width: 48px;
-  height: 48px;
-  background-color: ${THEME2.primary};
-  border-radius: 50%; 
-  display:flex;
-  justify-content: center;
-  align-items: center;
+
+const EmailWrapper = styled(motion.div)`
+  display: flex;
+  align-items:center;
 `
 
 const UsernameWrapper = styled.div`
   display: flex;
   align-items:center;
+  flex-direction: column;
 `
 const Circle = styled.div`
   background-color: ${THEME2.primary};
@@ -75,40 +72,40 @@ const CenterWrapper = styled.div`
 `
 
 export default function Appbar(props) {
-  const { matches } = props
+  const { matches, userData } = props
   const [open, setOpen] = React.useState(false);
-
   const { signOut } = useUsers();
   const router = useRouter();
-  console.log("matches :" + matches)
-  const LabelItem = (color,text)=>{
-  return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
+
+  const LabelItem = (color, text) => {
+    return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
   }
+
   const list = () => (
     <DrawerListRoot style={{ minWidth: 240 }}>
       <ListItem button key={"Dashboard"}>
         <ListItemIcon>
           <DashboardIcon style={{ color: THEME2.primary }} />
         </ListItemIcon>
-        <ListItemText style={{color: THEME2.primary}} primary={LabelItem(THEME2.primary, "Overview")}/>
+        <ListItemText style={{ color: THEME2.primary }} primary={LabelItem(THEME2.primary, "Overview")} />
       </ListItem>
       <ListItem button key={"About"}>
         <ListItemIcon>
           <InfoIcon style={{ color: THEME2.primary }} />
         </ListItemIcon>
-        <ListItemText primary={LabelItem(THEME2.primary, "Info")}/>
+        <ListItemText primary={LabelItem(THEME2.primary, "Info")} />
       </ListItem>
-      <ListItem onClick={()=>{
-        signOut(()=>{
+      <ListItem onClick={() => {
+        signOut(() => {
           router.push("/")
         })
-    }
-  }
-     button key={"Sign out"}>
+      }
+      }
+        button key={"Sign out"}>
         <ListItemIcon>
           <ExitToAppIcon style={{ color: THEME.red }} />
         </ListItemIcon>
-        <ListItemText  primary={LabelItem(THEME2.red,"Sign out")} />
+        <ListItemText primary={LabelItem(THEME2.red, "Sign out")} />
       </ListItem>
     </DrawerListRoot>
   );
@@ -122,23 +119,24 @@ export default function Appbar(props) {
         >
           <MenuIcon />
         </IconButton>
-        <CenterWrapper style={{marginTop: !matches ? "0": "10px"}}>
-        
-          <Logo size="48px"/>
-        
-        <Typography style={{display: !matches ? "none" : "block", marginTop: 8}} variant="h4" color="primary">AIRADAR</Typography>
+        <CenterWrapper style={{ marginTop: !matches ? "0" : "10px" }}>
+          <Logo size="48px" />
+          <Typography style={{ display: !matches ? "none" : "block", marginTop: 8 }} variant="h4" color="primary">AIRADAR</Typography>
         </CenterWrapper>
         <UsernameWrapper>
-          <Circle /><Typography variant="body1" align="center">Purinat</Typography>
+  <Typography variant="body1" align="center">{ (userData[1]?.firstname ?? "")+ " "+ (userData[1]?.surname ?? "") }</Typography>
+          <EmailWrapper>
+            <Circle /><Typography variant="body1" align="center">{userData[1]?.email ?? "Anonymous"}</Typography>
+          </EmailWrapper>
         </UsernameWrapper>
         <SwipeableDrawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-      >
-        {list()}
-      </SwipeableDrawer>
+          anchor="left"
+          open={open}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+        >
+          {list()}
+        </SwipeableDrawer>
       </AppbarContentWrapper>
     </AppbarWrapper>
   )

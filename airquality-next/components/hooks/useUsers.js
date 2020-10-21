@@ -7,6 +7,7 @@ export default function useUsers() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [user, setUser] = useState({})
+    const [userData, setUserData] = useState({})
     const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
     
@@ -57,7 +58,23 @@ export default function useUsers() {
         const unSubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 setIsLoggedIn(true)
-                setUser(user)
+                firebase.database().ref('users/').once("value").then((snapshot)=>{
+                    
+                    var result = Object.keys(snapshot.val()).map((key) => [String(key), snapshot.val()[key]]);
+                    result.forEach((el)=>{
+                            
+                            if(user.email == el[1].email){
+                                setUserData(el)
+                            }
+                        
+                    })
+                    setUser(user)
+
+                }).catch((err)=>{
+                    setError({...error, getUserError: err})
+                })
+
+                
             } else {
                 setIsLoggedIn(false)
             }
@@ -66,5 +83,5 @@ export default function useUsers() {
         return () => unSubscribe()
     }, [])
 
-    return { user ,isLoggedIn, signOut, signIn, signUp , error}
+    return { user, userData ,isLoggedIn, signOut, signIn, signUp , error}
 }
