@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"
 
 const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
 const server_address = "34.69.148.234"
@@ -73,4 +74,62 @@ export default function useAirData() {
   }, []);
 
   return dataState;
+}
+
+
+// Current hook for get air data
+
+const getAirData = async (setData) => {
+
+  try {
+    const airdata = await axios.get(`http://${server_address}/${auth_token}/project`)
+    const resApp = await axios.get(`http://${server_address}/${auth_token}/isAppConnected`)
+    const resCheck = await axios.get(`http://${server_address}/${auth_token}/isHardwareConnected`)
+
+    const widgets = airdata.data.widgets
+    let final_data = {}
+
+    widgets.forEach(el => {
+      if (el.pinType == "VIRTUAL") {
+        final_data = {
+          ...final_data, ["v" + el.pin]: parseFloat(el.value)
+        }
+      }
+    });
+    setData({ ...final_data, resApp: resApp.data, resCheck: resCheck.data })
+  }
+  catch (error) {
+    console.error(`> error : ${error}`);
+  }
+}
+
+export const useAirData2 = () => {
+
+
+  const [dataState, setDataState] = useState({
+    v0: 0,
+    v1: 0,
+    v2: 0,
+    v3: 0,
+    v4: 0,
+    v5: 0,
+    v6: 0,
+    v7: 0,
+    resCheck: false,
+    resApp: false,
+  });
+
+  useEffect(() => {
+
+    getAirData(setDataState)
+
+    const interval = setInterval(() => {
+      getAirData(setDataState)
+    }, 5000)
+
+    return () => clearInterval(interval)
+
+  }, [])
+  return dataState;
+
 }

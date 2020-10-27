@@ -7,6 +7,8 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import RouterIcon from '@material-ui/icons/Router';
 
+import {useAirData2} from "../components/hooks/useAirData"
+
 const Icon = (icon)=>{
     return (icon ?? <></>)
 }
@@ -36,6 +38,7 @@ export default function main() {
     const [page, setPage] = useState(PAGE[0].tag)
     const [currentComponent, setCurrentComponent] = useState(RenderComponentPage[0])
     
+    const airdata = useAirData2()
 
     useEffect(()=>{
         setCurrentComponent(RenderComponentPage.find((el)=> el.tag == page))
@@ -49,7 +52,8 @@ export default function main() {
                 </PageLayout2>
                 :
                 <>No Permission Na !! </>}
-
+            {console.dir(airdata)}
+            
         </>
     )
 }
