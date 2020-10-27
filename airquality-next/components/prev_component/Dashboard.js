@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { Grid, Chip, Divider } from "@material-ui/core";
 import LineChart from "../ChartJS";
-import useAirData from "../hooks/useAirData";
+import {useAirData2} from "../hooks/useAirData";
 import { THEME } from "../variable";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -48,7 +48,7 @@ const RawDataWrapper = styled(Grid)`
 
 const Dashboard = () => {
   const [counter, setCounter] = useState("");
-  const airData = useAirData();
+  const airData = useAirData2();
 
   return (
     <React.Fragment>

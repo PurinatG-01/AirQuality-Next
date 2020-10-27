@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemGrid } from "./Dashboard";
+import { ItemGrid } from "./prev_component/Dashboard";
 import { Container, Typography, Divider, Grid } from "@material-ui/core";
 import NetworkCellIcon from "@material-ui/icons/NetworkCell";
 import DnsIcon from "@material-ui/icons/Dns";

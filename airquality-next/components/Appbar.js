@@ -25,6 +25,11 @@ const AppbarWrapper = styled(motion.div)`
   background-color: transparent;
   display: flex;
   align-items: center;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(255,255,255,0.7245273109243697) 86%, rgba(255,255,255,0) 100%);
+  
+  z-index: 100;  
+  padding-bottom: 32px;
 `;
 
 const AppbarContentWrapper = styled(motion.div)`

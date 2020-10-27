@@ -24,6 +24,7 @@ const ScoreWrapper = styled.div`
   justify-content: start;
 `;
 const ScoreBox = styled(Box)``;
+
 const ScoreBoxWrapper = styled.div`
   min-width: 50%;
   min-height: 90%;
@@ -35,6 +36,7 @@ const ScoreBoxWrapper = styled.div`
   flex-direction: column;
   color: ${THEME.secondary};
   flex-grow: 1;
+  z-index: 0;
 `;
 
 const ListScoreWrapper = styled.div`
@@ -134,6 +136,7 @@ export default function Score(props) {
             value={overallScore}
             color={color}
           />
+          
           <Box
             top={0}
             left={0}

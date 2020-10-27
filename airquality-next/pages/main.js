@@ -7,6 +7,8 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import RouterIcon from '@material-ui/icons/Router';
 
+import Dashboard from '../components/prev_component/Dashboard' 
+
 import {useAirData2} from "../components/hooks/useAirData"
 
 const Icon = (icon)=>{
@@ -22,7 +24,7 @@ const PAGE = [
 ]
 
 const RenderComponentPage = [
-    {tag: "Dashboard", component: <>Dashboard</>},
+    {tag: "Dashboard", component: <Dashboard>Dashboard</Dashboard>},
     {tag: "About us", component: <>About us</>},
     {tag: "Live data", component: <>Live data</>},
     {tag: "Information", component: <>Information</>},
@@ -53,7 +55,7 @@ export default function main() {
                 :
                 <>No Permission Na !! </>}
             {console.dir(airdata)}
-            
+
         </>
     )
 }
