@@ -19,17 +19,17 @@ import useUsers from "./hooks/useUsers"
 import { useRouter } from "next/router"
 
 const AppbarWrapper = styled(motion.div)`
-  height: 100px;
+  height: 72px;
   width: 100%;
   position: fixed;
   background-color: transparent;
   display: flex;
   align-items: center;
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 58%, rgba(255,255,255,0.7245273109243697) 86%, rgba(255,255,255,0) 100%);
-  
+  background: ${THEME2.primary};
+  border-bottom-right-radius: 30px; 
+  border-bottom-left-radius: 30px; 
+ ${THEME2.boxShadow}
   z-index: 100;  
-  padding-bottom: 32px;
 `;
 
 const AppbarContentWrapper = styled(motion.div)`
@@ -83,10 +83,9 @@ const CenterWrapper = styled.div`
 `
 
 const ProfileIcon = styled(AccountCircleIcon)`
-
   margin-right: 8px;
   font-size: 32px !important;
-  color: ${THEME2.primary};
+  color: ${THEME2.white};
 `
 
 export default function Appbar(props) {
@@ -112,7 +111,7 @@ export default function Appbar(props) {
         </motion.div>
         )
       })}
-      <motion.div whileHover={{ scale: 1.2, x: 30}} >
+      <motion.div whileHover={{ scale: 1.2, x: 30 }} >
         <ListItem onClick={() => {
           signOut(() => {
             router.push("/")
@@ -133,19 +132,18 @@ export default function Appbar(props) {
     <AppbarWrapper initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} >
       <AppbarContentWrapper>
         <IconButton
-          style={{ color: THEME2.primary }}
+          style={{ color: THEME2.white }}
           onClick={() => setOpen(true)}
         >
           <MenuIcon />
         </IconButton>
-        <CenterWrapper style={{ marginTop: !matches ? "0" : "10px" }}>
+        <CenterWrapper>
           <Logo size="48px" />
-          <Typography style={{ display: !matches ? "none" : "block", marginTop: 8 }} variant="h4" color="primary">AIRADAR</Typography>
         </CenterWrapper>
         <UsernameWrapper>
-           <EmailWrapper>
-              <ProfileIcon />
-            <Typography style={{display: !matches ? "none" : "block"}} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
+          <EmailWrapper>
+            <ProfileIcon />
+            <Typography style={{ display: !matches ? "none" : "block", color: THEME2.white }} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
           </EmailWrapper>
         </UsernameWrapper>
         <SwipeableDrawer

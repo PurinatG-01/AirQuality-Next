@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"
 
-const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
+// const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
 const server_address = "34.69.148.234"
 
 
-export default function useAirData() {
+export default function useAirData(props) {
+  const auth_token = props
   const [dataState, setDataState] = useState({
     v0: 0,
     v1: 0,
@@ -79,7 +80,7 @@ export default function useAirData() {
 
 // Current hook for get air data
 
-const getAirData = async (setData) => {
+const getAirData = async (setData, auth_token) => {
 
   try {
     const airdata = await axios.get(`http://${server_address}/${auth_token}/project`)
@@ -103,9 +104,8 @@ const getAirData = async (setData) => {
   }
 }
 
-export const useAirData2 = () => {
-
-
+export const useAirData2 = (props) => {
+  const auth_token = props
   const [dataState, setDataState] = useState({
     v0: 0,
     v1: 0,
@@ -121,10 +121,10 @@ export const useAirData2 = () => {
 
   useEffect(() => {
 
-    getAirData(setDataState)
+    getAirData(setDataState, auth_token)
 
     const interval = setInterval(() => {
-      getAirData(setDataState)
+      getAirData(setDataState, auth_token)
     }, 5000)
 
     return () => clearInterval(interval)

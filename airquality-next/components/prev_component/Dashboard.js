@@ -48,7 +48,7 @@ const RawDataWrapper = styled(Grid)`
 
 const Dashboard = () => {
   const [counter, setCounter] = useState("");
-  const airData = useAirData2();
+  const airData = useAirData2("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
 
   return (
     <React.Fragment>
