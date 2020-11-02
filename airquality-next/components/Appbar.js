@@ -5,7 +5,7 @@ import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import Logo from "./Logo"
+import LogoW from "./LogoW"
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -138,7 +138,7 @@ export default function Appbar(props) {
           <MenuIcon />
         </IconButton>
         <CenterWrapper>
-          <Logo size="48px" />
+          <LogoW size="48px" />
         </CenterWrapper>
         <UsernameWrapper>
           <EmailWrapper>
