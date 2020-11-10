@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import LineChart from "./ChartJS";
-import {useAirData2} from "./hooks/useAirData";
+import useAirData from "./hooks/useAirData";
 import { THEME } from "./variable";
 
 
@@ -34,7 +34,7 @@ const ItemGrid = styled(Grid)`
 `;
 
 export default function LiveData(){
-    const airData = useAirData2("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
+    const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
 
     return (
         <>

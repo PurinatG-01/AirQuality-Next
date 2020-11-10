@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
-import { Grid, Chip, Divider } from "@material-ui/core";
+import { Grid} from "@material-ui/core";
 import LineChart from "../ChartJS";
-import {useAirData2} from "../hooks/useAirData";
+import useAirData from "../hooks/useAirData";
 import { THEME } from "../variable";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import MainData from "../MainData";
 
 export const ItemGrid = styled(Grid)`
@@ -48,7 +46,7 @@ const RawDataWrapper = styled(Grid)`
 
 const Dashboard = () => {
   const [counter, setCounter] = useState("");
-  const airData = useAirData2("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
+  const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
 
   return (
     <React.Fragment>
