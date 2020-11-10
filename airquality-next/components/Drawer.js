@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import styled from "styled-components";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -13,6 +13,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
 import {useRouter} from "next/router"
+import clsx from 'clsx';
 
 const DrawerRoot = styled.div`
   width: 100%;
@@ -31,14 +32,23 @@ const DrawerListRoot = styled(List)`
   border-radius: 0 30px 30px 0;
 `;
 
-export default function PersistentDrawerLeft(props) {
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+});
+
+function PersistentDrawerLeft(props) {
   const [open, setOpen] = React.useState(false);
 
   const { signOut } = useUsers();
   const router = useRouter();
 
   const list = () => (
-    <DrawerListRoot style={{ minWidth: 240 }}>
+    <DrawerListRoot style={{ minWidth: 240 }}  >
       <ListItem button key={"Dashboard"}>
         <ListItemIcon>
           <DashboardIcon style={{ color: THEME.secondary }} />
@@ -51,20 +61,12 @@ export default function PersistentDrawerLeft(props) {
         </ListItemIcon>
         <ListItemText primary="About us" />
       </ListItem>
-      <ListItem onClick={()=>{
-        signOut(()=>{
-          router.push("/")
-        })
-    }
-  }
-     button key={"Sign out"}>
-        <ListItemIcon>
-          <ExitToAppIcon style={{ color: THEME.red }} />
-        </ListItemIcon>
-        <ListItemText style={{ color: THEME.red }}  primary="Sign out" />
-      </ListItem>
+      
     </DrawerListRoot>
   );
+
+
+  
 
   return (
     <DrawerRoot style={{  width: "100vw", height: 50 , position: "fixed" }}>
@@ -73,16 +75,9 @@ export default function PersistentDrawerLeft(props) {
         onClick={() => setOpen(true)}
       >
         <MenuIcon />
-      </IconButton>
-
-      <SwipeableDrawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-      >
-        {list()}
-      </SwipeableDrawer>
+      </IconButton>      
     </DrawerRoot>
   );
 }
+
+export default PersistentDrawerLeft;

@@ -13,10 +13,27 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
 import { useRouter } from "next/router"
+
+
+const useStyles = makeStyles({
+  paper: {
+    background: 'transparent',
+    boxShadow: "none",
+  },
+  list: {
+    background: "red",
+  },
+  backdrop: {
+    backdropFilter: "blur(10px)",
+    background: "rgba(120,120,120,0.2)",
+  }
+});
+
 
 const AppbarWrapper = styled(motion.div)`
   height: 72px;
@@ -68,6 +85,7 @@ const DrawerListRoot = styled(List)`
   height: 100%;
   color: ${THEME.secondary} !important;
   border-radius: 0 30px 30px 0;
+  
 `;
 
 const CenterWrapper = styled.div`
@@ -94,35 +112,39 @@ export default function Appbar(props) {
   const { signOut } = useUsers();
   const router = useRouter();
 
+  const classes = useStyles();
+
   const LabelItem = (color, text) => {
     return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
   }
 
 
   const list = () => (
-    <DrawerListRoot style={{ minWidth: 240 }}>
+    <DrawerListRoot style={{ minWidth: 240, background: THEME2.primary }}>
       {PAGE.map((el) => {
-        return (<motion.div whileHover={{ scale: 1.2, x: 30 }} key={el.tag}><ListItem onClick={() => { setPage(el.tag); setOpen(false); }} button key={el.tag}>
+        return (<motion.div whileHover={{ scale: 1.2, }} key={el.tag}><ListItem onClick={() => { setPage(el.tag); setOpen(false); }} button key={el.tag}>
           <ListItemIcon>
-            <el.icon style={{ color: THEME2.primary }} />
+            <el.icon style={{ color: THEME2.white }} />
           </ListItemIcon>
-          <ListItemText primary={LabelItem(THEME2.primary, el.tag)} />
+          <ListItemText primary={LabelItem(THEME2.white, el.tag)} />
         </ListItem>
         </motion.div>
         )
       })}
-      <motion.div whileHover={{ scale: 1.2, x: 30 }} >
+      <motion.div whileHover={{ scale: 1.2, backgroundColor: THEME2.red }} >
         <ListItem onClick={() => {
           signOut(() => {
             router.push("/")
           })
         }
         }
-          button key={"Sign out"}>
+          button key={"Sign out"}
+          
+          >
           <ListItemIcon>
-            <ExitToAppIcon style={{ color: THEME.red }} />
+            <ExitToAppIcon style={{ color: THEME2.white }} />
           </ListItemIcon>
-          <ListItemText primary={LabelItem(THEME2.red, "Sign out")} />
+          <ListItemText primary={LabelItem(THEME2.white, "Sign out")} />
         </ListItem>
       </motion.div>
     </DrawerListRoot>
@@ -151,6 +173,14 @@ export default function Appbar(props) {
           open={open}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
+          classes={{paper: classes.paper}}
+          ModalProps={{
+            BackdropProps:{
+              classes:{
+                root:classes.backdrop
+              }
+            }
+          }}
         >
           {list()}
         </SwipeableDrawer>
@@ -159,16 +189,3 @@ export default function Appbar(props) {
   )
 }
 
-
-{/* <ListItem onClick={() => { setPage(PAGE.Dashboard); setOpen(false); }} button key={"Dashboard"}>
-        <ListItemIcon>
-          <DashboardIcon style={{ color: THEME2.primary }} />
-        </ListItemIcon>
-        <ListItemText style={{ color: THEME2.primary }} primary={LabelItem(THEME2.primary, "Dashboard")} />
-      </ListItem>
-      <ListItem onClick={() => { setPage(PAGE.AboutUs); setOpen(false); }} button key={"About us"}>
-        <ListItemIcon>
-          <InfoIcon style={{ color: THEME2.primary }} />
-        </ListItemIcon>
-        <ListItemText primary={LabelItem(THEME2.primary, "About us")} />
-      </ListItem> */}
