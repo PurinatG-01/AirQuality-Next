@@ -12,8 +12,8 @@ const getAirData = async (setData, auth_token) => {
 
   try {
     const airdata = await axios.get(`https://${data_server_address}/api/airdata/getByDeviceId/${auth_token}`)
-    const resApp = await axios.get(`http://${server_address}/${auth_token}/isAppConnected`)
-    const resCheck = await axios.get(`http://${server_address}/${auth_token}/isHardwareConnected`)
+    // const resApp = await axios.get(`http://${server_address}/${auth_token}/isAppConnected`)
+    // const resCheck = await axios.get(`http://${server_address}/${auth_token}/isHardwareConnected`)
 
     const final_data = {
       v0: airdata.data[0].co2,
@@ -26,7 +26,7 @@ const getAirData = async (setData, auth_token) => {
       v7: airdata.data[0].pm10_0,
     }
 
-    setData({ ...final_data, resApp: resApp.data, resCheck: resCheck.data })
+    setData({ ...final_data, resApp: true, resCheck: true })
   }
   catch (error) {
     console.error(`> error : ${error}`);
