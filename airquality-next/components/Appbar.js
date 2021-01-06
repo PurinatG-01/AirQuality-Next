@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core"
+import { Typography, Drawer } from "@material-ui/core"
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import LogoW from "./LogoW"
+import Logo from "./Logo"
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -39,14 +40,14 @@ const AppbarWrapper = styled(motion.div)`
   height: 72px;
   width: 100%;
   position: fixed;
-  background-color: transparent;
+  background-color: ${props => (props.matches ? "transparent" : THEME2.primary)};
   display: flex;
   align-items: center;
-  background: ${THEME2.primary};
-  border-bottom-right-radius: 30px; 
-  border-bottom-left-radius: 30px; 
- ${THEME2.boxShadow}
+  border-bottom-right-radius:  ${props => (props.matches ? "0" : "30px")} ;
+  border-bottom-left-radius: ${props => (props.matches ? "0" : "30px")} ;
+  ${props => (!props.matches && THEME2.boxShadow)}
   z-index: 100;  
+  
 `;
 
 const AppbarContentWrapper = styled(motion.div)`
@@ -103,7 +104,7 @@ const CenterWrapper = styled.div`
 const ProfileIcon = styled(AccountCircleIcon)`
   margin-right: 8px;
   font-size: 32px !important;
-  color: ${THEME2.white};
+  color: ${props => (props.matches ? THEME2.primary : THEME2.white)};
 `
 
 export default function Appbar(props) {
@@ -114,6 +115,28 @@ export default function Appbar(props) {
 
   const classes = useStyles();
 
+  // animate navbar
+  const [hideNav, setHideNav] = useState(false)
+  const [lastPosY, setLastPosY] = useState(0)
+
+  useEffect(() => {
+    function handleScroll() {
+      const yPos = window.scrollY
+      const isScrollingUp = yPos < lastPosY;
+      setHideNav(!isScrollingUp)
+      setLastPosY(yPos)
+    }
+
+    window.addEventListener('scroll', handleScroll, false)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, false)
+    }
+
+  }, [lastPosY])
+
+
+  console.log("> " + hideNav)
   const LabelItem = (color, text) => {
     return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
   }
@@ -139,8 +162,8 @@ export default function Appbar(props) {
         }
         }
           button key={"Sign out"}
-          
-          >
+
+        >
           <ListItemIcon>
             <ExitToAppIcon style={{ color: THEME2.white }} />
           </ListItemIcon>
@@ -150,22 +173,22 @@ export default function Appbar(props) {
     </DrawerListRoot>
   );
 
-  return (
-    <AppbarWrapper initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} >
+  return ( matches ? <></> : 
+    <AppbarWrapper matches={matches} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1.0, y: hideNav ? -100 : 0 }} >
       <AppbarContentWrapper>
         <IconButton
-          style={{ color: THEME2.white }}
+          style={{ color: THEME2.white}}
           onClick={() => setOpen(true)}
         >
           <MenuIcon />
         </IconButton>
         <CenterWrapper>
-          <LogoW size="48px" />
+            <LogoW size="48px" />
         </CenterWrapper>
         <UsernameWrapper>
           <EmailWrapper>
-            <ProfileIcon />
-            <Typography style={{ display: !matches ? "none" : "block", color: THEME2.white }} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
+            <ProfileIcon matches={matches} />
+            <Typography style={{ display: !matches ? "none" : "block", color: THEME2.primary }} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
           </EmailWrapper>
         </UsernameWrapper>
         <SwipeableDrawer
@@ -173,19 +196,21 @@ export default function Appbar(props) {
           open={open}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
-          classes={{paper: classes.paper}}
+          classes={{ paper: classes.paper }}
           ModalProps={{
-            BackdropProps:{
-              classes:{
-                root:classes.backdrop
+            BackdropProps: {
+              classes: {
+                root: classes.backdrop
               }
             }
           }}
         >
           {list()}
         </SwipeableDrawer>
+        
       </AppbarContentWrapper>
     </AppbarWrapper>
-  )
+        )
+  
 }
 

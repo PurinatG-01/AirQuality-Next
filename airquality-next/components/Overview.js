@@ -2,35 +2,35 @@ import React from 'react'
 import { motion }  from 'framer-motion'
 import styled from 'styled-components'
 import { THEME2 } from "./variable"
+
 const OverviewWrapper = styled(motion.div)`
 
-   width: 100%;
+    width: 100%;
     min-height: 500px;
     display: flex;
     background: transparent;
     
-
 `
 
 const AverageScoreWrapper = styled(motion.div)`
 
-width: 320px;
-height: 521px;
-border-radius: 30px;
-position: absolute;
-display: flex;
-align-items: center;
-flex-direction: column;
+    width: 320px;
+    height: 521px;
+    border-radius: 30px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
 `
 
 const AverageCard  = styled(motion.div)`
 
-width: 320px;
-height: 368px;
-border-radius: 30px;
-background-color: ${THEME2.white};
-position: absolute;
+    width: 320px;
+    height: 368px;
+    border-radius: 30px;
+    background-color: ${THEME2.white};
+    position: absolute;
     bottom:0;
     ${THEME2.boxShadow};
     
@@ -44,7 +44,7 @@ const AverageScore = styled(motion.div)`
     width: 270px;
     height: 270px;
     border-radius: 50%;
-    background-color: ${THEME2.primary};
+    background-color: ${THEME2.shade1};
     color: ${THEME2.white};
     display: flex;
     position: absolute;
@@ -53,14 +53,13 @@ const AverageScore = styled(motion.div)`
     align-items: center;
     z-index: 5;
 
-
 `
 
 
 export default function Overview() {
     return (
         <OverviewWrapper >
-            <AverageScoreWrapper  whileHover={{scale:1.1}}>
+            <AverageScoreWrapper whileHover={{scale:1.1}} >
                 <AverageScore>
                     <motion.span>80</motion.span>
                 </AverageScore>
