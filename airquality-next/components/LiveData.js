@@ -37,7 +37,8 @@ export default function LiveData(){
     const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
 
     return (
-        <>
+        
+        <Grid container justify="center">
             <ItemGrid>
                 <LineChart
                     label="CO2"
@@ -103,8 +104,8 @@ export default function LiveData(){
                     newData={{ value: airData.v7, label: "" }}
                 ></LineChart>
             </ItemGrid>
-
-
-        </>
+            
+        </Grid>
+        
     )
 }

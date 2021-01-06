@@ -11,6 +11,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useRouter } from "next/router"
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Logo from './Logo'
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -18,24 +19,27 @@ const LayoutWrapper = styled.div`
   min-height: 100vh;
   height: 100%;
   background-color: ${THEME2.white};
-  background-image: url("../static/Main-BG.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
+  // background-image: url("../static/Main-BG.png");
+  // background-repeat: no-repeat;
+  // background-attachment: fixed; 
+  overflow: hidden;
+
 `;
 
 const CustomSidebar = styled(motion.div)`
-  // background-color: black;
+
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   position: fixed;
+  padding-left: 20px; 
 `
 
 const CustomTab = styled(motion.div)`
-
+  
   padding: 20px 0 20px 0;
-  margin-left: 20px; 
   background: ${THEME2.white};
   ${THEME2.boxShadow}
   border-radius: 30px;
@@ -53,8 +57,13 @@ const PageLayout2 = (props) => {
     // <DrawerListRoot >
     <CustomSidebar>
       
-      <CustomTab>
 
+      <motion.div whileHover={{scale:1.2}} style={{marginBottom: 8,padding:8, borderRadius:"50%", backgroundColor: THEME2.white}}>
+      <Logo size="48px"></Logo>
+      </motion.div>
+      
+
+      <CustomTab>
       <motion.div>
         <ListItem onClick={() => {
           alert("Profile")  
@@ -109,11 +118,9 @@ const PageLayout2 = (props) => {
         }
 
         {/* <div style={{ background: "blue", width: 400, height: 400 }}></div> */}
-        <div style={{ padding: "40px 140px 0 140px" , flexGrow: 1}}>
-          <Container maxWidth="lg" style={{ margin: "80px auto 30px auto"}}>
-            <Grid container justify="center">
+        <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px" , flexGrow: 1}}>
+          <Container maxWidth="lg" style={{ display: "flex",margin: "80px auto 30px auto"}}>
               {props.children}
-            </Grid>
           </Container>
         </div>
       </LayoutWrapper>
