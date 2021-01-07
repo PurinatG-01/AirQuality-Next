@@ -33,7 +33,15 @@ export const THEME2 = {
     boxShadowVal: `box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);`,
     dividerColor: "#c2c2c2",
     breakpointM: "1024",
-    breakpointL: "1440", 
+    breakpointL: "1440",
+    factors:{
+        co2: "#3F3F3F",
+        temp: "#2E516A",
+        humidity: "#A7F5C8",
+        pressure: "#534062",
+        voc: "#F0C34E",
+        pm: "#D6D6D6",
+    }
 
 }
 
