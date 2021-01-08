@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { THEME2 } from "./variable"
-import { IconButton, Dialog, DialogTitle } from "@material-ui/core"
+import { IconButton, Dialog, DialogTitle, DialogContent, Select, MenuItem, FormControl } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 const OverviewWrapper = styled(motion.div)`
@@ -114,6 +114,10 @@ const RawDataWrapper = styled(motion.div)`
     background-color: ${THEME2.white};
     ${THEME2.boxShadow}
     width: ${props => props.matches ? "308px" : "100%"};
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
 `
 
 const UtilityWrapper = styled(motion.div)`
@@ -233,46 +237,85 @@ const FactorScore = styled(motion.div)`
 `
 
 const FactorLabel = styled(motion.label)`
-    overflow: hidden;
     ${props => !props.matches && "display: none;"}
     margin-bottom: 8px;
     font-size: 1rem;
-    font-weight: 80;0
+    font-weight: 800;
     color: ${props => props.color};
 `
 
-const CustomModalBody = styled(motion.div)`
+const FactorCircle = styled(motion.div)`
+    
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: ${props => props.color};
+    margin-right: 8px;
 
-width: 30%;
-height: 30%;
-background-color: ${THEME2.primary};
-border-radius: 30px;
-${THEME2.boxShadow}
 `
 
+
+const RawDataBody = styled(motion.div)`
+
+    // background: black;
+    flex-grow: 1;
+    margin: auto 24px 24px 24px; 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+`
+
+const RawDataRowWrapper = styled(motion.div)`
+
+    flex-grow: 1;
+    margin-bottom: 8px;
+    // background: red;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #f1f1f1;
+
+`
+
+const RawDataLabel = styled(motion.span)`
+
+    color: ${props=> props.color};
+    font-size: 18px;
+    font-weight: 400;
+
+`
 
 export default function Overview(props) {
 
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointL}px)`);
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
 
+
     const [overallScore, setOverallScore] = useState({ score: 87, level: "good" })
 
     const [factorDialog, setFactorDialog] = useState(false)
+
+    const [rawData, setRawData] = useState({
+        co2:400,
+        temp:25,
+        humidity: 44,
+        pressure: 1083,
+        voc: 20,
+        pm1_0: 0,
+        pm2_5: 14,
+        pm10_0: 15,
+    })
+
 
     const [devices, setDevices] = useState([
         { level: "good", score: 80, name: "Device1", online: true },
         { level: "warning", score: 70, name: "Device2", online: true },
         { level: "bad", score: 49, name: "Device3", online: false },
-        { level: "good", score: 80, name: "Device1", online: true },
-        { level: "warning", score: 70, name: "Device2", online: true },
-        { level: "bad", score: 49, name: "Device3", online: false },
-        { level: "good", score: 80, name: "Device1", online: true },
-        { level: "warning", score: 70, name: "Device2", online: true },
-        { level: "bad", score: 49, name: "Device3", online: false },
     ])
 
-    const [factors, setFactors] = useState({
+    const [selectedDevice, setSelectedDevice] = useState(devices[0])
+
+    const [factorsScore, setFactorsScore] = useState({
         co2: 40,
         temp: 54,
         humidity: 100,
@@ -281,9 +324,11 @@ export default function Overview(props) {
         pm: 85,
     })
 
+    // console.log("> selected : ", selectedDevice)
+
     const listDevices = () => {
         return (devices.map((el) => (
-            <Device>
+            <Device key={el.name}>
                 <ScoreCircle level={el.level}>
                     <div>{el.score}</div>
                 </ScoreCircle>
@@ -317,52 +362,93 @@ export default function Overview(props) {
 
             <RightWrapper matches={matches}>
                 <FactorWrapper matches={matches}>
-                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8 }}>
+                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, display: "flex", alignItems: "center" }}>
                         Factor Score
                          <IconButton onClick={() => { setFactorDialog(true) }} aria-label="factors information" color="primary">
                             <InfoOutlinedIcon />
                         </IconButton>
-                        <Dialog onClose={()=>{setFactorDialog(false)}} open={factorDialog}>
-                            <DialogTitle id="factor-information">Factors Information</DialogTitle>
-                           
+                        <Dialog onClose={() => { setFactorDialog(false) }} open={factorDialog}>
+                            <DialogTitle style={{ color: THEME2.primary }} id="factor-information">Factors Information</DialogTitle>
+                            <DialogContent>
+
+                                <motion.div style={{ color: THEME2.factors.co2, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.co2} />
+                                    CO2
+                                </motion.div>
+                                <motion.div style={{ color: THEME2.factors.temp, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.temp} />
+                                    Temperature
+                                </motion.div>
+                                <motion.div style={{ color: THEME2.factors.humidity, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.humidity} />
+                                    Humidity
+                                </motion.div>
+                                <motion.div style={{ color: THEME2.factors.pressure, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.pressure} />
+                                    Pressure
+                                </motion.div>
+                                <motion.div style={{ color: THEME2.factors.voc, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.voc} />
+                                    VOC
+                                </motion.div>
+                                <motion.div style={{ color: THEME2.factors.pm, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.pm} />
+                                    PM
+                                </motion.div>
+
+                            </DialogContent>
                         </Dialog>
+
+                        <FormControl>
+                            <Select
+                                autoWidth
+                                id="Device Selector"
+                                value={selectedDevice}
+                                onChange={(e) => { setSelectedDevice(e.target.value) }}
+                                style={{ height: "100%", minWidth: 100 }}
+                            >
+                                {devices.map((e) => {
+                                    return (<MenuItem key={e.name} value={e} >{e.name}</MenuItem>)
+                                })}
+                            </Select>
+                        </FormControl>
 
                     </motion.h4>
                     <BarWrapper>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.co2} score={factors.co2}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.co2} score={factorsScore.co2}>
                             <FactorLabel matches={matches2} color={THEME2.factors.co2} >CO2</FactorLabel>
                             <FactorBarScore color={THEME2.factors.co2}>
-                                <FactorTextScore>{factors.co2}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.co2}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.temp} score={factors.temp}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.temp} score={factorsScore.temp}>
                             <FactorLabel matches={matches2} color={THEME2.factors.temp}>Temperature</FactorLabel>
                             <FactorBarScore color={THEME2.factors.temp}>
-                                <FactorTextScore>{factors.temp}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.temp}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.humidity} score={factors.humidity}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
                             <FactorLabel matches={matches2} color={THEME2.factors.humidity}>Humidity</FactorLabel>
                             <FactorBarScore color={THEME2.factors.humidity}>
-                                <FactorTextScore>{factors.humidity}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.humidity}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pressure} score={factors.pressure}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
                             <FactorLabel matches={matches2} color={THEME2.factors.pressure} >Pressure</FactorLabel>
                             <FactorBarScore color={THEME2.factors.pressure}>
-                                <FactorTextScore>{factors.pressure}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.pressure}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.voc} score={factors.voc}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.voc} score={factorsScore.voc}>
                             <FactorLabel matches={matches2} color={THEME2.factors.voc}>VOC</FactorLabel>
                             <FactorBarScore color={THEME2.factors.voc}>
-                                <FactorTextScore>{factors.voc}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.voc}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pm} score={factors.pm}>
+                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pm} score={factorsScore.pm}>
                             <FactorLabel matches={matches2} color={THEME2.factors.pm}>PM</FactorLabel>
                             <FactorBarScore color={THEME2.factors.pm}>
-                                <FactorTextScore>{factors.pm}</FactorTextScore>
+                                <FactorTextScore>{factorsScore.pm}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                     </BarWrapper>
@@ -370,10 +456,78 @@ export default function Overview(props) {
 
                 <BottomWrapper>
                     <RawDataWrapper matches={matches}>
-
+                        <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8 }}>
+                            Raw Data
+                        </motion.h4>
+                        <RawDataBody>
+                            <RawDataRowWrapper>
+                                <RawDataLabel color={THEME2.factors.co2}>
+                                    CO2
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.co2} ppm
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.temp}>
+                                    Temperature
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.temp} °C
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.humidity}>
+                                    Humidity
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.humidity} %
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.pressure}>
+                                    Pressure
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.pressure} ppm
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.voc}>
+                                    VOC
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.voc} kPa
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.pm}>
+                                    PM 1.0
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.pm1_0} µg/m3
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                            <RawDataLabel color={THEME2.factors.pm}>
+                                    PM 2.5
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.pm2_5} µg/m3
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                            <RawDataRowWrapper>
+                                <RawDataLabel color={THEME2.factors.pm}>
+                                    PM 10.0
+                                </RawDataLabel>
+                                <RawDataLabel color={THEME2.factors.black}>
+                                    {rawData.pm10_0} µg/m3
+                                </RawDataLabel>
+                            </RawDataRowWrapper>
+                        </RawDataBody>
                     </RawDataWrapper>
                     <UtilityWrapper matches={matches}>
-
+                                {/* Can remove if nothing to put in here */}
                     </UtilityWrapper>
                 </BottomWrapper>
             </RightWrapper>

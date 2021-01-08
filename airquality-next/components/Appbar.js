@@ -135,8 +135,6 @@ export default function Appbar(props) {
 
   }, [lastPosY])
 
-
-  console.log("> " + hideNav)
   const LabelItem = (color, text) => {
     return <Typography type="body2" style={{ color: color, fontWeight: 400 }}>{text ?? ""}</Typography>
   }
