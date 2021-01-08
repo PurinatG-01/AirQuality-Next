@@ -9,6 +9,7 @@ import RouterIcon from '@material-ui/icons/Router';
 
 import { useAirData2 } from "../components/hooks/useAirData"
 import Overview from '../components/Overview';
+import AboutUs from '../components/AboutUs'
 import Dashboard from "../components/prev_component/Dashboard"
 import LiveData from "../components/LiveData"
 const Icon = (icon) => {
@@ -25,7 +26,7 @@ const PAGE = [
 
 const RenderComponentPage = [
     { tag: "Overview", component: <Overview>Dashboard</Overview> },
-    { tag: "About us", component: <>About us</> },
+    { tag: "About us", component: <AboutUs>About us</AboutUs> },
     { tag: "Live data", component: <LiveData>Live data</LiveData> },
     { tag: "Information", component: <>Information</> },
     { tag: "Device", component: <>Device</> },

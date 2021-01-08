@@ -156,7 +156,7 @@ const ScoreCircle = styled(motion.div)`
     }};
     color: ${THEME2.white};
     font-size: 24px;
-    font-weight: 800;
+    font-weight: 400;
     text-align: center;
     display: flex;
     align-items: center;
@@ -181,7 +181,8 @@ const OnlineInfoWrapper = styled(motion.div)`
     display : flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 100;
     color: ${THEME2.black};
 
 `
@@ -214,9 +215,9 @@ const FactorBarScore = styled(motion.div)`
 
 const FactorTextScore = styled(motion.span)`
 
-    font-size: 1.2em;
+    font-size: 16px;
     margin-bottom: 16px; 
-    font-weight: 800; 
+    font-weight: 400; 
     color: ${THEME2.white};
     text-shadow: 3px 1px 14px rgba(0,0,0,0.33);
 
@@ -239,8 +240,8 @@ const FactorScore = styled(motion.div)`
 const FactorLabel = styled(motion.label)`
     ${props => !props.matches && "display: none;"}
     margin-bottom: 8px;
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 400;
     color: ${props => props.color};
 `
 
@@ -259,7 +260,7 @@ const RawDataBody = styled(motion.div)`
 
     // background: black;
     flex-grow: 1;
-    margin: auto 24px 24px 24px; 
+    margin: 16px 24px 24px 24px; 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -273,15 +274,15 @@ const RawDataRowWrapper = styled(motion.div)`
     // background: red;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid ${THEME2.dividerColor};
 
 `
 
 const RawDataLabel = styled(motion.span)`
 
     color: ${props=> props.color};
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: 100;
 
 `
 
@@ -328,11 +329,11 @@ export default function Overview(props) {
 
     const listDevices = () => {
         return (devices.map((el) => (
-            <Device key={el.name}>
+            <Device key={el.name} style={{fontSize: 12, fontWeight: 100,}}>
                 <ScoreCircle level={el.level}>
                     <div>{el.score}</div>
                 </ScoreCircle>
-                <motion.div style={{ width: 18, height: 18, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
+                <motion.div style={{  width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
                 {el.name}
             </Device>
         )))
@@ -346,7 +347,7 @@ export default function Overview(props) {
                 </AverageScore>
                 <AverageCard>
                     <motion.div style={{ height: "100%", display: "flex", flexDirection: "column", width: "80%", margin: "80px 10%", flexWrap: "wrap" }}>
-                        <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24 }}> Overall Score </motion.h4>
+                        <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24, fontWeight: 400 }}> Overall Score </motion.h4>
                         <DeviceDetailWrapper>
                             {listDevices()}
                         </DeviceDetailWrapper>
@@ -362,7 +363,7 @@ export default function Overview(props) {
 
             <RightWrapper matches={matches}>
                 <FactorWrapper matches={matches}>
-                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, display: "flex", alignItems: "center" }}>
+                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, display: "flex", alignItems: "center", fontWeight: 400 }}>
                         Factor Score
                          <IconButton onClick={() => { setFactorDialog(true) }} aria-label="factors information" color="primary">
                             <InfoOutlinedIcon />
@@ -456,7 +457,7 @@ export default function Overview(props) {
 
                 <BottomWrapper>
                     <RawDataWrapper matches={matches}>
-                        <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8 }}>
+                        <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, fontWeight: 400 }}>
                             Raw Data
                         </motion.h4>
                         <RawDataBody>

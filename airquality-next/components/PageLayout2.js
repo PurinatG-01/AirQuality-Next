@@ -19,7 +19,7 @@ const LayoutWrapper = styled.div`
   min-height: 100vh;
   height: 100%;
   background-color: ${THEME2.white};
-  background-image: url("../static/Main-BG.png");
+  // background-image: url("../static/Main-BG.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 80% 100%;
