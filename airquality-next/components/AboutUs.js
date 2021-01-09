@@ -57,12 +57,12 @@ export default function AboutUs(props) {
 
     return (
         <AboutUsWrapper>
-            <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 800, marginBottom: 24 }} >ABOUT US</motion.h1>
+            <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24,marginTop: 48  }} >About us</motion.h1>
             <ProfileWrapper>
                 <ProfileCardWrapper whileHover={{scale: 1.1}}>
                     <ImgPro src="/static/aom_im.jpg" ></ImgPro>
-                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary }} >6088004<br/>Chayarat Boontham <br/>(Aom)</motion.h5>
-                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6}}>6088004 Management Information System (MS) 
+                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088004<br/>Chayarat Boontham <br/>(Aom)</motion.h5>
+                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>6088004 Management Information System (MS) 
                         <br />Faculty of ICT Mahidol University 
                         <br />chayarat.boo@student.mahidol.ac.th 
                         <br />084-655-5229
@@ -70,8 +70,8 @@ export default function AboutUs(props) {
                 </ProfileCardWrapper>
                 <ProfileCardWrapper whileHover={{scale: 1.1}}>
                     <ImgPro src="/static/fame_im.jpg" ></ImgPro>
-                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary }} >6088159<br/>Purinat Sanbundit <br/>(Fame)</motion.h5>
-                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6}}>Software Engineering (SE) 
+                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088159<br/>Purinat Sanbundit <br/>(Fame)</motion.h5>
+                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Software Engineering (SE) 
                         <br />Faculty of ICT Mahidol University 
                         <br />purinat.san@gmail.com
                         <br />097-227-1804
@@ -79,8 +79,8 @@ export default function AboutUs(props) {
                 </ProfileCardWrapper>
                 <ProfileCardWrapper whileHover={{scale: 1.1}}>
                     <ImgPro src="/static/earth_im.jpg" ></ImgPro>
-                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary }} >6088132<br/>Supawit Puengchim <br/>(Earth)</motion.h5>
-                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6}}>Database and Intelligent Systems (DB) 
+                    <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088132<br/>Supawit Puengchim <br/>(Earth)</motion.h5>
+                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Database and Intelligent Systems (DB) 
                         <br />Faculty of ICT Mahidol University 
                         <br />supawit.pue@gmail.com
                         <br />085-119-6018

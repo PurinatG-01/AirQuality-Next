@@ -140,6 +140,8 @@ const DeviceDetailWrapper = styled(motion.div)`
     width:100%;
     overflow-y: scroll;
     height: 268px;
+    padding: 16px 0;
+    box-shadow: inset 0px 0px 24px 4px ${THEME2.white};
 
 `
 const ScoreCircle = styled(motion.div)`
@@ -148,7 +150,7 @@ const ScoreCircle = styled(motion.div)`
     height: 48px; 
     border-radius: 50%;
     padding: 10px;
-    ${THEME2.boxShadow}
+
     background-color: ${props => {
         if (props.level == "good") { return THEME2.shade1 }
         else if (props.level == "warning") { return THEME2.yellow }
@@ -312,7 +314,7 @@ export default function Overview(props) {
         { level: "good", score: 80, name: "Device1", online: true },
         { level: "warning", score: 70, name: "Device2", online: true },
         { level: "bad", score: 49, name: "Device3", online: false },
-    ])
+       ])
 
     const [selectedDevice, setSelectedDevice] = useState(devices[0])
 
@@ -329,7 +331,7 @@ export default function Overview(props) {
 
     const listDevices = () => {
         return (devices.map((el) => (
-            <Device key={el.name} style={{fontSize: 12, fontWeight: 100,}}>
+            <Device whileHover={{y: -8}} key={el.name} style={{fontSize: 12, fontWeight: 100,}}>
                 <ScoreCircle level={el.level}>
                     <div>{el.score}</div>
                 </ScoreCircle>
@@ -416,37 +418,37 @@ export default function Overview(props) {
 
                     </motion.h4>
                     <BarWrapper>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.co2} score={factorsScore.co2}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.co2} score={factorsScore.co2}>
                             <FactorLabel matches={matches2} color={THEME2.factors.co2} >CO2</FactorLabel>
                             <FactorBarScore color={THEME2.factors.co2}>
                                 <FactorTextScore>{factorsScore.co2}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.temp} score={factorsScore.temp}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.temp} score={factorsScore.temp}>
                             <FactorLabel matches={matches2} color={THEME2.factors.temp}>Temperature</FactorLabel>
                             <FactorBarScore color={THEME2.factors.temp}>
                                 <FactorTextScore>{factorsScore.temp}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
                             <FactorLabel matches={matches2} color={THEME2.factors.humidity}>Humidity</FactorLabel>
                             <FactorBarScore color={THEME2.factors.humidity}>
                                 <FactorTextScore>{factorsScore.humidity}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
                             <FactorLabel matches={matches2} color={THEME2.factors.pressure} >Pressure</FactorLabel>
                             <FactorBarScore color={THEME2.factors.pressure}>
                                 <FactorTextScore>{factorsScore.pressure}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.voc} score={factorsScore.voc}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.voc} score={factorsScore.voc}>
                             <FactorLabel matches={matches2} color={THEME2.factors.voc}>VOC</FactorLabel>
                             <FactorBarScore color={THEME2.factors.voc}>
                                 <FactorTextScore>{factorsScore.voc}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
-                        <FactorScore whileHover={{ scale: 1.1 }} color={THEME2.factors.pm} score={factorsScore.pm}>
+                        <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.pm} score={factorsScore.pm}>
                             <FactorLabel matches={matches2} color={THEME2.factors.pm}>PM</FactorLabel>
                             <FactorBarScore color={THEME2.factors.pm}>
                                 <FactorTextScore>{factorsScore.pm}</FactorTextScore>
@@ -456,7 +458,7 @@ export default function Overview(props) {
                 </FactorWrapper>
 
                 <BottomWrapper>
-                    <RawDataWrapper matches={matches}>
+                    <RawDataWrapper matches={matches} >
                         <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, fontWeight: 400 }}>
                             Raw Data
                         </motion.h4>
