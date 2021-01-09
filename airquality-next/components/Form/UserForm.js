@@ -9,12 +9,12 @@ import { defaultUser, defaultAccount } from '../login2'
 
 
 const SignInFormWrapper = styled(motion.form)`
-max-width: 280px;
-width: 100%;
-display: flex ;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+    max-width: 280px;
+    width: 100%;
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `
 
 const SignUpFormWrapper = styled(motion.form)`

@@ -156,7 +156,7 @@ const ScoreCircle = styled(motion.div)`
     }};
     color: ${THEME2.white};
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 800;
     text-align: center;
     display: flex;
     align-items: center;
@@ -182,7 +182,7 @@ const OnlineInfoWrapper = styled(motion.div)`
     justify-content: center;
     align-items: center;
     font-size: 12px;
-    font-weight: 100;
+    font-weight: 800;
     color: ${THEME2.black};
 
 `
@@ -217,7 +217,7 @@ const FactorTextScore = styled(motion.span)`
 
     font-size: 16px;
     margin-bottom: 16px; 
-    font-weight: 400; 
+    font-weight: 800; 
     color: ${THEME2.white};
     text-shadow: 3px 1px 14px rgba(0,0,0,0.33);
 
@@ -241,7 +241,7 @@ const FactorLabel = styled(motion.label)`
     ${props => !props.matches && "display: none;"}
     margin-bottom: 8px;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 800;
     color: ${props => props.color};
 `
 
@@ -282,7 +282,7 @@ const RawDataLabel = styled(motion.span)`
 
     color: ${props=> props.color};
     font-size: 12px;
-    font-weight: 100;
+    font-weight: 800;
 
 `
 
@@ -329,7 +329,7 @@ export default function Overview(props) {
 
     const listDevices = () => {
         return (devices.map((el) => (
-            <Device key={el.name} style={{fontSize: 12, fontWeight: 100,}}>
+            <Device key={el.name} style={{fontSize: 12, fontWeight: 800,}}>
                 <ScoreCircle level={el.level}>
                     <div>{el.score}</div>
                 </ScoreCircle>
@@ -347,7 +347,7 @@ export default function Overview(props) {
                 </AverageScore>
                 <AverageCard>
                     <motion.div style={{ height: "100%", display: "flex", flexDirection: "column", width: "80%", margin: "80px 10%", flexWrap: "wrap" }}>
-                        <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24, fontWeight: 400 }}> Overall Score </motion.h4>
+                        <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24, fontWeight: 800 }}> OVERALL SCORE </motion.h4>
                         <DeviceDetailWrapper>
                             {listDevices()}
                         </DeviceDetailWrapper>
@@ -363,8 +363,8 @@ export default function Overview(props) {
 
             <RightWrapper matches={matches}>
                 <FactorWrapper matches={matches}>
-                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, display: "flex", alignItems: "center", fontWeight: 400 }}>
-                        Factor Score
+                    <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, display: "flex", alignItems: "center", fontWeight: 800 }}>
+                        FACTOR SCORE
                          <IconButton onClick={() => { setFactorDialog(true) }} aria-label="factors information" color="primary">
                             <InfoOutlinedIcon />
                         </IconButton>
@@ -406,10 +406,10 @@ export default function Overview(props) {
                                 id="Device Selector"
                                 value={selectedDevice}
                                 onChange={(e) => { setSelectedDevice(e.target.value) }}
-                                style={{ height: "100%", minWidth: 100 }}
+                                style={{ height: "100%", minWidth: 100, fontWeight: 800 }}
                             >
                                 {devices.map((e) => {
-                                    return (<MenuItem key={e.name} value={e} >{e.name}</MenuItem>)
+                                    return (<MenuItem key={e.name} value={e} style={{color: THEME2.black, fontWeight: 800}}>{e.name}</MenuItem>)
                                 })}
                             </Select>
                         </FormControl>
@@ -457,8 +457,8 @@ export default function Overview(props) {
 
                 <BottomWrapper>
                     <RawDataWrapper matches={matches}>
-                        <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, fontWeight: 400 }}>
-                            Raw Data
+                        <motion.h4 style={{ paddingLeft: 24, color: THEME2.primary, fontSize: 24, marginBottom: 8, fontWeight: 800 }}>
+                            RAW DATA
                         </motion.h4>
                         <RawDataBody>
                             <RawDataRowWrapper>

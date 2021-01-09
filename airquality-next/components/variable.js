@@ -31,7 +31,7 @@ export const THEME2 = {
     -moz-box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);
     box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);`,
     boxShadowVal: `box-shadow: 0px 10px 21px -1px rgba(51,51,51,0.3);`,
-    dividerColor: "#f1f1f1",
+    dividerColor: "#e1e1e1",
     breakpointM: "1024",
     breakpointL: "1440",
     factors:{

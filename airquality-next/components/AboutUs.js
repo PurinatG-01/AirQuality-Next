@@ -41,7 +41,7 @@ export default function AboutUs(props) {
 
     return (
         <AboutUsWrapper>
-            <motion.h1 style={{fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400}} >About Us</motion.h1>
+            <motion.h1 style={{fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 800}} >ABOUT US</motion.h1>
             <ProfileWrapper>
                 <ProfileCardWrapper>
 
