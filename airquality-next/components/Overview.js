@@ -5,6 +5,9 @@ import { THEME2 } from "./variable"
 import { IconButton, Dialog, DialogTitle, DialogContent, Select, MenuItem, FormControl } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import AverageScoreSvg from './Svg/AverageScoreSvg'
+import UtilityOverviewBg from './Svg/UtilityOverviewBg'
+
 const OverviewWrapper = styled(motion.div)`
 
     display: flex;
@@ -21,11 +24,16 @@ const AverageScoreWrapper = styled(motion.div)`
 
     // background: black;
     width: ${props => props.matches ? "320px" : "100%"};
+    max-width: ${props => props.matches ? ";" : "400px"};
+    margin-top: ${props => props.matches ? "auto" : "48px"};
     height: 823px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    // overflow-x: hidden;
+    // position: relative;
+    // overflow-y: hidden;
         
 `
 
@@ -41,6 +49,8 @@ const AverageCard = styled(motion.div)`
     // background: black;
     display: flex;
     flex-direction: column;
+    z-index: 2;
+    position: static;
     
 `
 
@@ -96,6 +106,8 @@ const FactorWrapper = styled(motion.div)`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    z-index: 5px;
+    position: relative;
 
 `
 
@@ -124,7 +136,7 @@ const UtilityWrapper = styled(motion.div)`
 
     height: 395px;
     border-radius : 30px;
-    background-color: ${THEME2.primary};
+    background-color: ${THEME2.white};
     ${THEME2.boxShadow}
     margin-top: ${props => props.matches ? "0" : " 24px"};
     margin-left: ${props => props.matches ? "24px" : " 0"};
@@ -163,6 +175,7 @@ const ScoreCircle = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 16px;
 
 `
 
@@ -171,7 +184,7 @@ const Device = styled(motion.div)`
     display: flex;
     margin-bottom: 24px;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     color: ${THEME2.black};
 
 `
@@ -199,7 +212,6 @@ const BarWrapper = styled(motion.div)`
     justify-content: space-around;
     align-items: flex-end;
     overflow-x: scroll;
-    overflow-y: width;
    
 `
 
@@ -217,11 +229,13 @@ const FactorBarScore = styled(motion.div)`
 
 const FactorTextScore = styled(motion.span)`
 
-    font-size: 16px;
+    font-size: ${props => props.matches ? "48px" :"16px" };
+    font-weight: ${props => props.matches ? "800" : "800" };
     margin-bottom: 16px; 
-    font-weight: 100; 
     color: ${THEME2.white};
     text-shadow: 3px 1px 14px rgba(0,0,0,0.33);
+    position: absolute;
+
 
 `
 
@@ -322,8 +336,8 @@ export default function Overview(props) {
         co2: 40,
         temp: 54,
         humidity: 100,
-        pressure: 88,
-        voc: 32,
+        pressure: 40,
+        voc: 100,
         pm: 85,
     })
 
@@ -335,7 +349,7 @@ export default function Overview(props) {
                 <ScoreCircle level={el.level}>
                     <div>{el.score}</div>
                 </ScoreCircle>
-                <motion.div style={{  width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
+                <motion.div style={{  marginRight: 16,width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
                 {el.name}
             </Device>
         )))
@@ -361,6 +375,7 @@ export default function Overview(props) {
                             </OnlineInfoWrapper>
                     </motion.div>
                 </AverageCard>
+                <AverageScoreSvg />
             </AverageScoreWrapper>
 
             <RightWrapper matches={matches}>
@@ -419,39 +434,39 @@ export default function Overview(props) {
                     </motion.h4>
                     <BarWrapper>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.co2} score={factorsScore.co2}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.co2} >CO2</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.co2} >CO2</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.co2}>
-                                <FactorTextScore>{factorsScore.co2}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.co2}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.temp} score={factorsScore.temp}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.temp}>Temperature</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.temp}>Temperature</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.temp}>
-                                <FactorTextScore>{factorsScore.temp}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.temp}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.humidity}>Humidity</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.humidity}>Humidity</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.humidity}>
-                                <FactorTextScore>{factorsScore.humidity}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.humidity}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.pressure} >Pressure</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.pressure} >Pressure</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.pressure}>
-                                <FactorTextScore>{factorsScore.pressure}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.pressure}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.voc} score={factorsScore.voc}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.voc}>VOC</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.voc}>VOC</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.voc}>
-                                <FactorTextScore>{factorsScore.voc}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.voc}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                         <FactorScore whileHover={{ y:-8 }} color={THEME2.factors.pm} score={factorsScore.pm}>
-                            <FactorLabel matches={matches2} color={THEME2.factors.pm}>PM</FactorLabel>
+                            {/* <FactorLabel matches={matches2} color={THEME2.factors.pm}>PM</FactorLabel> */}
                             <FactorBarScore color={THEME2.factors.pm}>
-                                <FactorTextScore>{factorsScore.pm}</FactorTextScore>
+                                <FactorTextScore matches={matches2}>{factorsScore.pm}</FactorTextScore>
                             </FactorBarScore>
                         </FactorScore>
                     </BarWrapper>
@@ -531,6 +546,7 @@ export default function Overview(props) {
                     </RawDataWrapper>
                     <UtilityWrapper matches={matches}>
                                 {/* Can remove if nothing to put in here */}
+                        <UtilityOverviewBg></UtilityOverviewBg>
                     </UtilityWrapper>
                 </BottomWrapper>
             </RightWrapper>

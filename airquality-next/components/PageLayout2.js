@@ -120,7 +120,7 @@ const PageLayout2 = (props) => {
 
         {/* <div style={{ background: "blue", width: 400, height: 400 }}></div> */}
         <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px" , flexGrow: 1}}>
-          <Container maxWidth="xl" style={{ display: "flex",margin: "40px auto 30px auto"}}>
+          <Container maxWidth="xl" style={{ display: "flex",margin: "40px auto 30px auto", overflowX: "hidden", position: "relative", overflowY: "hidden" }}>
               {props.children}
           </Container>
         </div>
