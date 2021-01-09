@@ -62,7 +62,7 @@ export default function AboutUs(props) {
                 <ProfileCardWrapper whileHover={{scale: 1.1}}>
                     <ImgPro src="/static/aom_im.jpg" ></ImgPro>
                     <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088004<br/>Chayarat Boontham <br/>(Aom)</motion.h5>
-                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>6088004 Management Information System (MS) 
+                    <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Management Information System (MS) 
                         <br />Faculty of ICT Mahidol University 
                         <br />chayarat.boo@student.mahidol.ac.th 
                         <br />084-655-5229
