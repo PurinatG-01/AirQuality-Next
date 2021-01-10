@@ -14,6 +14,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Logo from './Logo'
 
 const LayoutWrapper = styled.div`
+
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -120,7 +121,7 @@ const PageLayout2 = (props) => {
 
         {/* <div style={{ background: "blue", width: 400, height: 400 }}></div> */}
         <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px" , flexGrow: 1}}>
-          <Container maxWidth="xl" style={{ display: "flex",margin: "40px auto 30px auto", overflowX: "hidden", position: "relative", overflowY: "hidden" }}>
+          <Container maxWidth="xl" style={{ display: "flex",margin: "40px auto 30px auto"}}>
               {props.children}
           </Container>
         </div>

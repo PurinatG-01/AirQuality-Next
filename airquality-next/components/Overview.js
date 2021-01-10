@@ -16,7 +16,8 @@ const OverviewWrapper = styled(motion.div)`
     justify-content: ${props => props.matches ? "none" : "center"};
     width: 100%;
     height: 100%;
-    
+    position:relative;
+
 `
 
 
@@ -31,9 +32,6 @@ const AverageScoreWrapper = styled(motion.div)`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    // overflow-x: hidden;
-    // position: relative;
-    // overflow-y: hidden;
         
 `
 
@@ -362,7 +360,7 @@ export default function Overview(props) {
                     <motion.span>{overallScore.score}</motion.span>
                 </AverageScore>
                 <AverageCard>
-                    <motion.div style={{ height: "100%", display: "flex", flexDirection: "column", width: "80%", margin: "80px 10%", flexWrap: "wrap" }}>
+                    <motion.div style={{ height: "100%", display: "flex", flexDirection: "column", width: "80%", margin: "80px 10%"}}>
                         <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24, fontWeight: 400 }}> Overall Score </motion.h4>
                         <DeviceDetailWrapper>
                             {listDevices()}
