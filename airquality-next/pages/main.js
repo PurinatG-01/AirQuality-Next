@@ -8,10 +8,13 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import RouterIcon from '@material-ui/icons/Router';
 
 import { useAirData2 } from "../components/hooks/useAirData"
+// Routing page components
 import Overview from '../components/Overview';
 import AboutUs from '../components/AboutUs'
 import Dashboard from "../components/prev_component/Dashboard"
 import LiveData from "../components/LiveData"
+import Information from "../components/Information"
+
 const Icon = (icon) => {
     return (icon ?? <></>)
 }
@@ -28,7 +31,7 @@ const RenderComponentPage = [
     { tag: "Overview", component: <Overview>Dashboard</Overview> },
     { tag: "About us", component: <AboutUs>About us</AboutUs> },
     { tag: "Live data", component: <LiveData>Live data</LiveData> },
-    { tag: "Information", component: <>Information</> },
+    { tag: "Information", component: <Information>Information</Information> },
     { tag: "Device", component: <>Device</> },
 ]
 
