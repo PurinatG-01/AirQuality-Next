@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { THEME2 } from './variable'
+import { THEME2, INFO } from './variable'
 import InfoCard from './InfoCard'
 
 const InformationWrapper = styled(motion.div)`
@@ -20,6 +20,7 @@ const CategoryTitle = styled(motion.h2)`
     padding-bottom: 16px;
     // border-bottom: 2px solid ${THEME2.primary};
     font-weight: 400;
+    text-align: center;
 
 `
 
@@ -36,35 +37,10 @@ const CategoryWrapper = styled(motion.div)`
 export default function Information() {
 
 
-    const factorsInfo = [
-        {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }, {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }, {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }, {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }, {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }, {
-            title: "CO2",
-            description: "CO2 is one of the most important factor for air quality in home",
-            body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
-        }
-    ]
+    const factorsInfo = INFO.factors
+    const hardwareInfo = INFO.hardware
 
-    const listFactors = () => (factorsInfo.map((e) => (
+    const listFactors = (infos) => (infos.map((e) => (
         <InfoCard info={e}></InfoCard>
     )))
 
@@ -75,13 +51,13 @@ export default function Information() {
                 Factors
             </CategoryTitle>
             <CategoryWrapper>
-                {listFactors()}
+                {listFactors(factorsInfo)}
             </CategoryWrapper>
             <CategoryTitle>
                 Hardware
             </CategoryTitle>
             <CategoryWrapper>
-                {listFactors()}
+                {listFactors(hardwareInfo)}
             </CategoryWrapper>
         </InformationWrapper>
     )

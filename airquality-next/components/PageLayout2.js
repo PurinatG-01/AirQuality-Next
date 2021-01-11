@@ -43,8 +43,17 @@ const CustomTab = styled(motion.div)`
   
   padding: 20px 0 20px 0;
   background: ${THEME2.white};
-  ${THEME2.boxShadow}
+  border: 1px solid ${THEME2.dividerColor};
   border-radius: 30px;
+
+`
+const LogoWrapper = styled(motion.div)`
+
+margin-bottom: 8px;
+padding: 8px; 
+border-radius:50%;
+background-color: ${THEME2.white};
+border: 1px solid ${THEME2.dividerColor};
 
 `
 
@@ -58,51 +67,53 @@ const PageLayout2 = (props) => {
   const list = () => (
     // <DrawerListRoot >
     <CustomSidebar>
-      
 
-      <motion.div whileHover={{scale:1.2}} style={{marginBottom: 8,padding:8, borderRadius:"50%", backgroundColor: THEME2.white}}>
-      <Logo size="48px"></Logo>
-      </motion.div>
-      
+
+      <LogoWrapper>
+        <Logo size="48px"></Logo>
+      </LogoWrapper>
+
 
       <CustomTab>
-      <motion.div>
-        <ListItem onClick={() => {
-          alert("Profile")  
-        }}
-          button key={"Sign out"}
-        >
-          <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-            <AccountCircleIcon style={{ color: THEME2.primary }} />
-          </ListItemIcon>
-        </ListItem>
-      </motion.div>
-      
-      {PAGE.map((el) => {
-        return (
-          <motion.div key={el.tag}>
-            <ListItem onClick={() => { setPage(el.tag); }} button key={el.tag}>
-              <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-                <el.icon style={{ color: THEME2.primary }} />
-              </ListItemIcon>
+        <motion.div>
+          <ListItem onClick={() => {
+            alert("Profile")
+          }}
+            button
+            key={"Sign out"}
+          >
+            <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+              <AccountCircleIcon style={{ color: THEME2.primary }} />
+            </ListItemIcon>
+          </ListItem>
+        </motion.div>
 
-            </ListItem>
-          </motion.div>
-        )
-      })}
+        {PAGE.map((el) => {
+          return (
+            <motion.div key={el.tag}>
+              <ListItem onClick={() => { setPage(el.tag); }} button key={el.tag}>
+                <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+                  <el.icon style={{ color: THEME2.primary }} />
+                </ListItemIcon>
+              </ListItem>
+            </motion.div>
+          )
+        })}
 
-      <motion.div>
-        <ListItem onClick={() => {
-          signOut(() => {
-            router.push("/")
-          })}}
-          button key={"Sign out"}
-        >
-          <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-            <ExitToAppIcon style={{ color: THEME2.red }} />
-          </ListItemIcon>
-        </ListItem>
-      </motion.div>
+        <motion.div>
+          <ListItem onClick={() => {
+            signOut(() => {
+              router.push("/")
+            })
+          }}
+            button
+            key={"Sign out"}
+          >
+            <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+              <ExitToAppIcon style={{ color: THEME2.red }} />
+            </ListItemIcon>
+          </ListItem>
+        </motion.div>
 
       </CustomTab>
     </CustomSidebar>
@@ -111,18 +122,16 @@ const PageLayout2 = (props) => {
 
 
   return (
-    <motion.div style={{ display: "flex",width: "100%",height: "100%"}}>
+    <motion.div style={{ display: "flex", width: "100%", height: "100%" }}>
       { matches && list()}
       <LayoutWrapper>
         {matches ? <></>
           :
           <Appbar PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
         }
-
-        {/* <div style={{ background: "blue", width: 400, height: 400 }}></div> */}
-        <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px" , flexGrow: 1}}>
-          <Container maxWidth="xl" style={{ display: "flex",margin: "40px auto 30px auto"}}>
-              {props.children}
+        <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px", flexGrow: 1 }}>
+          <Container maxWidth="xl" style={{ display: "flex", margin: "40px auto 30px auto" }}>
+            {props.children}
           </Container>
         </div>
       </LayoutWrapper>

@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     backdropFilter: "blur(10px)",
     background: "rgba(120,120,120,0.2)",
   }
-});
+})
 
 
 const AppbarWrapper = styled(motion.div)`
@@ -45,10 +45,10 @@ const AppbarWrapper = styled(motion.div)`
   align-items: center;
   border-bottom-right-radius:  ${props => (props.matches ? "0" : "30px")} ;
   border-bottom-left-radius: ${props => (props.matches ? "0" : "30px")} ;
-  ${props => (!props.matches && THEME2.boxShadow)}
+  
   z-index: 100;  
   
-`;
+`
 
 const AppbarContentWrapper = styled(motion.div)`
   margin: 0 32px;
@@ -71,14 +71,6 @@ const UsernameWrapper = styled.div`
   max-width: 100px;
   
 `
-const Circle = styled.div`
-  background-color: ${THEME2.primary};
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-  
-`
 
 const DrawerListRoot = styled(List)`
   min-width: 240px;
@@ -87,7 +79,7 @@ const DrawerListRoot = styled(List)`
   color: ${THEME.secondary} !important;
   border-radius: 0 30px 30px 0;
   
-`;
+`
 
 const CenterWrapper = styled.div`
   display:flex;

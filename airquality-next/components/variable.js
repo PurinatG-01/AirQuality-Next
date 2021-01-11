@@ -45,7 +45,41 @@ export const THEME2 = {
 
 }
 
-export const Dialog = {
-
-welcome : "Hello Mr. Purinat welcome to AIRADAR",
+export const INFO = {
+    factors: [{
+        title: "CO2",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "Temperature",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "Humidity",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "Pressure",
+        description: "CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "VOC",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "PM",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }
+],
+    hardware: [{
+        title: "Micro Controller",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    }, {
+        title: "Sensors",
+        description: "CO2 is one of the most important factor for air quality in home",
+        body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
+    },
+], 
 }

@@ -7,12 +7,13 @@ const CardWrapper = styled(motion.div)`
 
     width: 200px;
     height: 300px;
-    border-radius: 30px;
+    border-radius: 30px ;
     display: flex;
     // background: black;
     margin: 16px;
     flex-direction: column;
     align-items: center;
+    border: 1px solid ${THEME2.dividerColor};
 
 `
 
@@ -31,18 +32,30 @@ const IconWrapper = styled(motion.div)`
 const InfoDescription = styled(motion.p)`
 
     width: 80%;
-    height: 130px;
+    height: 110px;
     text-align: center;
     font-size: 12px;
     font-weight: 100;
     color: ${THEME2.black};
-    margin: 16px 0;
+    margin: 8px 0;
+    margin-bottom: 16px;
     // background: blue;
-    overflow: hidden;
+    overflow: scroll;
     white-space: no-wrap;
     text-overflow: ellipsis;
     line-height: 1.6;
     
+`
+
+const InfoTitle = styled(motion.h6)`
+
+    font-size: 16px;
+    font-weight:400;
+    color: ${THEME2.primary};
+    text-align : center;
+    margin: 8px auto;
+    margin-top: 16px;
+
 `
 
 export default function InfoCard(props) {
@@ -51,11 +64,15 @@ export default function InfoCard(props) {
 
 
     return (
-        <CardWrapper whileHover={{ y: -8, boxShadow: THEME2.boxShadowVal }}>
+        <CardWrapper whileHover={{ y: -8}}>
             <IconWrapper>
                 
             </IconWrapper>
+            <InfoTitle>
+                {info.title}
+                </InfoTitle>
             <InfoDescription>
+                
                 {info.description}
             </InfoDescription>
         </CardWrapper>

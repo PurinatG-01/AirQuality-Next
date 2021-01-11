@@ -39,6 +39,7 @@ const ProfileCardWrapper = styled(motion.div)`
     font-size: 12px;
     text-align: center;
     padding: 48px 0;
+    border: 1px solid ${THEME2.dividerColor};
 
 `
 
@@ -59,7 +60,7 @@ export default function AboutUs(props) {
         <AboutUsWrapper>
             <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24,marginTop: 48  }} >About us</motion.h1>
             <ProfileWrapper>
-                <ProfileCardWrapper whileHover={{y: -8}}>
+                <ProfileCardWrapper whileHover={{ y: -8 }}>
                     <ImgPro src="/static/aom_im.jpg" ></ImgPro>
                     <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088004<br/>Chayarat Boontham <br/>(Aom)</motion.h5>
                     <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Management Information System (MS) 
@@ -68,7 +69,7 @@ export default function AboutUs(props) {
                         <br />084-655-5229
                     </motion.p>
                 </ProfileCardWrapper>
-                <ProfileCardWrapper whileHover={{y: -8}}>
+                <ProfileCardWrapper whileHover={{ y: -8 }}>
                     <ImgPro src="/static/fame_im.jpg" ></ImgPro>
                     <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088159<br/>Purinat Sanbundit <br/>(Fame)</motion.h5>
                     <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Software Engineering (SE) 
@@ -77,7 +78,7 @@ export default function AboutUs(props) {
                         <br />097-227-1804
                     </motion.p>
                 </ProfileCardWrapper>
-                <ProfileCardWrapper whileHover={{y: -8}}>
+                <ProfileCardWrapper whileHover={{ y: -8}}>
                     <ImgPro src="/static/earth_im.jpg" ></ImgPro>
                     <motion.h5 style={{ fontSize: 16, color: THEME2.primary ,fontWeight: 400}} >6088132<br/>Supawit Puengchim <br/>(Earth)</motion.h5>
                     <motion.p style={{fontSize: 12, color: THEME2.black, lineHeight: 1.6, fontWeight: 100}}>Database and Intelligent Systems (DB) 
