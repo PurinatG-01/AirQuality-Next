@@ -55,6 +55,8 @@ export default function useUsers() {
     }
 
     const addDevice = ()=>{
+    
+        const db = firebase.database().ref('users/')
 
     }
 

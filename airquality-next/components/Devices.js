@@ -44,7 +44,9 @@ export default function Devices() {
         { name: "Back door", key: "#dsDgF@s-aSNX" },
     ]
 
+    const [selectDevice,setSelectDevice] = useState()
 
+    console.log("> parent : ",selectDevice)
     return (
         <DevicesWrapper>
             <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24, marginTop: 48 }} >Devices</motion.h1>
@@ -65,7 +67,7 @@ export default function Devices() {
                                 </TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">{e.key}</TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">
-                                    <IconButton color="primary" aria-label="Edit device information">
+                                    <IconButton onClick={()=>{setSelectDevice({...e});setIsDialogOpen(true)}} color="primary" aria-label="Edit device information">
                                         <EditRoundedIcon style={{fontSize: 16}} />
                                     </IconButton>
                                 </TableCell>
@@ -77,7 +79,7 @@ export default function Devices() {
                     Add Device
                 </Button>
             </CustomTableWrapper>
-            <DeviceDialogForm open={isDialogOpen} onClose={()=>{setIsDialogOpen(false)}} />
+            <DeviceDialogForm data={{...selectDevice}} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} />
 
         </DevicesWrapper>
     )
