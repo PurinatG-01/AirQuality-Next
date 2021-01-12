@@ -18,18 +18,18 @@ const CategoryTitle = styled(motion.h2)`
 
     color: ${THEME2.primary};
     padding-bottom: 16px;
-    // border-bottom: 2px solid ${THEME2.primary};
+    border-bottom: 1px solid ${THEME2.primary};
     font-weight: 400;
-    text-align: center;
+    // text-align: center;
 
 `
 
 const CategoryWrapper = styled(motion.div)`
 
-    width: 100%;
+    // width: 100%;
     display: flex;
     flex-wrap : wrap;
-    justify-content: center;
+    // justify-content: center;
 
 `
 

@@ -14,6 +14,7 @@ import AboutUs from '../components/AboutUs'
 import Dashboard from "../components/prev_component/Dashboard"
 import LiveData from "../components/LiveData"
 import Information from "../components/Information"
+import Devices from  "../components/Devices"
 
 const Icon = (icon) => {
     return (icon ?? <></>)
@@ -32,7 +33,7 @@ const RenderComponentPage = [
     { tag: "About us", component: <AboutUs>About us</AboutUs> },
     { tag: "Live data", component: <LiveData>Live data</LiveData> },
     { tag: "Information", component: <Information>Information</Information> },
-    { tag: "Device", component: <>Device</> },
+    { tag: "Device", component: <Devices>Device</Devices> },
 ]
 
 

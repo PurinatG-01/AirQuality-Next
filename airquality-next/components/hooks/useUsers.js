@@ -54,6 +54,14 @@ export default function useUsers() {
 
     }
 
+    const addDevice = ()=>{
+
+    }
+
+    const editDevice = ()=>{
+        
+    }
+
     useEffect(() => {
         const unSubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
