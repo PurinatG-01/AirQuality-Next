@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { THEME2 } from '../variable'
@@ -20,8 +20,12 @@ const DialogContentWrapper = styled(DialogContent)`
 export default function DeviceDialogForm(props) {
 
     const { open, onClose, data } = props
-    const [state, setState] = useState(data ?? {name: "",key:""})
-    console.log("> state : ",state)
+    const [state, setState] = useState(data ?? { name: "", key: ""})
+
+    useEffect(()=>{
+        setState(data)
+    },[data])
+
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle
@@ -38,8 +42,8 @@ export default function DeviceDialogForm(props) {
                 }}
                 style={{display: "flex", flexDirection: "column"}}
                 >
-                    <TextField value={state.name ?? ""} required onChange={(e)=>{setState({...state, [e.target.id]: e.currentTarget.value})}} style={{ marginBottom: 16 }} fullWidth id="name" label="Device name" variant="outlined" />
-                    <TextField value={state.key ?? ""} required onChange={(e)=>{setState({...state, [e.target.id]: e.currentTarget.value})}} style={{ marginBottom: 16 }} fullWidth id="key" label="Device key" variant="outlined" />
+                    <TextField value={state?.name ?? ""} required onChange={(e)=>{setState({...state, [e.target.id]: e.currentTarget.value})}} style={{ marginBottom: 16 }} fullWidth id="name" label="Device name" variant="outlined" />
+                    <TextField value={state?.key ?? ""} required onChange={(e)=>{setState({...state, [e.target.id]: e.currentTarget.value})}} style={{ marginBottom: 16 }} fullWidth id="key" label="Device key" variant="outlined" />
                     <motion.div style={{display: "flex", justifyContent:"flex-end"}}>
                     <Button style={{ marginRight: 8,marginBottom: 16, fontSize: 12, padding: "8px 16px" }} variant="outlined" color="primary" type="submit">Submit</Button>
                     <Button style={{ marginRight: 8,marginBottom: 16, fontSize: 12, padding: "8px 16px", color: THEME2.dividerColor }} variant="outlined" onClick={()=>{onClose();setState({name: "",key:""})}}>Cancel</Button>

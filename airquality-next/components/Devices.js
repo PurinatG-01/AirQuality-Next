@@ -9,7 +9,7 @@ import {
         } from "@material-ui/core"
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeviceDialogForm from './Form/DeviceDialogForm'
-
+import Test from "./Test"
 
 const DevicesWrapper = styled(motion.div)`
 
@@ -19,7 +19,7 @@ const DevicesWrapper = styled(motion.div)`
     align-items: center;
     min-height: 80vh;
     padding: 0 16px;
-    // background: blue;
+    overflow: scroll;
 
 `
 
@@ -37,6 +37,7 @@ const CustomTableWrapper = styled(TableContainer)`
 export default function Devices() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [is1,setIs1] = useState({val : 0})
 
     const rows = [
         { name: "Front door", key: "GHJHJ@#jgF-JgjSA" },
@@ -67,7 +68,7 @@ export default function Devices() {
                                 </TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">{e.key}</TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">
-                                    <IconButton onClick={()=>{setSelectDevice({...e});setIsDialogOpen(true)}} color="primary" aria-label="Edit device information">
+                                    <IconButton onClick={()=>{setIsDialogOpen(true);setSelectDevice(e)}} color="primary" aria-label="Edit device information">
                                         <EditRoundedIcon style={{fontSize: 16}} />
                                     </IconButton>
                                 </TableCell>
@@ -79,8 +80,9 @@ export default function Devices() {
                     Add Device
                 </Button>
             </CustomTableWrapper>
-            <DeviceDialogForm data={{...selectDevice}} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} />
-
+            <DeviceDialogForm data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
+            {/* <Button onClick={()=>{setIs1({val: is1.val+1})}}>Add</Button>
+            <Test data={is1} /> */}
         </DevicesWrapper>
     )
 }

@@ -17,6 +17,7 @@ const defaultData = {
 };
 
 const defaultOptions = {
+  maintainAspectRatio: false,
   scales: {
     xAxes: [
       {
@@ -82,19 +83,13 @@ const ChartJS = (props) => {
   }, [newData]);
 
   return (
-    <div>
       <Line
         data={state ?? defaultData}
-        style={{ minWidth: 320 }}
-        width={320}
-        height={200}
-        options={{
-          maintainAspectRatio: false,
-        }}
-        options={options ?? defaultOptions}
+        width={"100%"}
+        height={"100%"}
+        options={defaultOptions}
         redraw
       />
-    </div>
   );
 };
 
