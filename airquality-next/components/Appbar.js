@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Typography, Drawer } from "@material-ui/core"
+import { Typography} from "@material-ui/core"
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import LogoW from "./LogoW"
-import Logo from "./Logo"
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,7 +14,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
 import { useRouter } from "next/router"
@@ -100,7 +98,7 @@ const ProfileIcon = styled(AccountCircleIcon)`
 `
 
 export default function Appbar(props) {
-  const { matches, userData, setPage, PAGE } = props
+  const { matches, userData, setPage, PAGE, setProfileOpen } = props
   const [open, setOpen] = React.useState(false);
   const { signOut } = useUsers();
   const router = useRouter();
@@ -176,7 +174,7 @@ export default function Appbar(props) {
             <LogoW size="48px" />
         </CenterWrapper>
         <UsernameWrapper>
-          <EmailWrapper>
+          <EmailWrapper onClick={setProfileOpen}>
             <ProfileIcon matches={matches} />
             <Typography style={{ display: !matches ? "none" : "block", color: THEME2.primary }} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
           </EmailWrapper>
