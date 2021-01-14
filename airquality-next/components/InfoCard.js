@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { THEME2 } from './variable'
+import FactorDialog from './FactorDialog'
 
 const CardWrapper = styled(motion.div)`
 
@@ -64,7 +65,8 @@ export default function InfoCard(props) {
 
 
     return (
-        <CardWrapper whileHover={{ y: -8}}>
+        <>
+        <CardWrapper whileHover={{ y: -8}} onClick={()=>{setIsOpen(true)}}>
             <IconWrapper>
                 
             </IconWrapper>
@@ -76,5 +78,7 @@ export default function InfoCard(props) {
                 {info.description}
             </InfoDescription>
         </CardWrapper>
+        <FactorDialog data={info} open={isOpen} onClose={()=>{setIsOpen(false)}} />
+        </>
     )
 }
