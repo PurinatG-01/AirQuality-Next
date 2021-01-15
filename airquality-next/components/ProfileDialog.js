@@ -38,7 +38,6 @@ const ProfileIcon = styled(AccountCircleIcon)`
 export default function ProfileDialog(props) {
 
     const {userData} = useUsers()
-console.log("> userData : ",userData)
     return (
         <Dialog {...props}>
        <DialogContent 

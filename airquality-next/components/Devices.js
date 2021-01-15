@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState , useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { THEME2 } from '../components/variable'
@@ -9,7 +9,7 @@ import {
         } from "@material-ui/core"
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeviceDialogForm from './Form/DeviceDialogForm'
-import Test from "./Test"
+import useUsers from "./hooks/useUsers"
 
 const DevicesWrapper = styled(motion.div)`
 
@@ -37,17 +37,20 @@ const CustomTableWrapper = styled(TableContainer)`
 export default function Devices() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const [is1,setIs1] = useState({val : 0})
-
-    const rows = [
-        { name: "Front door", key: "GHJHJ@#jgF-JgjSA" },
-        { name: "Kitchen", key: "mobSxsdgFDsD" },
-        { name: "Back door", key: "#dsDgF@s-aSNX" },
-    ]
+    const { userData } = useUsers();
 
     const [selectDevice,setSelectDevice] = useState()
+    const [method,setMethod] = useState("edit")
 
-    console.log("> parent : ",selectDevice)
+    const [displayDevices, setDisplayDevices] = useState([])
+
+    useEffect(()=>{
+        setDisplayDevices(userData[1]?.devices)
+        console.log("> devices : ",userData[1]?.devices)
+        console.log("check!!")
+    },[userData])
+
+    
     return (
         <DevicesWrapper>
             <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24, marginTop: 48 }} >Devices</motion.h1>
@@ -61,14 +64,14 @@ export default function Devices() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((e) => (
+                        {displayDevices?.map((e) => (
                             <TableRow  key={e.name}>
                                 <TableCell style={{fontWeight: "100"}} component="th" scope="row">
                                     {e.name}
                                 </TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">{e.key}</TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">
-                                    <IconButton onClick={()=>{setIsDialogOpen(true);setSelectDevice(e)}} color="primary" aria-label="Edit device information">
+                                    <IconButton onClick={()=>{setIsDialogOpen(true);setSelectDevice(e); setMethod("edit")}} color="primary" aria-label="Edit device information">
                                         <EditRoundedIcon style={{fontSize: 16}} />
                                     </IconButton>
                                 </TableCell>
@@ -76,13 +79,12 @@ export default function Devices() {
                         ))}
                     </TableBody>
                 </Table>
-                <Button onClick={()=>{setIsDialogOpen(true)}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
+                <Button onClick={()=>{setIsDialogOpen(true); setMethod("add")}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
                     Add Device
                 </Button>
+                {/* <Button>Test add device </Button> */}
             </CustomTableWrapper>
-            <DeviceDialogForm data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
-            {/* <Button onClick={()=>{setIs1({val: is1.val+1})}}>Add</Button>
-            <Test data={is1} /> */}
+            <DeviceDialogForm method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
         </DevicesWrapper>
     )
 }

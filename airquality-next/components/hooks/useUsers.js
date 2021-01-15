@@ -1,7 +1,19 @@
 import { FirebaseContext } from "../../utils/firebase/firebase"
 import React, { useContext, useEffect, useState } from 'react'
 
-export const defaultError = {message: null}
+export const defaultError = { message: null }
+
+const checkExistName = (name, devices) => {
+    let result;
+    devices.forEach((e) => {
+        if (e.name == name) {
+            result = true
+        }
+    })
+
+    return result ?? false
+}
+
 
 export default function useUsers() {
 
@@ -10,8 +22,8 @@ export default function useUsers() {
     const [userData, setUserData] = useState({})
     const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
-    
-    const signUp = ({ email, password,firstname,surname }, callback,callback2) => {
+
+    const signUp = ({ email, password, firstname, surname }, callback, callback2) => {
         return firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 setError(defaultError)
@@ -20,7 +32,7 @@ export default function useUsers() {
                     surname: surname,
                     email: email,
                 });
-                callback(firstname,surname,email)
+                callback(firstname, surname, email)
             })
             .catch((error) => {
                 setError(error)
@@ -28,7 +40,7 @@ export default function useUsers() {
             })
     }
 
-    const signOut = (callback,callback2) => {
+    const signOut = (callback, callback2) => {
         return firebase.auth().signOut()
             .then(() => {
                 setIsLoggedIn(false)
@@ -41,50 +53,120 @@ export default function useUsers() {
             })
     }
 
-    const signIn = ({ email, password },callback,callback2) => {
+    const signIn = ({ email, password }, callback, callback2) => {
         return firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((response) => {
-            setIsLoggedIn(true)
-            setError(defaultError)
-            callback()
-        }).catch((error) => {
-            setError(error)
-            callback2()
+            .then((response) => {
+                setIsLoggedIn(true)
+                setError(defaultError)
+                callback()
+            }).catch((error) => {
+                setError(error)
+                callback2()
+            })
+
+    }
+
+    const addDevice = (deviceObj, callback, callback2) => {
+
+        const db = firebase.database().ref('users/' + userData[0])
+        db.once('value').then((snapshot) => {
+            // console.log("> snapshot : ", snapshot.val())
+            // Check if has exist name
+            if (snapshot.val().devices) {
+                if (checkExistName(deviceObj.name, snapshot.val().devices)) {
+                    if(callback2)
+                        callback2()
+                } else {
+                    let devices = snapshot.val().devices
+                    // console.log("Have device : ",devices)
+                    devices.push(deviceObj)
+                    db.update({
+                        ...snapshot.val(), devices: devices
+                    }).then(() => {
+                        let temp = userData
+                        temp[1] = { ...temp[1], devices: devices }
+                        setUserData(temp)
+                        // console.log("> userData after update :", userData)
+                        if (callback)
+                            callback()
+                    }).catch((error) => {
+                        if (callback2)
+                            callback2()
+                    })
+                }
+
+
+            } else {
+                db.update({
+                    ...snapshot.val(), devices: [deviceObj]
+                }).then(() => {
+                    let temp = userData
+                    temp[1] = { ...temp[1], devices: devices }
+                    setUserData(temp)
+                    // console.log("> userData after update :", userData)
+                    if (callback)
+                        callback()
+                }).catch((error) => {
+                    setError(error)
+                    if (callback2)
+                        callback2()
+                })
+            }
+
         })
 
     }
 
-    const addDevice = ()=>{
-    
-        const db = firebase.database().ref('users/')
+    const editDevice = (deviceObj, callback, callback2) => {
 
-    }
+        alert("Edit Device!!")
+        // const db = firebase.database().ref('users/' + userData[0])
+        // db.once('value').then((snapshot) => {
+        //     console.log("> snapshot : ", snapshot.val())
+        //     let devices = snapshot.val().devices
+        //     // console.log("Have device : ",devices)
+        //     devices.push(deviceObj)
+        //     db.update({
+        //         ...snapshot.val(), devices: devices
+        //     }).then(() => {
+        //         // Update UserData state
+        //         let temp = userData
+        //         temp[1] = { ...temp[1], devices: devices }
+        //         setUserData(temp)
+        //         // console.log("> userData after update :", userData)
+        //         if (callback)
+        //             callback()
+        //     }).catch((error) => {
+        //         if (callback2)
+        //             callback2()
+        //     })
 
-    const editDevice = ()=>{
-        
+
+
+        // })
     }
 
     useEffect(() => {
         const unSubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 setIsLoggedIn(true)
-                firebase.database().ref('users/').once("value").then((snapshot)=>{
-                    
+                firebase.database().ref('users/').once("value").then((snapshot) => {
+
                     var result = Object.keys(snapshot.val()).map((key) => [String(key), snapshot.val()[key]]);
-                    result.forEach((el)=>{
-                            
-                            if(user.email.toLowerCase() == el[1].email.toLowerCase()){
-                                setUserData(el)
-                            }
-                        
+                    result.forEach((el) => {
+
+                        if (user.email.toLowerCase() == el[1].email.toLowerCase()) {
+                            setUserData(el)
+                        }
+
                     })
                     setUser(user)
-                    
-                }).catch((err)=>{
-                    setError({...error, getUserError: err})
+
+                }).catch((err) => {
+                    setError({ ...error, getUserError: err })
                 })
 
-                
+
             } else {
                 setIsLoggedIn(false)
                 setUser({})
@@ -94,5 +176,5 @@ export default function useUsers() {
         return () => unSubscribe()
     }, [])
 
-    return { user, userData ,isLoggedIn, signOut, signIn, signUp , error}
+    return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice }
 }
