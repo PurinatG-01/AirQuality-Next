@@ -44,7 +44,9 @@ export default function DeviceDialogForm(props) {
                         e.preventDefault();
                         // console.log("> ", state)
                         if (method == "add") {
-                            addDevice(state, 
+                            addDevice(
+                            // State
+                            state, 
                             // Success Handler
                             () => {
                                 setState({ name: "", key: "" })

@@ -22,6 +22,7 @@ export default function useUsers() {
     const [userData, setUserData] = useState({})
     const [error, setError] = useState(defaultError)
     const firebase = useContext(FirebaseContext)
+    const [devicesData, setDevicesData] = useState([])
 
     const signUp = ({ email, password, firstname, surname }, callback, callback2) => {
         return firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -68,11 +69,12 @@ export default function useUsers() {
 
     const addDevice = (deviceObj, callback, callback2) => {
 
-        const db = firebase.database().ref('users/' + userData[0])
+        const db = firebase.database().ref('users/' + userData.key)
         db.once('value').then((snapshot) => {
             // console.log("> snapshot : ", snapshot.val())
             // Check if has exist name
-            if (snapshot.val().devices) {
+            // console.log("userData jaa!! : ",('devices' in userData[1]))
+            if (('devices' in userData.data)) {
                 if (checkExistName(deviceObj.name, snapshot.val().devices)) {
                     if(callback2)
                         callback2()
@@ -84,9 +86,10 @@ export default function useUsers() {
                         ...snapshot.val(), devices: devices
                     }).then(() => {
                         let temp = userData
-                        temp[1] = { ...temp[1], devices: devices }
+                        temp.data = { ...temp.data, devices: devices }
                         setUserData(temp)
-                        // console.log("> userData after update :", userData)
+                        setDevicesData(userData.data.devices)
+                        console.log("> userData after update :", userData)
                         if (callback)
                             callback()
                     }).catch((error) => {
@@ -97,17 +100,21 @@ export default function useUsers() {
 
 
             } else {
+                // alert("First Device !!")
+                let devices = [deviceObj]
                 db.update({
-                    ...snapshot.val(), devices: [deviceObj]
+                    ...snapshot.val(), devices: devices
                 }).then(() => {
                     let temp = userData
-                    temp[1] = { ...temp[1], devices: devices }
+                    temp.data = { ...temp.data, devices: devices }
                     setUserData(temp)
-                    // console.log("> userData after update :", userData)
+                    setDevicesData(userData.data.devices)
+                    console.log("> userData after update :", userData)
                     if (callback)
                         callback()
                 }).catch((error) => {
                     setError(error)
+                    console.log("error > ",error)
                     if (callback2)
                         callback2()
                 })
@@ -156,7 +163,8 @@ export default function useUsers() {
                     result.forEach((el) => {
 
                         if (user.email.toLowerCase() == el[1].email.toLowerCase()) {
-                            setUserData(el)
+                            setUserData({key: el[0], data: el[1]})
+                            setDevicesData(el[1].devices ?? [])
                         }
 
                     })
@@ -171,10 +179,13 @@ export default function useUsers() {
                 setIsLoggedIn(false)
                 setUser({})
                 setUserData({})
+                setDevicesData([])
             }
         })
         return () => unSubscribe()
     }, [])
 
-    return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice }
+    console.log("devicesData in hooks : ", devicesData)
+
+    return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice, devicesData }
 }

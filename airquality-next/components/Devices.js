@@ -9,7 +9,7 @@ import {
         } from "@material-ui/core"
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeviceDialogForm from './Form/DeviceDialogForm'
-import useUsers from "./hooks/useUsers"
+import useUsers, {TestHook} from "./hooks/useUsers"
 
 const DevicesWrapper = styled(motion.div)`
 
@@ -37,7 +37,7 @@ const CustomTableWrapper = styled(TableContainer)`
 export default function Devices() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const { userData } = useUsers();
+    const { devicesData} = useUsers();
 
     const [selectDevice,setSelectDevice] = useState()
     const [method,setMethod] = useState("edit")
@@ -45,12 +45,12 @@ export default function Devices() {
     const [displayDevices, setDisplayDevices] = useState([])
 
     useEffect(()=>{
-        setDisplayDevices(userData[1]?.devices)
-        console.log("> devices : ",userData[1]?.devices)
-        console.log("check!!")
-    },[userData])
+        setDisplayDevices(devicesData)
+        console.log("devicesData in comp : ", devicesData)
+    },[devicesData])
 
     
+
     return (
         <DevicesWrapper>
             <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24, marginTop: 48 }} >Devices</motion.h1>
@@ -82,7 +82,6 @@ export default function Devices() {
                 <Button onClick={()=>{setIsDialogOpen(true); setMethod("add")}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
                     Add Device
                 </Button>
-                {/* <Button>Test add device </Button> */}
             </CustomTableWrapper>
             <DeviceDialogForm method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
         </DevicesWrapper>

@@ -52,8 +52,8 @@ export default function ProfileDialog(props) {
             <IconWrapper>
                 <ProfileIcon/>
             </IconWrapper>
-           <FullName>{userData[1]?.firstname}&nbsp;&nbsp;&nbsp;{userData[1]?.surname}</FullName>
-           <Email>{userData[1]?.email}</Email>
+           <FullName>{userData?.data?.firstname}&nbsp;&nbsp;&nbsp;{userData?.data?.surname}</FullName>
+           <Email>{userData?.data?.email}</Email>
           </DialogContent>
       </Dialog>
 
