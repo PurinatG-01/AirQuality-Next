@@ -19,9 +19,8 @@ const DialogContentWrapper = styled(DialogContent)`
 
 export default function DeviceDialogForm(props) {
 
-    const { open, onClose, data, method } = props
+    const { open, onClose, data, method, addDevice, editDevice } = props
     const [state, setState] = useState(data ?? { name: "", key: "" })
-    const { addDevice, editDevice } = useUsers()
     const [status, setStatus] = useState("")
 
     useEffect(() => {

@@ -37,7 +37,7 @@ const CustomTableWrapper = styled(TableContainer)`
 export default function Devices() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const { devicesData} = useUsers();
+    const { devicesData, addDevice, editDevice } = useUsers();
 
     const [selectDevice,setSelectDevice] = useState()
     const [method,setMethod] = useState("edit")
@@ -48,6 +48,8 @@ export default function Devices() {
         setDisplayDevices(devicesData)
         console.log("devicesData in comp : ", devicesData)
     },[devicesData])
+
+    // const count = TestHook();
 
     
 
@@ -82,8 +84,9 @@ export default function Devices() {
                 <Button onClick={()=>{setIsDialogOpen(true); setMethod("add")}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
                     Add Device
                 </Button>
+                {/* This is count : {count} */}
             </CustomTableWrapper>
-            <DeviceDialogForm method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
+            <DeviceDialogForm editDevice={editDevice} addDevice={addDevice} method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
         </DevicesWrapper>
     )
 }

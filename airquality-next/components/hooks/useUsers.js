@@ -189,3 +189,21 @@ export default function useUsers() {
 
     return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice, devicesData }
 }
+
+
+
+export const TestHook = ()=>{
+
+    const [count, setCount] = useState(0)
+
+    useEffect(()=>{
+        const in1 = setInterval(()=>{
+            setCount(count+1)
+            console.log("Count : ", count)
+            
+        },1000)
+        return ()=>{clearInterval(in1)}
+    })
+
+    return count
+}
