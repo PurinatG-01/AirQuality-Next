@@ -1,5 +1,6 @@
 import { FirebaseContext } from "../../utils/firebase/firebase"
 import React, { useContext, useEffect, useState } from 'react'
+import { Info } from "@material-ui/icons";
 
 export const defaultError = { message: null }
 
@@ -67,17 +68,15 @@ export default function useUsers() {
 
     }
 
-    const addDevice = (deviceObj, callback, callback2) => {
+    const addDevice = (deviceObj, callbackSuccess, callbackError) => {
 
         const db = firebase.database().ref('users/' + userData.key)
         db.once('value').then((snapshot) => {
-            // console.log("> snapshot : ", snapshot.val())
             // Check if has exist name
-            // console.log("userData jaa!! : ",('devices' in userData[1]))
             if (('devices' in userData.data)) {
                 if (checkExistName(deviceObj.name, snapshot.val().devices)) {
-                    if(callback2)
-                        callback2()
+                    if (callbackError)
+                        callbackError()
                 } else {
                     let devices = snapshot.val().devices
                     // console.log("Have device : ",devices)
@@ -89,18 +88,20 @@ export default function useUsers() {
                         temp.data = { ...temp.data, devices: devices }
                         setUserData(temp)
                         setDevicesData(userData.data.devices)
-                        console.log("> userData after update :", userData)
-                        if (callback)
-                            callback()
+                        // console.log("> userData after update :", userData)
+                        if (callbackSuccess)
+                            callbackSuccess()
                     }).catch((error) => {
-                        if (callback2)
-                            callback2()
+                        setError(error)
+                        console.error("Add device error > ", error)
+                        if (callbackError)
+                            callbackError()
                     })
                 }
 
 
             } else {
-                // alert("First Device !!")
+                // Adding first device to account
                 let devices = [deviceObj]
                 db.update({
                     ...snapshot.val(), devices: devices
@@ -109,48 +110,65 @@ export default function useUsers() {
                     temp.data = { ...temp.data, devices: devices }
                     setUserData(temp)
                     setDevicesData(userData.data.devices)
-                    console.log("> userData after update :", userData)
-                    if (callback)
-                        callback()
+                    // console.log("> userData after update :", userData)
+                    if (callbackSuccess)
+                        callbackSuccess()
                 }).catch((error) => {
                     setError(error)
-                    console.log("error > ",error)
-                    if (callback2)
-                        callback2()
+                    console.error("Add device error > ", error)
+                    if (callbackError)
+                        callbackError()
                 })
             }
 
+        }).catch((error) => {
+            setError(error)
+            console.error("Get user data error > ", error)
+            if (callbackError)
+                callbackError()
         })
 
     }
 
-    const editDevice = (deviceObj, callback, callback2) => {
+    const editDevice = (rowId, editedDeviceObj, callbackSuccess, callbackError) => {
 
-        alert("Edit Device!!")
-        // const db = firebase.database().ref('users/' + userData[0])
-        // db.once('value').then((snapshot) => {
-        //     console.log("> snapshot : ", snapshot.val())
-        //     let devices = snapshot.val().devices
-        //     // console.log("Have device : ",devices)
-        //     devices.push(deviceObj)
-        //     db.update({
-        //         ...snapshot.val(), devices: devices
-        //     }).then(() => {
-        //         // Update UserData state
-        //         let temp = userData
-        //         temp[1] = { ...temp[1], devices: devices }
-        //         setUserData(temp)
-        //         // console.log("> userData after update :", userData)
-        //         if (callback)
-        //             callback()
-        //     }).catch((error) => {
-        //         if (callback2)
-        //             callback2()
-        //     })
+        // 1. Succeed get user data
+        let db = firebase.database().ref('users/' + userData.key)
+        db.once("value")
+            .then((snapshot) => {
+                // 1.1 Get devices array from db
+                let devices = snapshot.val().devices
+                // 1.2 Pop device from array at specific index and push edit obj to array
+                devices.splice(rowId, 1, editedDeviceObj)
+                // 1.3 Update to DB
+                db.update({
+                    ...snapshot.val(), devices: devices
+                }).then(() => {
+                    // 1.3.1 then => set๊UserData, setDevicesData, and use callbackSuccess
+                    let temp = userData
+                    temp.data = { ...temp.data, devices: devices }
+                    setUserData(temp)
+                    setDevicesData(userData.data.devices)
+                    if (callbackSuccess)
+                        callbackSuccess()
+                }).catch((error) => {
+                    // 1.3.2 catch => setError, and use callbackError
+                    setError(error)
+                    console.error("Add device error > ", error)
+                    if (callbackError)
+                        callbackError()
+                })
+            }).catch((error) => {
+            // 2. Failed get user data
+                setError(error)
+                console.error("Get user data error > ", error)
+                if (callbackError)
+                    callbackError()
+            })
 
 
 
-        // })
+
     }
 
     useEffect(() => {
@@ -163,7 +181,7 @@ export default function useUsers() {
                     result.forEach((el) => {
 
                         if (user.email.toLowerCase() == el[1].email.toLowerCase()) {
-                            setUserData({key: el[0], data: el[1]})
+                            setUserData({ key: el[0], data: el[1] })
                             setDevicesData(el[1].devices ?? [])
                         }
 
@@ -185,24 +203,24 @@ export default function useUsers() {
         return () => unSubscribe()
     }, [])
 
-    console.log("devicesData in hooks : ", devicesData)
+    // console.log("devicesData in hooks : ", devicesData)
 
     return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice, devicesData }
 }
 
 
 
-export const TestHook = ()=>{
+export const TestHook = () => {
 
     const [count, setCount] = useState(0)
 
-    useEffect(()=>{
-        const in1 = setInterval(()=>{
-            setCount(count+1)
+    useEffect(() => {
+        const in1 = setInterval(() => {
+            setCount(count + 1)
             console.log("Count : ", count)
-            
-        },1000)
-        return ()=>{clearInterval(in1)}
+
+        }, 1000)
+        return () => { clearInterval(in1) }
     })
 
     return count

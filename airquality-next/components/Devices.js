@@ -40,6 +40,7 @@ export default function Devices() {
     const { devicesData, addDevice, editDevice } = useUsers();
 
     const [selectDevice,setSelectDevice] = useState()
+    const [rowId,setRowId] = useState()
     const [method,setMethod] = useState("edit")
 
     const [displayDevices, setDisplayDevices] = useState([])
@@ -66,14 +67,14 @@ export default function Devices() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {displayDevices?.map((e) => (
+                        {displayDevices?.map((e,index) => (
                             <TableRow  key={e.name}>
                                 <TableCell style={{fontWeight: "100"}} component="th" scope="row">
                                     {e.name}
                                 </TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">{e.key}</TableCell>
                                 <TableCell style={{fontWeight: "100"}} align="right">
-                                    <IconButton onClick={()=>{setIsDialogOpen(true);setSelectDevice(e); setMethod("edit")}} color="primary" aria-label="Edit device information">
+                                    <IconButton onClick={()=>{setRowId(index);setIsDialogOpen(true);setSelectDevice(e); setMethod("edit")}} color="primary" aria-label="Edit device information">
                                         <EditRoundedIcon style={{fontSize: 16}} />
                                     </IconButton>
                                 </TableCell>
@@ -81,12 +82,12 @@ export default function Devices() {
                         ))}
                     </TableBody>
                 </Table>
-                <Button onClick={()=>{setIsDialogOpen(true); setMethod("add")}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
+                <Button onClick={()=>{setIsDialogOpen(true);setMethod("add")}} variant="outlined" color="primary" style={{alignSelf: "flex-end",fontSize: 12,padding: "8px 16px",marginTop: 16}}>
                     Add Device
                 </Button>
                 {/* This is count : {count} */}
             </CustomTableWrapper>
-            <DeviceDialogForm editDevice={editDevice} addDevice={addDevice} method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
+            <DeviceDialogForm rowId={rowId} editDevice={editDevice} addDevice={addDevice} method={method} data={selectDevice} open={isDialogOpen} onClose={()=>{setIsDialogOpen(false); setSelectDevice({name: "",key:""}) }} /> 
         </DevicesWrapper>
     )
 }

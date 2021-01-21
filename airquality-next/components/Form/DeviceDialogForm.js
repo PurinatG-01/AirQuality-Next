@@ -19,7 +19,7 @@ const DialogContentWrapper = styled(DialogContent)`
 
 export default function DeviceDialogForm(props) {
 
-    const { open, onClose, data, method, addDevice, editDevice } = props
+    const { open, onClose, data, method, addDevice, editDevice, rowId } = props
     const [state, setState] = useState(data ?? { name: "", key: "" })
     const [status, setStatus] = useState("")
 
@@ -58,7 +58,19 @@ export default function DeviceDialogForm(props) {
                                 setStatus("Existing name. Please select another name") 
                             })
                         } else if (method == "edit") {
-                            editDevice()
+                            editDevice(
+                                rowId,
+                                state,
+                                // Success Handler
+                                () => {
+                                    setState({ name: "", key: "" })
+                                    setStatus("")
+                                    onClose();
+                                }, 
+                                // Error Handler
+                                () => { 
+                                    setStatus("Error occured") 
+                                })
                         }
 
                     }}
