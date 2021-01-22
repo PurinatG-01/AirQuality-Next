@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { THEME2, INFO } from "./variable"
@@ -8,6 +8,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AverageScoreSvg from './Svg/AverageScoreSvg'
 import UtilityOverviewBg from './Svg/UtilityOverviewBg'
 import FactorDialog from "./FactorDialog"
+import useUsers from "./hooks/useUsers"
 
 const OverviewWrapper = styled(motion.div)`
 
@@ -307,7 +308,7 @@ export default function Overview(props) {
 
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointL}px)`);
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
-
+    const { devicesData } = useUsers()
 
     const [overallScore, setOverallScore] = useState({ score: 87, level: "good" })
     const [isFactorInfoDialogOpen, setIsFactorInfoDialogOpen] = useState(false)
@@ -332,7 +333,7 @@ export default function Overview(props) {
         { level: "bad", score: 49, name: "Device3", online: false },
     ])
 
-    const [selectedDevice, setSelectedDevice] = useState(devices[0])
+    const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
     const [factorsScore, setFactorsScore] = useState({
         co2: 40,
@@ -343,7 +344,12 @@ export default function Overview(props) {
         pm: 85,
     })
 
-    // console.log("> selected : ", selectedDevice)
+    // Waiting for getting devicesData
+    useEffect(() => {
+        if (devicesData.length >= 1) {
+            setSelectedDevice(devicesData[0])
+        }
+    }, [devicesData])
 
     const listDevices = () => {
         return (devices.map((el) => (
@@ -419,53 +425,58 @@ export default function Overview(props) {
                             </DialogContent>
                         </Dialog>
 
-                        <FormControl>
-                            <Select
-                                autoWidth
-                                id="Device Selector"
-                                value={selectedDevice}
-                                onChange={(e) => { setSelectedDevice(e.target.value) }}
-                                style={{ height: "100%", minWidth: 100, fontWeight: 100 }}
-                            >
-                                {devices.map((e) => {
-                                    return (<MenuItem key={e.name} value={e} style={{ color: THEME2.black, fontWeight: 100 }}>{e.name}</MenuItem>)
-                                })}
-                            </Select>
-                        </FormControl>
+                        {(devicesData.length >= 1) &&
+                            <FormControl>
+                                <Select
+                                    autoWidth
+                                    id="Device Selector"
+                                    value={selectedDevice}
+                                    onChange={(e) => { setSelectedDevice(e.target.value) }}
+                                    style={{ height: "100%", minWidth: 100, fontWeight: 100 }}
+                                >
+                                    {(devicesData.length != 0) && devicesData.map((e) => {
+                                        return (<MenuItem key={e.name} value={e} style={{ color: THEME2.black, fontWeight: 100 }}>{e.name}</MenuItem>)
+                                    })}
+                                </Select>
+                            </FormControl>
+                        }
+
 
                     </motion.h4>
-                    <BarWrapper>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }} whileHover={{ y: -8 }} color={THEME2.factors.co2} score={factorsScore.co2}>
-                            <FactorBarScore color={THEME2.factors.co2}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.co2}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }} whileHover={{ y: -8 }} color={THEME2.factors.temp} score={factorsScore.temp}>
-                            <FactorBarScore color={THEME2.factors.temp}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.temp}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }} whileHover={{ y: -8 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
-                            <FactorBarScore color={THEME2.factors.humidity}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.humidity}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }} whileHover={{ y: -8 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
-                            <FactorBarScore color={THEME2.factors.pressure}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.pressure}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }} whileHover={{ y: -8 }} color={THEME2.factors.voc} score={factorsScore.voc}>
-                            <FactorBarScore color={THEME2.factors.voc}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.voc}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                        <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }} whileHover={{ y: -8 }} color={THEME2.factors.pm} score={factorsScore.pm}>
-                            <FactorBarScore color={THEME2.factors.pm}>
-                                <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.pm}</FactorTextScore>
-                            </FactorBarScore>
-                        </FactorScore>
-                    </BarWrapper>
+                    {(devicesData.length >= 1) &&
+                        <BarWrapper>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }} whileHover={{ y: -8 }} color={THEME2.factors.co2} score={factorsScore.co2}>
+                                <FactorBarScore color={THEME2.factors.co2}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.co2}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }} whileHover={{ y: -8 }} color={THEME2.factors.temp} score={factorsScore.temp}>
+                                <FactorBarScore color={THEME2.factors.temp}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.temp}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }} whileHover={{ y: -8 }} color={THEME2.factors.humidity} score={factorsScore.humidity}>
+                                <FactorBarScore color={THEME2.factors.humidity}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.humidity}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }} whileHover={{ y: -8 }} color={THEME2.factors.pressure} score={factorsScore.pressure}>
+                                <FactorBarScore color={THEME2.factors.pressure}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.pressure}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }} whileHover={{ y: -8 }} color={THEME2.factors.voc} score={factorsScore.voc}>
+                                <FactorBarScore color={THEME2.factors.voc}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.voc}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }} whileHover={{ y: -8 }} color={THEME2.factors.pm} score={factorsScore.pm}>
+                                <FactorBarScore color={THEME2.factors.pm}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.pm}</FactorTextScore>
+                                </FactorBarScore>
+                            </FactorScore>
+                        </BarWrapper>
+                    }
                     {/* Factor info display */}
                     <FactorDialog data={factorDisplayInfo} open={isFactorInfoDialogOpen} onClose={() => { setIsFactorInfoDialogOpen(false) }} />
                 </FactorWrapper>

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { THEME2 } from '../variable'
 import { Dialog, DialogContent, DialogTitle, TextField, Button } from "@material-ui/core"
-import useUsers from "../hooks/useUsers"
 
 const DialogContentWrapper = styled(DialogContent)`
 
@@ -19,7 +18,7 @@ const DialogContentWrapper = styled(DialogContent)`
 
 export default function DeviceDialogForm(props) {
 
-    const { open, onClose, data, method, addDevice, editDevice, rowId } = props
+    const { open, onClose, data, method, addDevice, editDevice, deleteDevice, rowId } = props
     const [state, setState] = useState(data ?? { name: "", key: "" })
     const [status, setStatus] = useState("")
 
@@ -35,7 +34,7 @@ export default function DeviceDialogForm(props) {
                 Device form
                 </DialogTitle>
             <DialogContentWrapper>
-                <motion.div style={{fontSize: 12, color: THEME2.red,marginBottom: 16}}>
+                <motion.div style={{ fontSize: 12, color: THEME2.red, marginBottom: 16 }}>
                     {status}
                 </motion.div>
                 <motion.form
@@ -44,19 +43,18 @@ export default function DeviceDialogForm(props) {
                         // console.log("> ", state)
                         if (method == "add") {
                             addDevice(
-                            // State
-                            state, 
-                            // Success Handler
-                            () => {
-                                setState({ name: "", key: "" })
-                                setStatus("")
-                                onClose();
-                            }, 
-                            // Error Handler
-                            () => { 
-                                alert("Exist Name----")
-                                setStatus("Existing name. Please select another name") 
-                            })
+                                // State
+                                state,
+                                // Success Handler
+                                () => {
+                                    setState({ name: "", key: "" })
+                                    setStatus("")
+                                    onClose();
+                                },
+                                // Error Handler
+                                (message) => {
+                                    setStatus(message)
+                                })
                         } else if (method == "edit") {
                             editDevice(
                                 rowId,
@@ -66,10 +64,10 @@ export default function DeviceDialogForm(props) {
                                     setState({ name: "", key: "" })
                                     setStatus("")
                                     onClose();
-                                }, 
+                                },
                                 // Error Handler
-                                () => { 
-                                    setStatus("Error occured") 
+                                (message) => {
+                                    setStatus(message)
                                 })
                         }
 
@@ -92,7 +90,24 @@ export default function DeviceDialogForm(props) {
                         >
                             Submit
                         </Button>
-                        {method == "edit" && <Button style={{ marginRight: 8, marginBottom: 16, fontSize: 12, padding: "8px 16px", color: THEME2.red, borderColor: THEME2.red }} variant="outlined" onClick={() => { onClose(); setState({ name: "", key: "" }) }}>Delete</Button>
+                        {method == "edit" &&
+                            <Button
+                                style={{
+                                    marginRight: 8,
+                                    marginBottom: 16,
+                                    fontSize: 12,
+                                    padding: "8px 16px",
+                                    color: THEME2.red,
+                                    borderColor: THEME2.red
+                                }} variant="outlined"
+                                onClick={() => {
+                                    onClose();
+                                    deleteDevice(rowId);
+                                    setState({ name: "", key: "" })
+                                }}
+                            >
+                                Delete
+                        </Button>
                         }
                         <Button
                             style={{
@@ -111,7 +126,7 @@ export default function DeviceDialogForm(props) {
                         >
                             Cancel
                         </Button>
-                        
+
                     </motion.div>
 
                 </motion.form>

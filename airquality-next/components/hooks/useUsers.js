@@ -76,48 +76,51 @@ export default function useUsers() {
             if (('devices' in userData.data)) {
                 if (checkExistName(deviceObj.name, snapshot.val().devices)) {
                     if (callbackError)
-                        callbackError()
+                        callbackError("Existing name. Please select another name")
+
                 } else {
                     let devices = snapshot.val().devices
-                    // console.log("Have device : ",devices)
                     devices.push(deviceObj)
                     db.update({
-                        ...snapshot.val(), devices: devices
+                        ...snapshot.val(),
+                        devices: devices
                     }).then(() => {
+
                         let temp = userData
                         temp.data = { ...temp.data, devices: devices }
                         setUserData(temp)
                         setDevicesData(userData.data.devices)
-                        // console.log("> userData after update :", userData)
                         if (callbackSuccess)
                             callbackSuccess()
+
                     }).catch((error) => {
                         setError(error)
                         console.error("Add device error > ", error)
                         if (callbackError)
-                            callbackError()
+                            callbackError("Cannot update data : ", error.message)
+
                     })
                 }
-
-
             } else {
                 // Adding first device to account
                 let devices = [deviceObj]
                 db.update({
-                    ...snapshot.val(), devices: devices
+                    ...snapshot.val(),
+                    devices: devices
                 }).then(() => {
                     let temp = userData
                     temp.data = { ...temp.data, devices: devices }
                     setUserData(temp)
                     setDevicesData(userData.data.devices)
-                    // console.log("> userData after update :", userData)
                     if (callbackSuccess)
                         callbackSuccess()
+
                 }).catch((error) => {
                     setError(error)
                     console.error("Add device error > ", error)
                     if (callbackError)
-                        callbackError()
+                        callbackError("Cannot update data : ", error.message)
+
                 })
             }
 
@@ -125,49 +128,99 @@ export default function useUsers() {
             setError(error)
             console.error("Get user data error > ", error)
             if (callbackError)
-                callbackError()
+                callbackError("Cannot get data")
         })
 
     }
 
     const editDevice = (rowId, editedDeviceObj, callbackSuccess, callbackError) => {
-
-        // 1. Succeed get user data
+        
         let db = firebase.database().ref('users/' + userData.key)
         db.once("value")
             .then((snapshot) => {
+                // 1. Succeed get user data
                 // 1.1 Get devices array from db
                 let devices = snapshot.val().devices
                 // 1.2 Pop device from array at specific index and push edit obj to array
                 devices.splice(rowId, 1, editedDeviceObj)
                 // 1.3 Update to DB
+                if (checkExistName(editedDeviceObj.name, snapshot.val().devices)) {
+                    if (callbackError)
+                        callbackError("Existing name. Please select another name")
+
+                } else {
+                    db.update({
+                        ...snapshot.val(), devices: devices
+                    }).then(() => {
+                        // 1.3.1 then => set๊UserData, setDevicesData, and use callbackSuccess
+                        let temp = userData
+                        temp.data = { ...temp.data, devices: devices }
+                        setUserData(temp)
+                        setDevicesData(userData.data.devices)
+                        if (callbackSuccess)
+                            callbackSuccess()
+
+                    }).catch((error) => {
+                        // 1.3.2 catch => setError, and use callbackError
+                        setError(error)
+                        console.error("Add device error > ", error)
+                        if (callbackError)
+                            callbackError("Cannot update data : ", error.message)
+
+                    })
+                }
+
+            }).catch((error) => {
+                // 2. Failed get user data
+                setError(error)
+                console.error("Get user data error > ", error)
+                if (callbackError)
+                    callbackError("Cannot get data")
+
+            })
+
+    }
+
+
+    const deleteDevice = (rowId, callbackSuccess, callbackError) => {
+        
+        const db = firebase.database().ref('users/' + userData.key)
+        db.once('value')
+            .then((snapshot) => {
+                // 1. Succeed get user data
+                // 1.1 Get devices array from db
+                let devices = snapshot.val().devices
+                // 1.2 Remove device from specific rowId in devices array
+                devices.splice(rowId, 1)
+                // 1.3 Update to DB
                 db.update({
-                    ...snapshot.val(), devices: devices
+                    ...snapshot.val(),
+                    devices: devices
                 }).then(() => {
-                    // 1.3.1 then => set๊UserData, setDevicesData, and use callbackSuccess
+                    // 1.3.1 Succeed update : setUserData, setDevicesData, callbackSuccess
                     let temp = userData
                     temp.data = { ...temp.data, devices: devices }
                     setUserData(temp)
                     setDevicesData(userData.data.devices)
                     if (callbackSuccess)
                         callbackSuccess()
+
                 }).catch((error) => {
-                    // 1.3.2 catch => setError, and use callbackError
+                    // 1.3.2 Failed update : setError, callbackError
+                    console.error('Delete device error > ', error)
                     setError(error)
-                    console.error("Add device error > ", error)
                     if (callbackError)
                         callbackError()
+
                 })
             }).catch((error) => {
-            // 2. Failed get user data
+                // 2. Failed get user data : setError, callbackError
+                console.error('Get user data error > ', error)
                 setError(error)
-                console.error("Get user data error > ", error)
                 if (callbackError)
-                    callbackError()
+                    callbackError("Cannot get data")
+
             })
-
-
-
 
     }
 
@@ -203,25 +256,5 @@ export default function useUsers() {
         return () => unSubscribe()
     }, [])
 
-    // console.log("devicesData in hooks : ", devicesData)
-
-    return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice, devicesData }
-}
-
-
-
-export const TestHook = () => {
-
-    const [count, setCount] = useState(0)
-
-    useEffect(() => {
-        const in1 = setInterval(() => {
-            setCount(count + 1)
-            console.log("Count : ", count)
-
-        }, 1000)
-        return () => { clearInterval(in1) }
-    })
-
-    return count
+    return { user, userData, isLoggedIn, signOut, signIn, signUp, error, addDevice, editDevice, deleteDevice, devicesData }
 }
