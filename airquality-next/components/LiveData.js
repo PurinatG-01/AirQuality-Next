@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
 import LineChart from "./ChartJS";
 import useAirData from "./hooks/useAirData";
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
 import { MenuItem, Select, FormControl, useMediaQuery } from "@material-ui/core"
+import useUsers from "./hooks/useUsers"
 
 
 
@@ -61,6 +62,7 @@ const BottomWrapper = styled(motion.div)`
 export default function LiveData() {
 
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
+    const { devicesData } = useUsers()
 
     const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
     const [devices, setDevices] = useState([
@@ -68,8 +70,14 @@ export default function LiveData() {
         { level: "warning", score: 70, name: "Device2", online: true },
         { level: "bad", score: 49, name: "Device3", online: false },
     ])
-    const [selectedDevice, setSelectedDevice] = useState(devices[0])
+    const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
+     // Waiting for getting devicesData
+     useEffect(() => {
+        if (devicesData.length >= 1) {
+            setSelectedDevice(devicesData[0])
+        }
+    }, [devicesData])
 
     return (
 
@@ -120,7 +128,7 @@ export default function LiveData() {
                         onChange={(e) => { setSelectedDevice(e.target.value) }}
                         style={{ height: "100%", minWidth: 100, fontWeight: 100 }}
                     >
-                        {devices.map((e) => {
+                        { (devicesData.length >= 1) && devicesData.map((e) => {
                             return (
                                 <MenuItem key={e.name} value={e} style={{ color: THEME2.black, fontWeight: 100 }}>
                                     {e.name}
