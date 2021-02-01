@@ -316,7 +316,7 @@ export default function Overview(props) {
     const [metaFactorDialog, setMetaFactorDialog] = useState(false)
 
     const [rawData, setRawData] = useState({
-        co2: 400,
+        co: 400,
         temp: 25,
         humidity: 44,
         pressure: 1083,
@@ -336,7 +336,7 @@ export default function Overview(props) {
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
     const [factorsScore, setFactorsScore] = useState({
-        co2: 40,
+        co: 40,
         temp: 54,
         humidity: 100,
         pressure: 40,
@@ -397,9 +397,9 @@ export default function Overview(props) {
                             <DialogTitle style={{ color: THEME2.primary }} id="factor-information">Factors Information</DialogTitle>
                             <DialogContent>
 
-                                <motion.div style={{ color: THEME2.factors.co2, display: "flex", alignItems: "center", marginBottom: 16 }}>
-                                    <FactorCircle color={THEME2.factors.co2} />
-                                    CO2
+                                <motion.div style={{ color: THEME2.factors.co, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                    <FactorCircle color={THEME2.factors.co} />
+                                    CO
                                 </motion.div>
                                 <motion.div style={{ color: THEME2.factors.temp, display: "flex", alignItems: "center", marginBottom: 16 }}>
                                     <FactorCircle color={THEME2.factors.temp} />
@@ -445,9 +445,9 @@ export default function Overview(props) {
                     </motion.h4>
                     {(devicesData.length >= 1) &&
                         <BarWrapper>
-                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }} whileHover={{ y: -8 }} color={THEME2.factors.co2} score={factorsScore.co2}>
-                                <FactorBarScore color={THEME2.factors.co2}>
-                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.co2}</FactorTextScore>
+                            <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }} whileHover={{ y: -8 }} color={THEME2.factors.co} score={factorsScore.co}>
+                                <FactorBarScore color={THEME2.factors.co}>
+                                    <FactorTextScore matches={matches} matches2={matches2}>{factorsScore.co}</FactorTextScore>
                                 </FactorBarScore>
                             </FactorScore>
                             <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }} whileHover={{ y: -8 }} color={THEME2.factors.temp} score={factorsScore.temp}>
@@ -488,11 +488,11 @@ export default function Overview(props) {
                         </motion.h4>
                         <RawDataBody>
                             <RawDataRowWrapper>
-                                <RawDataLabel color={THEME2.factors.co2}>
-                                    CO2
+                                <RawDataLabel color={THEME2.factors.co}>
+                                    CO
                                 </RawDataLabel>
                                 <RawDataLabel color={THEME2.factors.black}>
-                                    {rawData.co2} ppm
+                                    {rawData.co} ppm
                                 </RawDataLabel>
                             </RawDataRowWrapper>
                             <RawDataRowWrapper>

@@ -10,33 +10,30 @@ import useUsers from "./hooks/useUsers"
 
 
 const ItemGrid = styled(motion.div)`
-
     ${(props) => props.width && `width : ${props.width}`};
     ${(props) => props.height && `height: ${props.height}`};
-  background: ${(props) => (props.bg ? props.bg : THEME2.white)};
-  color: ${THEME2.secondary};
-  border-radius: 30px;
-  border: 1px solid ${THEME2.dividerColor};
-  display: flex;
-  align-items: center;
-  overflow: scroll;
-  padding: 16px;
-  flex-grow:1;
+    background: ${(props) => (props.bg ? props.bg : THEME2.white)};
+    color: ${THEME2.secondary};
+    border-radius: 30px;
+    border: 1px solid ${THEME2.dividerColor};
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+    padding: 16px;
+    flex-grow:1;
     margin: 16px;
-    ${(props)=> props.margin && `margin: ${props.margin}`};
+    ${(props) => props.margin && `margin: ${props.margin}`};
 `;
 
 
 const LiveDataWrapper = styled(motion.div)`
-
-display: flex;
-flex-wrap: wrap;
-flex-direction: column;
-min-height: 80vh;
-height: 100%;
-width: 100%;
-// background: cyan;
-
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    min-height: 80vh;
+    height: 100%;
+    width: 100%;
+    // background: cyan;
 `
 
 const TopWrapper = styled(motion.div)`
@@ -46,7 +43,6 @@ const TopWrapper = styled(motion.div)`
 `
 
 const BottomWrapper = styled(motion.div)`
-
     flex-grow: 1;
     // background: blue;
     margin-bottom: 16px;
@@ -54,7 +50,6 @@ const BottomWrapper = styled(motion.div)`
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
-
 `
 
 
@@ -72,8 +67,8 @@ export default function LiveData() {
     ])
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
-     // Waiting for getting devicesData
-     useEffect(() => {
+    // Waiting for getting devicesData
+    useEffect(() => {
         if (devicesData.length >= 1) {
             setSelectedDevice(devicesData[0])
         }
@@ -114,7 +109,7 @@ export default function LiveData() {
             </TopWrapper>
             <motion.h2
                 style={{
-                    color: THEME2.primary, fontWeight: 400,marginTop: 48,
+                    color: THEME2.primary, fontWeight: 400, marginTop: 48,
                     paddingBottom: 16,
                     borderBottom: `1px solid ${THEME2.primary}`,
                 }}
@@ -128,7 +123,7 @@ export default function LiveData() {
                         onChange={(e) => { setSelectedDevice(e.target.value) }}
                         style={{ height: "100%", minWidth: 100, fontWeight: 100 }}
                     >
-                        { (devicesData.length >= 1) && devicesData.map((e) => {
+                        {(devicesData.length >= 1) && devicesData.map((e) => {
                             return (
                                 <MenuItem key={e.name} value={e} style={{ color: THEME2.black, fontWeight: 100 }}>
                                     {e.name}
@@ -142,7 +137,7 @@ export default function LiveData() {
 
                 <ItemGrid width="300px" height="240px">
                     <LineChart
-                        label="CO2"
+                        label="CO"
                         color="rgb(230,230,230)"
                         areaColor="rgba(230,230,230,0.2)"
                         newData={{ value: airData.v0, label: "" }}
@@ -150,7 +145,7 @@ export default function LiveData() {
                 </ItemGrid>
                 <ItemGrid width="300px" height="240px" >
                     <LineChart
-                        label="Gas"
+                        label="VOC"
                         color="rgb(200, 40, 53)"
                         areaColor="rgba(200, 40, 53, 0.2)"
                         newData={{ value: airData.v4, label: "" }}

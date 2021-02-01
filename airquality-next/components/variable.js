@@ -35,7 +35,7 @@ export const THEME2 = {
     breakpointM: "1024",
     breakpointL: "1440",
     factors:{
-        co2: "#3F3F3F",
+        co: "#3F3F3F",
         temp: "#2E516A",
         humidity: "#A7F5C8",
         pressure: "#534062",
@@ -47,38 +47,38 @@ export const THEME2 = {
 
 export const INFO = {
     factors: [{
-        title: "CO2",
-        description: "CO2 is one of the most important factor for air quality in home",
+        title: "co",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "Temperature",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "Humidity",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "Pressure",
-        description: "CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home co is one of the most important factor for air quality in home co is one of the most important factor for air quality in home co is one of the most important factor for air quality in home co is one of the most important factor for air quality in home co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "VOC",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "PM",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }
 ],
     hardware: [{
         title: "Micro Controller",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     }, {
         title: "Sensors",
-        description: "CO2 is one of the most important factor for air quality in home",
+        description: "co is one of the most important factor for air quality in home",
         body: ["this is paragraph 1", "this is paragraph 2", "this is paragraph 3",]
     },
 ], 

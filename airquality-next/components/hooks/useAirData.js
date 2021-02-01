@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"
 
-// const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
-const server_address = "34.69.148.234"
-const data_server_address = "muict-senior2020-airquality.uc.r.appspot.com"
+const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
+// const server_address = "34.69.148.234"
+const data_server_address = "139.59.126.32"
 
 
 // Current hook for get air data
@@ -11,16 +11,16 @@ const data_server_address = "muict-senior2020-airquality.uc.r.appspot.com"
 const getAirData = async (setData, auth_token) => {
 
   try {
-    const airdata = await axios.get(`https://${data_server_address}/api/airdata/getByDeviceId/${auth_token}`)
+    const airdata = await axios.get(`http://${data_server_address}:8081/api/airdata/rawData/getByDeviceId/${auth_token}`)
     // const resApp = await axios.get(`http://${server_address}/${auth_token}/isAppConnected`)
     // const resCheck = await axios.get(`http://${server_address}/${auth_token}/isHardwareConnected`)
 
     const final_data = {
-      v0: airdata.data[0].co2,
+      v0: airdata.data[0].co,
       v1: airdata.data[0].temperature,
       v2: airdata.data[0].humidity,
       v3: airdata.data[0].pressure,
-      v4: airdata.data[0].gas,
+      v4: airdata.data[0].VOC,
       v5: airdata.data[0].pm1_0,
       v6: airdata.data[0].pm2_5,
       v7: airdata.data[0].pm10_0,
