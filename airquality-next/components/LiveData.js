@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
 import LineChart from "./ChartJS";
-import useAirData from "./hooks/useAirData";
+import useAirData, { useHistoricalData } from "./hooks/useAirData";
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
-import { MenuItem, Select, FormControl, useMediaQuery } from "@material-ui/core"
+import { MenuItem, Select, FormControl, useMediaQuery, IconButton } from "@material-ui/core"
+import DownloadIcon from '@material-ui/icons/GetAppRounded';
 import useUsers from "./hooks/useUsers"
-
+import { CSVLink } from "react-csv";
 
 
 const ItemGrid = styled(motion.div)`
@@ -58,6 +59,7 @@ export default function LiveData() {
 
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
     const { devicesData } = useUsers()
+    const { historicalData, getHistoricalData } = useHistoricalData()
 
     const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
     const [devices, setDevices] = useState([
@@ -91,7 +93,7 @@ export default function LiveData() {
                 style={{
                     color: THEME2.primary, fontWeight: 400,
                     paddingBottom: 16,
-                    borderBottom: `1px solid ${THEME2.primary}`,
+                    // borderBottom: `1px solid ${THEME2.primary}`,
                 }}
             >
                 Overall Score
@@ -111,7 +113,8 @@ export default function LiveData() {
                 style={{
                     color: THEME2.primary, fontWeight: 400, marginTop: 48,
                     paddingBottom: 16,
-                    borderBottom: `1px solid ${THEME2.primary}`,
+                    // borderBottom: `1px solid ${THEME2.primary}`,
+                    display: "flex", alignItems: "center"
                 }}
             >
                 Factors data
@@ -131,10 +134,17 @@ export default function LiveData() {
                         })}
                     </Select>
                 </FormControl>
+                <IconButton
+                    color="primary"
+                    onClick={() => {
+                        getHistoricalData();
+                    }}
+                >
+                    <DownloadIcon />
+                </IconButton>
             </motion.h2>
 
             <BottomWrapper>
-
                 <ItemGrid width="300px" height="240px">
                     <LineChart
                         label="CO"

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"
+import fileDownload from 'js-file-download'
+const { convertArrayToCSV } = require('convert-array-to-csv');
 
 const auth_token = "XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j";
 // const server_address = "34.69.148.234"
@@ -33,7 +35,7 @@ const getAirData = async (setData, auth_token) => {
   }
 }
 
-export default function useAirData(props){
+export default function useAirData(props) {
   const auth_token = props
   const [dataState, setDataState] = useState({
     v0: 0,
@@ -59,6 +61,34 @@ export default function useAirData(props){
     return () => clearInterval(interval)
 
   }, [])
-  return dataState;
+  // return dataState;
+  return {
+    v0: 0,
+    v1: 0,
+    v2: 0,
+    v3: 0,
+    v4: 0,
+    v5: 0,
+    v6: 0,
+    v7: 0,
+    resCheck: false,
+    resApp: false,
+  }
 
+}
+
+
+export const useHistoricalData = () => {
+  const getHistoricalData = async (deviceID, fileName, limit) => {
+    try {
+      const historicalData = await axios.get(`http://${data_server_address}:8081/api/airdata/rawData/getHistoricalByDeviceId/${auth_token}`)
+      fileDownload(historicalData.data, 'test.csv')
+    } catch (error) {
+      console.error(`> error : ${error}`);
+    }
+
+  }
+  return {
+    getHistoricalData
+  }
 }
