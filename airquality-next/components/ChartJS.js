@@ -31,6 +31,11 @@ const defaultOptions = {
         gridLines: {
           display: false,
         },
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 2000,
+      }
+
       },
     ],
   },
@@ -87,7 +92,7 @@ const ChartJS = (props) => {
         data={state ?? defaultData}
         width={"100%"}
         height={"100%"}
-        options={defaultOptions}
+        options={ options ? options : defaultOptions}
         redraw
       />
   );

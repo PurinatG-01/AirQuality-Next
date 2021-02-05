@@ -59,23 +59,32 @@ export default function LiveData() {
 
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
     const { devicesData } = useUsers()
-    const { historicalData, getHistoricalData } = useHistoricalData()
+    const { getHistoricalData } = useHistoricalData()
 
-    const airData = useAirData("XYS9rw2wCXCqBN8yq9TnJw_4zy0p5A5j")
+    const { airData , setAuthToken } = useAirData()
     const [devices, setDevices] = useState([
         { level: "good", score: 80, name: "Device1", online: true },
         { level: "warning", score: 70, name: "Device2", online: true },
         { level: "bad", score: 49, name: "Device3", online: false },
     ])
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
+    // console.log("> selectedDevice : ", selectedDevice)
+
+    useEffect(()=>{
+        setAuthToken(selectedDevice.key)
+    },[selectedDevice])
+
 
     // Waiting for getting devicesData
     useEffect(() => {
         if (devicesData.length >= 1) {
             setSelectedDevice(devicesData[0])
+            setAuthToken(devicesData[0].key)
         }
     }, [devicesData])
 
+   
+    // console.log("> airData : ", airData)
     return (
 
         <LiveDataWrapper>
@@ -137,7 +146,7 @@ export default function LiveData() {
                 <IconButton
                     color="primary"
                     onClick={() => {
-                        getHistoricalData();
+                        getHistoricalData(selectedDevice.key, "Test-Prototype-1.csv", 10);
                     }}
                 >
                     <DownloadIcon />
