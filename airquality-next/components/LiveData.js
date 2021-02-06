@@ -122,7 +122,6 @@ export default function LiveData() {
                 style={{
                     color: THEME2.primary, fontWeight: 400, marginTop: 48,
                     paddingBottom: 16,
-                    // borderBottom: `1px solid ${THEME2.primary}`,
                     display: "flex", alignItems: "center"
                 }}
             >

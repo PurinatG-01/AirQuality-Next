@@ -33,8 +33,6 @@ const getAirData = async (authToken, setData) => {
     .catch((error) => {
       console.error(`> error : ${error}`);
     })
-  // console.log("> finalData : ", finalData)
-
 }
 
 export default function useAirData() {
