@@ -209,12 +209,7 @@ const FactorScore = styled(motion.div)`
     align-items: center;
 `
 
-const NoFactorButton = styled(Button)`
-    padding: 16px;
-    
-`
-
-const NoFactorLabelWrapper = styled(motion.div)`
+const NoDeviceLabel = styled(motion.div)`
     flex-grow: 1;
     font-size: 12px;
     font-weight: 100;
@@ -223,8 +218,7 @@ const NoFactorLabelWrapper = styled(motion.div)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    
+    text-align: center; 
 `
 
 const FactorLabel = styled(motion.label)`
@@ -339,7 +333,7 @@ export default function Overview(props) {
                             {devicesData.length >= 1 ?
                                 listDevices() :
                                 (
-                                    <NoFactorLabelWrapper>
+                                    <NoDeviceLabel>
                                         <div>
                                             Please add your device to view data
                                         </div>
@@ -352,7 +346,7 @@ export default function Overview(props) {
                                             style={{ fontSize: 12, padding: "8px 16px", marginTop: 16 }} >
                                             Go to Devices Page
                                         </Button>
-                                    </NoFactorLabelWrapper>
+                                    </NoDeviceLabel>
                                 )
                             }
                         </DeviceDetailWrapper>
@@ -458,11 +452,11 @@ export default function Overview(props) {
                             </BarWrapper>
                         ) :
                         (
-                            <NoFactorLabelWrapper>
+                            <NoDeviceLabel>
                                 <div>
                                     Please add your device to view data
                                 </div>
-                            </NoFactorLabelWrapper>
+                            </NoDeviceLabel>
                         )
                     }
                     {/* Factor info display */}
@@ -544,11 +538,11 @@ export default function Overview(props) {
                                 </>
                                 )
                                 :
-                                (<NoFactorLabelWrapper>
+                                (<NoDeviceLabel>
                                     <div>
                                         Please add your device to view data
                                     </div>
-                                </NoFactorLabelWrapper>)
+                                </NoDeviceLabel>)
                             }
                         </RawDataBody>
                     </RawDataWrapper>

@@ -36,13 +36,13 @@ export default function main() {
     const [page, setPage] = useState(PAGE[0].tag)
 
     const RenderComponentPage = [
-        { tag: "Overview", component: <Overview PAGE={PAGE} setPage={setPage} >Dashboard</Overview> },
+        { tag: "Overview", component: <Overview PAGE={PAGE} setPage={setPage}>Dashboard</Overview> },
         { tag: "About us", component: <AboutUs>About us</AboutUs> },
-        { tag: "Live data", component: <LiveData>Live data</LiveData> },
+        { tag: "Live data", component: <LiveData PAGE={PAGE} setPage={setPage}>Live data</LiveData> },
         { tag: "Information", component: <Information>Information</Information> },
         { tag: "Device", component: <Devices>Device</Devices> },
     ]
-    
+
     const [currentComponent, setCurrentComponent] = useState(RenderComponentPage[0])
 
 
