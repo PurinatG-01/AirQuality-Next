@@ -53,7 +53,6 @@ export default function useAirData() {
 
   useEffect(() => {
     if (authToken != "") {
-      console.log("> getAirData => authToken : ", authToken)
       getAirData(setDataState, authToken)
       const interval = setInterval(() => {
         getAirData(authToken, setDataState)
