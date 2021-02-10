@@ -9,7 +9,7 @@ import AverageScoreSvg from './Svg/AverageScoreSvg'
 import UtilityOverviewBg from './Svg/UtilityOverviewBg'
 import FactorDialog from "./FactorDialog"
 import useUsers from "./hooks/useUsers"
-import useScore from "./hooks/useScore"
+import useScore, { useMultipleScores } from "./hooks/useScore"
 import useAirData from "./hooks/useAirData"
 
 const OverviewWrapper = styled(motion.div)`
@@ -136,8 +136,10 @@ const ScoreCircle = styled(motion.div)`
     padding: 10px;
     background-color: ${props => {
         if (props.level == "good") { return THEME2.shade1 }
-        else if (props.level == "warning") { return THEME2.yellow }
-        else { return THEME2.red }
+        else if (props.level == "moderate") { return THEME2.primary }
+        else if (props.level == "unhealthy") { return THEME2.yellow }
+        else if (props.level == "hazardous") { return THEME2.red }
+        else { return THEME2.dividerColor }
     }};
     color: ${THEME2.white};
     font-size: 24px;
@@ -297,6 +299,7 @@ export default function Overview(props) {
 
     // Score of selected device
     const { setScoreDevice, deviceScore } = useScore()
+    const { setScoreDevices, devicesScores } = useMultipleScores()
     const [factorsScore, setFactorsScore] = useState({
         co: 40,
         temp: 54,
@@ -310,7 +313,7 @@ export default function Overview(props) {
     useEffect(() => {
         if (devicesData.length >= 1) {
             setSelectedDevice(devicesData[0])
-            // console.log("> devicesData : ", devicesData)
+            setScoreDevices(devicesData)
         }
     }, [devicesData])
 
@@ -319,14 +322,15 @@ export default function Overview(props) {
         setAuthToken(selectedDevice?.key ?? "")
     }, [selectedDevice])
 
-    console.log("> deviceScore : ", deviceScore)
-    console.log("> airData : ", airData)
+    // console.log("> selected deviceScore : ", deviceScore)
+    console.log("> devicesScores : ", devicesScores)
+    // console.log("> airData : ", airData)
 
     const listDevices = () => {
-        return (devices.map((el) => (
+        return (devicesScores.map((el) => (
             <Device whileHover={{ y: -8 }} key={el.name} style={{ fontSize: 12, fontWeight: 100, }}>
                 <ScoreCircle level={el.level}>
-                    <div>{el.score}</div>
+                    <div>{Math.round(el.device_score ?? 0)}</div>
                 </ScoreCircle>
                 <motion.div style={{ marginRight: 16, width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
                 {el.name}
@@ -344,7 +348,6 @@ export default function Overview(props) {
                     <motion.div style={{ height: "100%", display: "flex", flexDirection: "column", width: "80%", margin: "80px 10%" }}>
                         <motion.h4 style={{ color: THEME2.primary, textAlign: "center", fontSize: 24, fontWeight: 400 }}> Overall Score </motion.h4>
                         <DeviceDetailWrapper>
-
                             {devicesData.length >= 1 ?
                                 listDevices() :
                                 (
@@ -431,7 +434,7 @@ export default function Overview(props) {
 
 
                     </motion.h4>
-                    {(devicesData.length >= 1 && deviceScore?.factors_score ) ?
+                    {(devicesData.length >= 1 && deviceScore?.factors_score) ?
                         (
                             <BarWrapper>
                                 <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }}
@@ -489,7 +492,7 @@ export default function Overview(props) {
                                 >
                                     <FactorBarScore color={THEME2.factors.voc}>
                                         <FactorTextScore matches={matches} matches2={matches2}>
-                                        {Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
+                                            {Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
                                         </FactorTextScore>
                                     </FactorBarScore>
                                 </FactorScore>
