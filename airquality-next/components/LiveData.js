@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
-import LineChart from "./ChartJS";
+import LineChart from "./LineChart";
 import useAirData, { useHistoricalData } from "./hooks/useAirData";
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
@@ -128,8 +128,8 @@ export default function LiveData(props) {
                                 label="Overall Score"
                                 color="rgba(111, 207, 151, 1.0"
                                 areaColor="rgba(111, 207, 151, 0.4)"
-                                newData={{ value: 10, label: "0" }}
-
+                                newData={{ value: 10, label: "" }}
+                                range={{ min: 0, max: 100 }}
                             />
                         </ItemGrid>
                     </TopWrapper>
@@ -174,6 +174,7 @@ export default function LiveData(props) {
                                 color="rgb(230,230,230)"
                                 areaColor="rgba(230,230,230,0.2)"
                                 newData={{ value: airData.v0, label: "" }}
+                                range={{ min: 0, max: 50 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -182,6 +183,7 @@ export default function LiveData(props) {
                                 color="rgb(200, 40, 53)"
                                 areaColor="rgba(200, 40, 53, 0.2)"
                                 newData={{ value: airData.v4, label: "" }}
+                                range={{ min: 0, max: 1000 }}
                             ></LineChart>
                         </ItemGrid>
 
@@ -191,6 +193,7 @@ export default function LiveData(props) {
                                 color="rgb(40, 200, 184)"
                                 areaColor="rgba(40, 200, 184, 0.2)"
                                 newData={{ value: airData.v1, label: "" }}
+                                range={{ min: 0, max: 50 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -199,6 +202,7 @@ export default function LiveData(props) {
                                 color="rgb(40, 200, 93)"
                                 areaColor="rgba(40, 200, 93, 0.2)"
                                 newData={{ value: airData.v2, label: "" }}
+                                range={{ min: 0, max: 100 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -207,6 +211,7 @@ export default function LiveData(props) {
                                 color="rgb(117, 40, 200)"
                                 areaColor="rgba(117, 40, 200,  0.2)"
                                 newData={{ value: airData.v3, label: "" }}
+                                range={{ min: 0, max: 2000 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -215,6 +220,7 @@ export default function LiveData(props) {
                                 color="rgb(0, 20, 10)"
                                 areaColor="rgba(0, 20, 10, 0.2)"
                                 newData={{ value: airData.v5, label: "" }}
+                                range={{ min: 0, max: 100 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -223,6 +229,7 @@ export default function LiveData(props) {
                                 color="rgb(0, 20, 10)"
                                 areaColor="rgba(0, 20, 10, 0.2)"
                                 newData={{ value: airData.v6, label: "" }}
+                                range={{ min: 0, max: 100 }}
                             ></LineChart>
                         </ItemGrid>
                         <ItemGrid width="300px" height="240px" >
@@ -231,6 +238,7 @@ export default function LiveData(props) {
                                 color="rgb(0, 20, 10)"
                                 areaColor="rgba(0, 20, 10, 0.2)"
                                 newData={{ value: airData.v7, label: "" }}
+                                range={{ min: 0, max: 100 }}
                             ></LineChart>
                         </ItemGrid>
                     </BottomWrapper>

@@ -34,7 +34,7 @@ const defaultOptions = {
         ticks: {
           suggestedMin: 0,
           suggestedMax: 2000,
-      }
+        }
 
       },
     ],
@@ -42,7 +42,7 @@ const defaultOptions = {
 };
 
 const ChartJS = (props) => {
-  const { newData, color, areaColor, label, options } = props;
+  const { newData, color, areaColor, label, range } = props;
   const [state, setState] = useState({
     labels: [],
     datasets: [
@@ -68,7 +68,7 @@ const ChartJS = (props) => {
 
       let temp_label = state.labels;
       temp_label.push(newData.label);
-      if(temp_label.length> 16){
+      if (temp_label.length > 16) {
         temp_label.shift();
       }
 
@@ -88,13 +88,26 @@ const ChartJS = (props) => {
   }, [newData]);
 
   return (
-      <Line
-        data={state ?? defaultData}
-        width={"100%"}
-        height={"100%"}
-        options={ options ? options : defaultOptions}
-        redraw
-      />
+    <Line
+      data={state ?? defaultData}
+      width={"100%"}
+      height={"100%"}
+      options={range ? {
+        ...defaultOptions, scales: {
+          xAxes: defaultOptions.scales.xAxes,
+          yAxes: [{
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              suggestedMin: range.min,
+              suggestedMax: range.max,
+            }
+          }]
+        }
+      } : defaultOptions}
+      redraw
+    />
   );
 };
 
