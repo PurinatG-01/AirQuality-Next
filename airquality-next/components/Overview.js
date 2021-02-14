@@ -276,24 +276,6 @@ export default function Overview(props) {
     const [factorDisplayInfo, setFactorDisplayInfo] = useState()
     const [metaFactorDialog, setMetaFactorDialog] = useState(false)
 
-    // Raw data of selected device
-    const [rawData, setRawData] = useState({
-        co: 400,
-        temp: 25,
-        humidity: 44,
-        pressure: 1083,
-        voc: 20,
-        pm1_0: 0,
-        pm2_5: 14,
-        pm10_0: 15,
-    })
-
-    // Devices
-    const [devices, setDevices] = useState([
-        { level: "good", score: 80, name: "Device1", online: true },
-        { level: "warning", score: 70, name: "Device2", online: true },
-        { level: "bad", score: 49, name: "Device3", online: false },
-    ])
 
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
@@ -322,9 +304,16 @@ export default function Overview(props) {
         setAuthToken(selectedDevice?.key ?? "")
     }, [selectedDevice])
 
-    // console.log("> selected deviceScore : ", deviceScore)
-    console.log("> devicesScores : ", devicesScores)
-    // console.log("> airData : ", airData)
+    useEffect(() => {
+        if (devicesData.length >= 1) {
+            let avg = 0
+            devicesScores.forEach((e)=>{
+                avg += e.device_score
+            })
+            setOverallScore({ score: Math.round(avg/devicesData.length), level: "good"})
+        }
+    }, [devicesScores])
+
 
     const listDevices = () => {
         return (devicesScores.map((el) => (
