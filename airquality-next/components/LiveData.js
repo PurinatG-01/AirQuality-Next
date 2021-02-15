@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import { MenuItem, Select, FormControl, useMediaQuery, IconButton, Button } from "@material-ui/core"
 import DownloadIcon from '@material-ui/icons/GetAppRounded';
 import useUsers from "./hooks/useUsers"
-import { CSVLink } from "react-csv";
+import useScore from './hooks/useScore';
 
 
 const ItemGrid = styled(motion.div)`
@@ -75,14 +75,10 @@ export default function LiveData(props) {
     const { devicesData } = useUsers()
     const { getHistoricalData } = useHistoricalData()
 
-    const { airData, setAuthToken } = useAirData()
-    const [devices, setDevices] = useState([
-        { level: "good", score: 80, name: "Device1", online: true },
-        { level: "warning", score: 70, name: "Device2", online: true },
-        { level: "bad", score: 49, name: "Device3", online: false },
-    ])
+    const { airData, setAuthToken, resetAirData } = useAirData()
+    const { setScoreDevice, deviceScore, resetScore } = useScore()
+
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
-    // console.log("> selectedDevice : ", selectedDevice)
 
     useEffect(() => {
         setAuthToken(selectedDevice.key)
@@ -98,7 +94,16 @@ export default function LiveData(props) {
     }, [devicesData])
 
 
-    // console.log("> airData : ", airData)
+    useEffect(() => {
+        if (devicesData.length >= 1) {
+            setScoreDevice(selectedDevice)
+            setAuthToken(selectedDevice?.key ?? "")
+            // Clear all data in hook
+            resetScore()
+            resetAirData()
+        }
+    }, [selectedDevice])
+
     return (
 
         <LiveDataWrapper>
@@ -117,21 +122,25 @@ export default function LiveData(props) {
                         style={{
                             color: THEME2.primary, fontWeight: 400,
                             paddingBottom: 16,
-                            // borderBottom: `1px solid ${THEME2.primary}`,
                         }}
                     >
-                        Overall Score
+                        Device Score
             </motion.h2>
                     <TopWrapper>
-                        <ItemGrid width="100%" height="500px" margin="0">
-                            <LineChart
-                                label="Overall Score"
-                                color="rgba(111, 207, 151, 1.0"
-                                areaColor="rgba(111, 207, 151, 0.4)"
-                                newData={{ value: 10, label: "" }}
-                                range={{ min: 0, max: 100 }}
-                            />
-                        </ItemGrid>
+                        {deviceScore ? (
+                            <ItemGrid width="100%" height="500px" margin="0">
+                                <LineChart
+                                    label="Device Score"
+                                    color="rgba(111, 207, 151, 1.0"
+                                    areaColor="rgba(111, 207, 151, 0.4)"
+                                    newData={{ value: Math.round(deviceScore?.device_score) ?? 0, label: "" }}
+                                    range={{ min: 0, max: 100 }}
+                                />
+                            </ItemGrid>
+                        ) :
+                            (<>Loading...</>)
+                        }
+
                     </TopWrapper>
                     <motion.h2
                         style={{
@@ -141,7 +150,7 @@ export default function LiveData(props) {
                         }}
                     >
                         Factors data
-                <FormControl style={{ marginLeft: 16 }}>
+                        <FormControl style={{ marginLeft: 16 }}>
                             <Select
                                 autoWidth
                                 id="Device Selector"
@@ -168,80 +177,85 @@ export default function LiveData(props) {
                     </motion.h2>
 
                     <BottomWrapper>
-                        <ItemGrid width="300px" height="240px">
-                            <LineChart
-                                label="CO"
-                                color="rgb(230,230,230)"
-                                areaColor="rgba(230,230,230,0.2)"
-                                newData={{ value: airData.v0, label: "" }}
-                                range={{ min: 0, max: 50 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="VOC"
-                                color="rgb(200, 40, 53)"
-                                areaColor="rgba(200, 40, 53, 0.2)"
-                                newData={{ value: airData.v4, label: "" }}
-                                range={{ min: 0, max: 1000 }}
-                            ></LineChart>
-                        </ItemGrid>
+                        {airData ? (
+                            <>
+                                <ItemGrid width="300px" height="240px">
+                                    <LineChart
+                                        label="CO"
+                                        color="rgb(230,230,230)"
+                                        areaColor="rgba(230,230,230,0.2)"
+                                        newData={{ value: airData.v0, label: "" }}
+                                        range={{ min: 0, max: 50 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="VOC"
+                                        color="rgb(200, 40, 53)"
+                                        areaColor="rgba(200, 40, 53, 0.2)"
+                                        newData={{ value: airData.v4, label: "" }}
+                                        range={{ min: 0, max: 1000 }}
+                                    ></LineChart>
+                                </ItemGrid>
 
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="Temperature"
-                                color="rgb(40, 200, 184)"
-                                areaColor="rgba(40, 200, 184, 0.2)"
-                                newData={{ value: airData.v1, label: "" }}
-                                range={{ min: 0, max: 50 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="Humidity"
-                                color="rgb(40, 200, 93)"
-                                areaColor="rgba(40, 200, 93, 0.2)"
-                                newData={{ value: airData.v2, label: "" }}
-                                range={{ min: 0, max: 100 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="Pressure"
-                                color="rgb(117, 40, 200)"
-                                areaColor="rgba(117, 40, 200,  0.2)"
-                                newData={{ value: airData.v3, label: "" }}
-                                range={{ min: 0, max: 2000 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="PM 1.0"
-                                color="rgb(0, 20, 10)"
-                                areaColor="rgba(0, 20, 10, 0.2)"
-                                newData={{ value: airData.v5, label: "" }}
-                                range={{ min: 0, max: 100 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="PM 2.5"
-                                color="rgb(0, 20, 10)"
-                                areaColor="rgba(0, 20, 10, 0.2)"
-                                newData={{ value: airData.v6, label: "" }}
-                                range={{ min: 0, max: 100 }}
-                            ></LineChart>
-                        </ItemGrid>
-                        <ItemGrid width="300px" height="240px" >
-                            <LineChart
-                                label="PM 10.0"
-                                color="rgb(0, 20, 10)"
-                                areaColor="rgba(0, 20, 10, 0.2)"
-                                newData={{ value: airData.v7, label: "" }}
-                                range={{ min: 0, max: 100 }}
-                            ></LineChart>
-                        </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="Temperature"
+                                        color="rgb(40, 200, 184)"
+                                        areaColor="rgba(40, 200, 184, 0.2)"
+                                        newData={{ value: airData.v1, label: "" }}
+                                        range={{ min: 0, max: 50 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="Humidity"
+                                        color="rgb(40, 200, 93)"
+                                        areaColor="rgba(40, 200, 93, 0.2)"
+                                        newData={{ value: airData.v2, label: "" }}
+                                        range={{ min: 0, max: 100 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="Pressure"
+                                        color="rgb(117, 40, 200)"
+                                        areaColor="rgba(117, 40, 200,  0.2)"
+                                        newData={{ value: airData.v3, label: "" }}
+                                        range={{ min: 0, max: 2000 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="PM 1.0"
+                                        color="rgb(0, 20, 10)"
+                                        areaColor="rgba(0, 20, 10, 0.2)"
+                                        newData={{ value: airData.v5, label: "" }}
+                                        range={{ min: 0, max: 100 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="PM 2.5"
+                                        color="rgb(0, 20, 10)"
+                                        areaColor="rgba(0, 20, 10, 0.2)"
+                                        newData={{ value: airData.v6, label: "" }}
+                                        range={{ min: 0, max: 100 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                                <ItemGrid width="300px" height="240px" >
+                                    <LineChart
+                                        label="PM 10.0"
+                                        color="rgb(0, 20, 10)"
+                                        areaColor="rgba(0, 20, 10, 0.2)"
+                                        newData={{ value: airData.v7, label: "" }}
+                                        range={{ min: 0, max: 100 }}
+                                    ></LineChart>
+                                </ItemGrid>
+                            </>
+                        ) : <>Loading ...</>}
                     </BottomWrapper>
+
                 </> :
                 <NoDeviceLabel>
                     <div>

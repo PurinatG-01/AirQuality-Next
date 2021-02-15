@@ -38,18 +38,20 @@ const getAirData = async (authToken, setData) => {
 export default function useAirData() {
   const [authToken, setAuthToken] = useState("")
 
-  const [dataState, setDataState] = useState({
-    v0: 0,
-    v1: 0,
-    v2: 0,
-    v3: 0,
-    v4: 0,
-    v5: 0,
-    v6: 0,
-    v7: 0,
-    resCheck: false,
-    resApp: false,
-  });
+  const [dataState, setDataState] = useState();
+  // default data
+  // {
+  //   v0: 0,
+  //   v1: 0,
+  //   v2: 0,
+  //   v3: 0,
+  //   v4: 0,
+  //   v5: 0,
+  //   v6: 0,
+  //   v7: 0,
+  //   resCheck: false,
+  //   resApp: false,
+  // }
 
   useEffect(() => {
     if (authToken != "") {
@@ -66,6 +68,9 @@ export default function useAirData() {
     airData: dataState,
     setAuthToken,
     authToken,
+    resetAirData: () => {
+      setDataState(null)
+    },
   }
 
 }

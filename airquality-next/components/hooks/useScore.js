@@ -19,7 +19,7 @@ const getScores = async (devices) => {
 export default function useScore() {
 
     const [device, setDevice] = useState([])
-    const [deviceScore, setDeviceScore] = useState([])
+    const [deviceScore, setDeviceScore] = useState()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -36,7 +36,10 @@ export default function useScore() {
 
     return {
         setScoreDevice: setDevice,
-        deviceScore
+        deviceScore,
+        resetScore: () => {
+            setDeviceScore(null)
+        },
     }
 }
 
@@ -44,7 +47,7 @@ export default function useScore() {
 export function useMultipleScores() {
 
     const [devices, setDevices] = useState([])
-    const [devicesScores, setDevicesScores] = useState([])
+    const [devicesScores, setDevicesScores] = useState()
 
     useEffect(() => {
         const interval = setInterval(() => {

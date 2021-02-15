@@ -225,14 +225,6 @@ const NoDeviceLabel = styled(motion.div)`
     text-align: center; 
 `
 
-const FactorLabel = styled(motion.label)`
-    ${props => !props.matches && "display: none;"}
-    margin-bottom: 8px;
-    font-size: 16px;
-    font-weight: 100;
-    color: ${props => props.color};
-`
-
 const FactorCircle = styled(motion.div)`
     width: 24px;
     height: 24px;
@@ -240,7 +232,6 @@ const FactorCircle = styled(motion.div)`
     background-color: ${props => props.color};
     margin-right: 8px;
 `
-
 
 const RawDataBody = styled(motion.div)`
     flex-grow: 1;
@@ -271,7 +262,7 @@ export default function Overview(props) {
     const { devicesData } = useUsers()
     const { setAuthToken, airData } = useAirData()
 
-    const [overallScore, setOverallScore] = useState({ score: 87, level: "good" })
+    const [overallScore, setOverallScore] = useState({ score: "-", level: "good" })
     const [isFactorInfoDialogOpen, setIsFactorInfoDialogOpen] = useState(false)
     const [factorDisplayInfo, setFactorDisplayInfo] = useState()
     const [metaFactorDialog, setMetaFactorDialog] = useState(false)
@@ -280,16 +271,9 @@ export default function Overview(props) {
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
     // Score of selected device
-    const { setScoreDevice, deviceScore } = useScore()
+    const { setScoreDevice, deviceScore, resetScore } = useScore()
     const { setScoreDevices, devicesScores } = useMultipleScores()
-    const [factorsScore, setFactorsScore] = useState({
-        co: 40,
-        temp: 54,
-        humidity: 100,
-        pressure: 40,
-        voc: 0,
-        pm: 85,
-    })
+
 
     // Waiting for getting devicesData
     useEffect(() => {
@@ -302,29 +286,35 @@ export default function Overview(props) {
     useEffect(() => {
         setScoreDevice(selectedDevice)
         setAuthToken(selectedDevice?.key ?? "")
+        // reset for clear data
+        resetScore()
     }, [selectedDevice])
 
     useEffect(() => {
         if (devicesData.length >= 1) {
             let avg = 0
-            devicesScores.forEach((e)=>{
+            devicesScores.forEach((e) => {
                 avg += e.device_score
             })
-            setOverallScore({ score: Math.round(avg/devicesData.length), level: "good"})
+            setOverallScore({ score: Math.round(avg / devicesData.length), level: "good" })
         }
     }, [devicesScores])
 
 
     const listDevices = () => {
-        return (devicesScores.map((el) => (
-            <Device whileHover={{ y: -8 }} key={el.name} style={{ fontSize: 12, fontWeight: 100, }}>
-                <ScoreCircle level={el.level}>
-                    <div>{Math.round(el.device_score ?? 0)}</div>
-                </ScoreCircle>
-                <motion.div style={{ marginRight: 16, width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
-                {el.name}
-            </Device>
-        )))
+        if (devicesScores) {
+            return (devicesScores.map((el) => (
+                <Device whileHover={{ y: -8 }} key={el.name} style={{ fontSize: 12, fontWeight: 100, }}>
+                    <ScoreCircle level={el.level}>
+                        <div>{Math.round(el.device_score ?? 0)}</div>
+                    </ScoreCircle>
+                    <motion.div style={{ marginRight: 16, width: 16, height: 16, borderRadius: "50%", backgroundColor: el.online ? THEME2.shade1 : THEME2.red }} />
+                    {el.name}
+                </Device>
+            )))
+        } else {
+            return (<>Loading...</>)
+        }
     }
 
     return (
@@ -421,90 +411,88 @@ export default function Overview(props) {
                             </FormControl>
                         }
 
-
                     </motion.h4>
-                    {(devicesData.length >= 1 && deviceScore?.factors_score) ?
-                        (
-                            <BarWrapper>
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.co}
-                                    score={Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.co}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
+                    {(devicesData.length >= 1) ?
+                        (<BarWrapper>
+                            {deviceScore ? (
+                                <>
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.co}
+                                        score={Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.co}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
 
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.temp}
-                                    score={Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.temp}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.temp}
+                                        score={Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.temp}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
 
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.humidity}
-                                    score={Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.humidity}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.humidity}
+                                        score={Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.humidity}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
 
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.pressure}
-                                    score={Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.pressure}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.pressure}
+                                        score={Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.pressure}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
 
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.voc}
-                                    score={Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.voc}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
-                                <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
-                                    whileHover={{ y: -8 }}
-                                    color={THEME2.factors.pm}
-                                    score={Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
-                                >
-                                    <FactorBarScore color={THEME2.factors.pm}>
-                                        <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
-                                        </FactorTextScore>
-                                    </FactorBarScore>
-                                </FactorScore>
-                            </BarWrapper>
-                        ) :
-                        (
-                            <NoDeviceLabel>
-                                <div>
-                                    Please add your device to view data
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.voc}
+                                        score={Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.voc}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.pm}
+                                        score={Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.pm}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                                {Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
+                                </>) : (<>Loading...</>)}
+                        </BarWrapper>) :
+                        (<NoDeviceLabel>
+                            <div>
+                                Please add your device to view data
                                 </div>
-                            </NoDeviceLabel>
-                        )
+                        </NoDeviceLabel>)
                     }
                     {/* Factor info display */}
                     <FactorDialog data={factorDisplayInfo} open={isFactorInfoDialogOpen} onClose={() => { setIsFactorInfoDialogOpen(false) }} />
@@ -517,73 +505,74 @@ export default function Overview(props) {
                         </motion.h4>
                         <RawDataBody>
                             {devicesData.length >= 1 ?
-                                (<>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.co}>
-                                            CO
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v0 ?? 0} ppm
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.temp}>
-                                            Temperature
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v1 ?? 0} °C
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.humidity}>
-                                            Humidity
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v2 ?? 0} %
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.pressure}>
-                                            Pressure
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v3 ?? 0} ppm
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.voc}>
-                                            VOC
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v4 ?? 0} kPa
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.pm}>
-                                            PM 1.0
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v5 ?? 0} µg/m3
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.pm}>
-                                            PM 2.5
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v6 ?? 0} µg/m3
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                    <RawDataRowWrapper>
-                                        <RawDataLabel color={THEME2.factors.pm}>
-                                            PM 10.0
-                                </RawDataLabel>
-                                        <RawDataLabel color={THEME2.factors.black}>
-                                            {airData.v7 ?? 0} µg/m3
-                                </RawDataLabel>
-                                    </RawDataRowWrapper>
-                                </>
-                                )
+                                (<> {airData ?
+                                    (<>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.co}>
+                                                CO
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v0 ?? 0} ppm
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.temp}>
+                                                Temperature
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v1 ?? 0} °C
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.humidity}>
+                                                Humidity
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v2 ?? 0} %
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.pressure}>
+                                                Pressure
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v3 ?? 0} ppm
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.voc}>
+                                                VOC
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v4 ?? 0} kPa
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.pm}>
+                                                PM 1.0
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v5 ?? 0} µg/m3
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.pm}>
+                                                PM 2.5
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v6 ?? 0} µg/m3
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                        <RawDataRowWrapper>
+                                            <RawDataLabel color={THEME2.factors.pm}>
+                                                PM 10.0
+                                                </RawDataLabel>
+                                            <RawDataLabel color={THEME2.factors.black}>
+                                                {airData?.v7 ?? 0} µg/m3
+                                                </RawDataLabel>
+                                        </RawDataRowWrapper>
+                                    </>) : <>Loading...</>}
+                                </>)
                                 :
                                 (<NoDeviceLabel>
                                     <div>
@@ -599,7 +588,7 @@ export default function Overview(props) {
                     </UtilityWrapper>
                 </BottomWrapper>
             </RightWrapper>
-        </OverviewWrapper>
+        </OverviewWrapper >
 
     )
 }
