@@ -1,6 +1,7 @@
 import FirebaseProvider from "../utils/firebase/firebase"
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { THEME2 } from "../components/variable"
+import { createGlobalStyle } from 'styled-components'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 const theme = createMuiTheme({
@@ -24,12 +25,12 @@ const theme = createMuiTheme({
             fontWeight: 500,
             letterSpacing: 8,
         },
-        body1:{
+        body1: {
             fontSize: 12,
             fontWeight: 400,
             color: THEME2.dividerColor,
         },
-        body2:{
+        body2: {
             fontWeight: 400,
         }
     },
@@ -47,7 +48,7 @@ const theme = createMuiTheme({
         MuiButton: {
             root: {
                 borderRadius: 10,
-                fontSize:11,
+                fontSize: 11,
             }
 
 
@@ -55,15 +56,25 @@ const theme = createMuiTheme({
     },
 })
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`
+
 function MyApp({ Component, pageProps }) {
 
-    return (<><style jsx global>
-        {`
+    return (<>
+        <GlobalStyle />
+        <style jsx global>
+            {`
           * {
             font-family: ${THEME2.fontFam};
           }
         `}
-      </style><MuiThemeProvider theme={theme}><FirebaseProvider><Component {...pageProps} /></FirebaseProvider></MuiThemeProvider></>)
+        </style><MuiThemeProvider theme={theme}><FirebaseProvider><Component {...pageProps} /></FirebaseProvider></MuiThemeProvider></>)
 }
 
 export default MyApp
