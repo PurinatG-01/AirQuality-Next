@@ -256,6 +256,7 @@ const RawDataLabel = styled(motion.span)`
 `
 
 export default function Overview(props) {
+    
     const { setPage, PAGE } = props
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointL}px)`);
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
@@ -267,13 +268,11 @@ export default function Overview(props) {
     const [factorDisplayInfo, setFactorDisplayInfo] = useState()
     const [metaFactorDialog, setMetaFactorDialog] = useState(false)
 
-
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
     // Score of selected device
     const { setScoreDevice, deviceScore, resetScore } = useScore()
     const { setScoreDevices, devicesScores } = useMultipleScores()
-
 
     // Waiting for getting devicesData
     useEffect(() => {
