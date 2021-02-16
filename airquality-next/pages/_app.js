@@ -2,7 +2,6 @@ import FirebaseProvider from "../utils/firebase/firebase"
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { THEME2 } from "../components/variable"
 import { createGlobalStyle } from 'styled-components'
-import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 const theme = createMuiTheme({
     palette: {
