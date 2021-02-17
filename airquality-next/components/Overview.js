@@ -415,73 +415,75 @@ export default function Overview(props) {
                         (<BarWrapper>
                             {deviceScore ? (
                                 <>
+                                {/* CO */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.co}
-                                        score={Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "co")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.co}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[0].AQI) ?? 0}
+                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "co")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-
+                                {/* Temperature */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.temp}
-                                        score={Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "temperature")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.temp}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[1].AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "temperature")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-
+                                {/* Humidity */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.humidity}
-                                        score={Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "humidity")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.humidity}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[2].AQI) ?? 0}
+                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "humidity")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-
-                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }}
-                                        whileHover={{ y: -8 }}
-                                        color={THEME2.factors.pressure}
-                                        score={Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
-                                    >
-                                        <FactorBarScore color={THEME2.factors.pressure}>
-                                            <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[3].AQI) ?? 0}
-                                            </FactorTextScore>
-                                        </FactorBarScore>
-                                    </FactorScore>
-
+                                {/* VOC */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.voc}
-                                        score={Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "VOC")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.voc}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[4].AQI) ?? 0}
+                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "VOC")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
+                                {/* PM 2.5 */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.pm}
-                                        score={Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm2_5")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.pm}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score[5].AQI) ?? 0}
+                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm2_5")).AQI) ?? 0}
+                                            </FactorTextScore>
+                                        </FactorBarScore>
+                                    </FactorScore>
+                                {/* PM 10.0 */}
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
+                                        whileHover={{ y: -8 }}
+                                        color={THEME2.factors.pm}
+                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm10_0")).AQI) ?? 0}
+                                    >
+                                        <FactorBarScore color={THEME2.factors.pm}>
+                                            <FactorTextScore matches={matches} matches2={matches2}>
+                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm10_0")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
@@ -490,7 +492,7 @@ export default function Overview(props) {
                         (<NoDeviceLabel>
                             <div>
                                 Please add your device to view data
-                                </div>
+                            </div>
                         </NoDeviceLabel>)
                     }
                     {/* Factor info display */}
