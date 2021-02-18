@@ -11,6 +11,7 @@ import FactorDialog from "./FactorDialog"
 import useUsers from "./hooks/useUsers"
 import useScore, { useMultipleScores } from "./hooks/useScore"
 import useAirData from "./hooks/useAirData"
+import Loading from "./Loading"
 
 const OverviewWrapper = styled(motion.div)`
     display: flex;
@@ -312,7 +313,7 @@ export default function Overview(props) {
                 </Device>
             )))
         } else {
-            return (<>Loading...</>)
+            return (<Loading />)
         }
     }
 
@@ -487,7 +488,7 @@ export default function Overview(props) {
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-                                </>) : (<>Loading...</>)}
+                                </>) : (<Loading />)}
                         </BarWrapper>) :
                         (<NoDeviceLabel>
                             <div>
@@ -572,7 +573,7 @@ export default function Overview(props) {
                                                 {airData?.v7 ?? 0} µg/m3
                                                 </RawDataLabel>
                                         </RawDataRowWrapper>
-                                    </>) : <>Loading...</>}
+                                    </>) : <Loading />}
                                 </>)
                                 :
                                 (<NoDeviceLabel>

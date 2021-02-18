@@ -8,7 +8,7 @@ import { MenuItem, Select, FormControl, useMediaQuery, IconButton, Button } from
 import DownloadIcon from '@material-ui/icons/GetAppRounded';
 import useUsers from "./hooks/useUsers"
 import useScore from './hooks/useScore';
-
+import Loading from "./Loading"
 
 const ItemGrid = styled(motion.div)`
     ${(props) => props.width && `width : ${props.width}`};
@@ -138,7 +138,7 @@ export default function LiveData(props) {
                                 />
                             </ItemGrid>
                         ) :
-                            (<>Loading...</>)
+                            (<Loading />)
                         }
 
                     </TopWrapper>
@@ -253,7 +253,7 @@ export default function LiveData(props) {
                                     ></LineChart>
                                 </ItemGrid>
                             </>
-                        ) : <>Loading ...</>}
+                        ) : <Loading />}
                     </BottomWrapper>
 
                 </> :
