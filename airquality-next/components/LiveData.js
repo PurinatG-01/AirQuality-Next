@@ -169,7 +169,7 @@ export default function LiveData(props) {
                         <IconButton
                             color="primary"
                             onClick={() => {
-                                getHistoricalData(selectedDevice.key, "Test-Prototype-1.csv", 10);
+                                getHistoricalData(selectedDevice.key, `${selectedDevice.name}.csv`, 10);
                             }}
                         >
                             <DownloadIcon />

@@ -18,7 +18,6 @@ const LoadingLabel = styled.span`
     font-weight: 100;
     margin-top: 16px;
     color: ${THEME2.primary};
-    
 `
 
 export default function Loading() {
