@@ -384,10 +384,10 @@ export default function Overview(props) {
                                     <FactorCircle color={THEME2.factors.pressure} />
                                     Pressure
                                 </motion.div>
-                                <motion.div style={{ color: THEME2.factors.voc, display: "flex", alignItems: "center", marginBottom: 16 }}>
+                                {/* <motion.div style={{ color: THEME2.factors.voc, display: "flex", alignItems: "center", marginBottom: 16 }}>
                                     <FactorCircle color={THEME2.factors.voc} />
                                     VOC
-                                </motion.div>
+                                </motion.div> */}
                                 <motion.div style={{ color: THEME2.factors.pm, display: "flex", alignItems: "center", marginBottom: 16 }}>
                                     <FactorCircle color={THEME2.factors.pm} />
                                     PM
@@ -453,7 +453,7 @@ export default function Overview(props) {
                                         </FactorBarScore>
                                     </FactorScore>
                                 {/* VOC */}
-                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
+                                    {/* <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.voc}
                                         score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "VOC")).AQI) ?? 0}
@@ -463,7 +463,7 @@ export default function Overview(props) {
                                             {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "VOC")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
-                                    </FactorScore>
+                                    </FactorScore> */}
                                 {/* PM 2.5 */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
                                         whileHover={{ y: -8 }}

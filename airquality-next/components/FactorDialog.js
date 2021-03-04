@@ -10,17 +10,15 @@ import {
 } from "framer-motion"
 import { THEME2 } from './variable'
 
-const ContentWrapper = styled(DialogContent)
-    `
-display :flex;
-flex-direction: column;
-flex-wrap: wrap;
-min-width: 300px
-width: 480px;
+const ContentWrapper = styled(DialogContent)`
+    display :flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-width: 300px
+    width: 480px;
 `
 
 const Paragraph = styled(motion.p)`
-
     margin-top: 16px;
     font-size: 12px;
     font-weight: 100;
@@ -28,8 +26,6 @@ const Paragraph = styled(motion.p)`
     // text-indent: 24px;
     line-height: 1.6;
     text-align: center;
-
-
 `
 
 export default function FactorDialog(props) {
