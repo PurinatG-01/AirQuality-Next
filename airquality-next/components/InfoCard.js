@@ -74,8 +74,7 @@ export default function InfoCard(props) {
                 {info.title}
                 </InfoTitle>
             <InfoDescription>
-                
-                {info.description}
+                {info.basicInfo[0]}
             </InfoDescription>
         </CardWrapper>
         <FactorDialog data={info} open={isOpen} onClose={()=>{setIsOpen(false)}} />

@@ -40,7 +40,7 @@ export default function Information() {
     const factorsInfo = INFO.factors
     const hardwareInfo = INFO.hardware
 
-    const listFactors = (infos) => (infos.map((e) => (
+    const listCards = (infos) => (infos.map((e) => (
         <InfoCard info={e}></InfoCard>
     )))
 
@@ -51,13 +51,13 @@ export default function Information() {
                 Factors
             </CategoryTitle>
             <CategoryWrapper>
-                {listFactors(factorsInfo)}
+                {listCards(factorsInfo)}
             </CategoryWrapper>
             <CategoryTitle>
                 Hardware
             </CategoryTitle>
             <CategoryWrapper>
-                {listFactors(hardwareInfo)}
+                {listCards(hardwareInfo)}
             </CategoryWrapper>
         </InformationWrapper>
     )

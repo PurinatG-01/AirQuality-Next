@@ -19,10 +19,6 @@ const Icon = (icon) => {
     return (icon ?? <></>)
 }
 
-
-
-
-
 export default function main() {
     const PAGE = [
         { icon: Icon(DashboardIcon), tag: "Overview" },
@@ -44,8 +40,6 @@ export default function main() {
     ]
 
     const [currentComponent, setCurrentComponent] = useState(RenderComponentPage[0])
-
-
 
     useEffect(() => {
         setCurrentComponent(RenderComponentPage.find((el) => el.tag == page))

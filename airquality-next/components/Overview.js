@@ -465,7 +465,7 @@ export default function Overview(props) {
                                         </FactorBarScore>
                                     </FactorScore> */}
                                 {/* PM 2.5 */}
-                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.pm}
                                         score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm2_5")).AQI) ?? 0}
@@ -477,7 +477,7 @@ export default function Overview(props) {
                                         </FactorBarScore>
                                     </FactorScore>
                                 {/* PM 10.0 */}
-                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[5]); }}
+                                    <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.pm}
                                         score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm10_0")).AQI) ?? 0}

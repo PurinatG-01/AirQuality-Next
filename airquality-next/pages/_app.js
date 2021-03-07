@@ -10,7 +10,6 @@ const theme = createMuiTheme({
             contrastText: THEME2.white,
         },
         secondary: { main: THEME2.secondary },
-
     },
     typography: {
         fontFamily: THEME2.fontFam,
@@ -26,8 +25,8 @@ const theme = createMuiTheme({
         },
         body1: {
             fontSize: 12,
-            fontWeight: 400,
-            color: THEME2.dividerColor,
+            fontWeight: 100,
+            color: THEME2.black,
         },
         body2: {
             fontWeight: 400,
