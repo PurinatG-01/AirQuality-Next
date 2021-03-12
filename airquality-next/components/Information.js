@@ -53,12 +53,12 @@ export default function Information() {
             <CategoryWrapper>
                 {listCards(factorsInfo)}
             </CategoryWrapper>
-            <CategoryTitle>
+            {/* <CategoryTitle>
                 Hardware
             </CategoryTitle>
             <CategoryWrapper>
                 {listCards(hardwareInfo)}
-            </CategoryWrapper>
+            </CategoryWrapper> */}
         </InformationWrapper>
     )
 }
