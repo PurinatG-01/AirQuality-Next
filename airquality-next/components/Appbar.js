@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Typography} from "@material-ui/core"
+import { Typography, IconButton } from "@material-ui/core"
 import { THEME2 } from "./variable";
 import { motion } from "framer-motion"
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import LogoW from "./LogoW"
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -17,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { THEME } from "./variable";
 import useUsers from "./hooks/useUsers"
 import { useRouter } from "next/router"
-
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles({
   paper: {
@@ -65,7 +64,6 @@ const EmailWrapper = styled(motion.div)`
 const UsernameWrapper = styled.div`
   display: flex;
   align-items:center;
-  flex-direction: column;
   max-width: 100px;
   
 `
@@ -94,6 +92,15 @@ const CenterWrapper = styled.div`
 const ProfileIcon = styled(AccountCircleIcon)`
   margin-right: 8px;
   font-size: 32px !important;
+  color: ${props => (props.matches ? THEME2.primary : THEME2.white)};
+`
+
+const NotificationWrapper = styled(IconButton)`
+  background: red;
+`
+
+const CustomNotificationsIcon = styled(NotificationsIcon)`
+  font-size: 24px !important;
   color: ${props => (props.matches ? THEME2.primary : THEME2.white)};
 `
 
@@ -161,19 +168,22 @@ export default function Appbar(props) {
     </DrawerListRoot>
   );
 
-  return ( matches ? <></> : 
+  return (matches ? <></> :
     <AppbarWrapper matches={matches} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1.0, y: hideNav ? -100 : 0 }} >
       <AppbarContentWrapper>
         <IconButton
-          style={{ color: THEME2.white}}
+          style={{ color: THEME2.white }}
           onClick={() => setOpen(true)}
         >
           <MenuIcon />
         </IconButton>
         <CenterWrapper>
-            <LogoW size="48px" />
+          <LogoW size="48px" />
         </CenterWrapper>
         <UsernameWrapper>
+          <NotificationWrapper >
+            <CustomNotificationsIcon matches={matches} />
+          </NotificationWrapper>
           <EmailWrapper onClick={setProfileOpen}>
             <ProfileIcon matches={matches} />
             <Typography style={{ display: !matches ? "none" : "block", color: THEME2.primary }} variant="body1" align="center">{userData[1]?.firstname ?? "Anonymous"}</Typography>
@@ -195,10 +205,10 @@ export default function Appbar(props) {
         >
           {list()}
         </SwipeableDrawer>
-        
+
       </AppbarContentWrapper>
     </AppbarWrapper>
-        )
-  
+  )
+
 }
 

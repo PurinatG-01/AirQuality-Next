@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { THEME2 } from "./variable";
 import Appbar from "./Appbar";
 import styled from "styled-components";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router"
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Logo from './Logo'
 import ProfileDialog from "./ProfileDialog";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const LayoutWrapper = styled.div`
 
@@ -65,11 +66,11 @@ const PageLayout2 = (props) => {
   const { signOut } = useUsers()
   const router = useRouter()
 
-  const [profileOpen, setProfileOpen ] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   const list = () => (
     <CustomSidebar>
-      <LogoWrapper onClick={()=>{ setPage(PAGE[0].tag);}}>
+      <LogoWrapper onClick={() => { setPage(PAGE[0].tag); }}>
         <Logo size="48px"></Logo>
       </LogoWrapper>
       <CustomTab>
@@ -78,10 +79,22 @@ const PageLayout2 = (props) => {
             setProfileOpen(true)
           }}
             button
-            key={"Sign out"}
+            key={"Profile"}
           >
             <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
               <AccountCircleIcon style={{ color: THEME2.primary }} />
+            </ListItemIcon>
+          </ListItem>
+        </motion.div>
+        <motion.div>
+          <ListItem onClick={() => {
+            alert("> notification")
+          }}
+            button
+            key={"Notification"}
+          >
+            <ListItemIcon style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+              <NotificationsIcon style={{ color: THEME2.primary }} />
             </ListItemIcon>
           </ListItem>
         </motion.div>
@@ -125,7 +138,7 @@ const PageLayout2 = (props) => {
       <LayoutWrapper>
         {matches ? <></>
           :
-          <Appbar setProfileOpen={()=>{setProfileOpen(true)}} PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
+          <Appbar setProfileOpen={() => { setProfileOpen(true) }} PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
         }
         <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px", flexGrow: 1 }}>
           <Container maxWidth="xl" style={{ display: "flex", margin: "40px auto 30px auto" }}>
@@ -134,7 +147,7 @@ const PageLayout2 = (props) => {
         </div>
       </LayoutWrapper>
       {/* Profile Dialog */}
-      <ProfileDialog onClose={()=>{setProfileOpen(false)}} open={profileOpen} />
+      <ProfileDialog onClose={() => { setProfileOpen(false) }} open={profileOpen} />
     </motion.div>
   );
 };
