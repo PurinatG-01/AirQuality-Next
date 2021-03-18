@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { THEME2 } from "./variable";
 import Appbar from "./Appbar";
 import styled from "styled-components";
@@ -14,6 +14,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Logo from './Logo'
 import ProfileDialog from "./ProfileDialog";
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationPopover from './NotificationPopover'
+import useEvent from './hooks/useEvent'
 
 const LayoutWrapper = styled.div`
 
@@ -66,7 +68,17 @@ const PageLayout2 = (props) => {
   const { signOut } = useUsers()
   const router = useRouter()
 
+  const { devicesData } = useUsers()
+  const { setDevices, events } = useEvent()
+
   const [profileOpen, setProfileOpen] = useState(false)
+  const [notiPopoverOpen, setNotiPopoverOpen] = useState(false)
+
+  useEffect(() => {
+    if (devicesData.length >= 1) {
+      setDevices(devicesData)
+    }
+  }, [devicesData])
 
   const list = () => (
     <CustomSidebar>
@@ -88,7 +100,7 @@ const PageLayout2 = (props) => {
         </motion.div>
         <motion.div>
           <ListItem onClick={() => {
-            alert("> notification")
+            setNotiPopoverOpen(true)
           }}
             button
             key={"Notification"}
@@ -141,6 +153,7 @@ const PageLayout2 = (props) => {
           <Appbar setProfileOpen={() => { setProfileOpen(true) }} PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
         }
         <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px", flexGrow: 1 }}>
+          <NotificationPopover data={events} open={notiPopoverOpen} onClose={() => { setNotiPopoverOpen(false) }} />
           <Container maxWidth="xl" style={{ display: "flex", margin: "40px auto 30px auto" }}>
             {props.children}
           </Container>

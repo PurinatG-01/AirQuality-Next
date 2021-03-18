@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ScoreSharp } from '@material-ui/icons'
-
-
-const data_server_address = "139.59.126.32"
+import { data_server_address } from '../variable'
 
 const getScore = async (authToken) => {
     return await axios.get(`http://${data_server_address}:8081/api/airdata/score/getByDeviceId/${authToken}`)

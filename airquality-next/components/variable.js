@@ -1,4 +1,4 @@
-
+export const data_server_address = '139.59.126.32'
 
 export const THEME = {
     primary: "#fefefe",
@@ -108,4 +108,10 @@ export const INFO = {
             "Do not burn garbage or stop burning incense because the smoke from burning produces toxic dust."],
     },
     ],
+}
+
+export const EVENT = {
+
+    dialog: "Device detect an unhealthy enviroment on realted factors"
+
 }
