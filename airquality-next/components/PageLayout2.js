@@ -150,10 +150,10 @@ const PageLayout2 = (props) => {
       <LayoutWrapper>
         {matches ? <></>
           :
-          <Appbar setProfileOpen={() => { setProfileOpen(true) }} PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
+          <Appbar setNotiPopoverOpen={()=>{ setNotiPopoverOpen(true)}} setProfileOpen={() => { setProfileOpen(true) }} PAGE={PAGE} setPage={setPage} matches={matches} userData={userData} />
         }
         <div style={{ padding: matches ? "40px 140px 0 140px" : "40px 0px 0 0px", flexGrow: 1 }}>
-          <NotificationPopover data={events} open={notiPopoverOpen} onClose={() => { setNotiPopoverOpen(false) }} />
+          <NotificationPopover matches={matches} data={events} open={notiPopoverOpen} onClose={() => { setNotiPopoverOpen(false) }} />
           <Container maxWidth="xl" style={{ display: "flex", margin: "40px auto 30px auto" }}>
             {props.children}
           </Container>

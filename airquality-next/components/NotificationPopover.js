@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import { THEME2, EVENT } from './variable'
 
 const PopoverContentWrapper = styled.div`
-min-width: 300px;
-height: 400px;
-overflow-y :scroll;
-overflow-x : hidden;
-margin: 16px;
+    min-height: 400px;
+    overflow-y :scroll;
+    overflow-x : hidden;
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 `
 
 const PopoverList = styled.div`
@@ -27,10 +29,13 @@ font-weight: 100;
 
 const EventContent = styled(Typography)`
     font-weight: 100;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100% !important;
 `
 
 export default function NotificationPopOver(props) {
-    const { open, onClose, data } = props
+    const { open, onClose, data, matches } = props
 
     const listEvent = () => (
         data.map((event) => {
@@ -47,13 +52,13 @@ export default function NotificationPopOver(props) {
                     </EventTitle>
                     <EventContent>
                         {EVENT.dialog}
-                        <br/>
-                        Factors : {event.event_factors.map((factor,index) => {
+                        <br />
+                        Factors : {event.event_factors.map((factor, index) => {
                             let str = factor
-                            if(index != event.event_factors.length - 1) str += ', '
+                            if (index != event.event_factors.length - 1) str += ', '
                             return str
-                    })}
-                        </EventContent>
+                        })}
+                    </EventContent>
                 </PopoverList>
             )
         })
@@ -72,10 +77,16 @@ export default function NotificationPopOver(props) {
                 horizontal: 'left',
             }}
             style={{
-                top: '36%',
-                left: '112px',
+                top: matches ? '36%' : '72px',
+                left: matches ? '112px' : '0',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                flexWrap: 'wrap',
+            }}
+            PaperProps={{
+                style: {
+                    right: matches ? 'auto': 0,
+                }
             }}
             elevation={1}
         >

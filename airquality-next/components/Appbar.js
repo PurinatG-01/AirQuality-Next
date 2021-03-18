@@ -105,7 +105,7 @@ const CustomNotificationsIcon = styled(NotificationsIcon)`
 `
 
 export default function Appbar(props) {
-  const { matches, userData, setPage, PAGE, setProfileOpen } = props
+  const { matches, userData, setPage, PAGE, setProfileOpen, setNotiPopoverOpen } = props
   const [open, setOpen] = React.useState(false);
   const { signOut } = useUsers();
   const router = useRouter();
@@ -181,7 +181,7 @@ export default function Appbar(props) {
           <LogoW size="48px" />
         </CenterWrapper>
         <UsernameWrapper>
-          <NotificationWrapper >
+          <NotificationWrapper onClick={setNotiPopoverOpen}>
             <CustomNotificationsIcon matches={matches} />
           </NotificationWrapper>
           <EmailWrapper onClick={setProfileOpen}>
