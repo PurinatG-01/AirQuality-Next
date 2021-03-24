@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { THEME2, INFO } from './variable'
 import InfoCard from './InfoCard'
+import DeviceCard from './DeviceCard'
 
 const InformationWrapper = styled(motion.div)`
     
@@ -40,9 +41,13 @@ export default function Information() {
     const factorsInfo = INFO.factors
     const hardwareInfo = INFO.hardware
 
-    const listCards = (infos) => (infos.map((e) => (
+    const listFactorCards = (infos) => (infos.map((e) => (
         <InfoCard info={e}></InfoCard>
     )))
+
+    const listDeviceCards = (infos) => (infos.map((e)=>(
+        <DeviceCard info={e}></DeviceCard>
+    ) ))
 
     return (
         <InformationWrapper>
@@ -51,14 +56,14 @@ export default function Information() {
                 Factors
             </CategoryTitle>
             <CategoryWrapper>
-                {listCards(factorsInfo)}
+                {listFactorCards(factorsInfo)}
             </CategoryWrapper>
-            {/* <CategoryTitle>
+            <CategoryTitle>
                 Hardware
             </CategoryTitle>
             <CategoryWrapper>
-                {listCards(hardwareInfo)}
-            </CategoryWrapper> */}
+                {listDeviceCards(hardwareInfo)}
+            </CategoryWrapper>
         </InformationWrapper>
     )
 }

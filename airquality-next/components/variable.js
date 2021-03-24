@@ -87,26 +87,21 @@ export const INFO = {
     }
     ],
     hardware: [{
-        title: "Micro Controller",
-        basicInfo: ["PM stands for particulate matter or particle pollution. For the PM 2.5 is the particles smaller than 2.5 microns, or approximately one 25th the diameter of a human hair. Particulate matter is a mixture of solid particles and liquid droplets that are found in the air. It can’t see in the air but can only be detected by using an electron microscope"],
-        humanEffectInfo: ["PM 2.5 is the main cause of reduced visibility in the city. It can cause several health problems. Include respiratory systems such as stinging, stuffy nose, cough, recurrent allergies. In addition, the dermal system and Long-term exposure can cause inflammation of the cells in the body. Increased risk of heart failure and it can cause lung cancer."],
-        suggestionInfo: ["Use an air purifier to make your house air free from PM 2.5", "Always keep your house clean",
-            "Reducing the use of private cars is equal to reducing the increase of dust in the air.",
-            "Planting trees to reduce toxicity Choose a plant with rough and hairy leaves because that type of leaves are highly effective in dust trapping.",
-            "Check the car condition regularly and turn off the engine when parking the car every time. To reduce the smoke from the exhaust pipe that causes pm 2.5.",
-            "If you want to build a building, renovate or repair your home, you should select the dust reduction product.",
-            "Do not burn garbage or stop burning incense because the smoke from burning produces toxic dust."],
-    }, {
-        title: "Sensors",
-        basicInfo: ["PM stands for particulate matter or particle pollution. For the PM 2.5 is the particles smaller than 2.5 microns, or approximately one 25th the diameter of a human hair. Particulate matter is a mixture of solid particles and liquid droplets that are found in the air. It can’t see in the air but can only be detected by using an electron microscope"],
-        humanEffectInfo: ["PM 2.5 is the main cause of reduced visibility in the city. It can cause several health problems. Include respiratory systems such as stinging, stuffy nose, cough, recurrent allergies. In addition, the dermal system and Long-term exposure can cause inflammation of the cells in the body. Increased risk of heart failure and it can cause lung cancer."],
-        suggestionInfo: ["Use an air purifier to make your house air free from PM 2.5", "Always keep your house clean",
-            "Reducing the use of private cars is equal to reducing the increase of dust in the air.",
-            "Planting trees to reduce toxicity Choose a plant with rough and hairy leaves because that type of leaves are highly effective in dust trapping.",
-            "Check the car condition regularly and turn off the engine when parking the car every time. To reduce the smoke from the exhaust pipe that causes pm 2.5.",
-            "If you want to build a building, renovate or repair your home, you should select the dust reduction product.",
-            "Do not burn garbage or stop burning incense because the smoke from burning produces toxic dust."],
+        title: "Arduin Uno WiFi Rev 2",
+        overview: "The Arduino UNO WiFi Rev 2 is one type of microcontroller board in the UNO family manufactured by Arduino. The Arduino Uno WiFi Rev2 is an Arduino Uno Rev 3 with a built-in WiFi module. This board is upgraded from the previous version of Arduino Uno WiFi which in this new version retains the stability but with the addition of some other enhancements. The Arduino Uno WiFi Rev2 is a one-stop-solution for many basic IoT application scenarios, such as building a network of sensors connected to an office or home router or building BLE devices that transmit data to a phone. It is programmed using the Arduino software (IDE) and can work both online and offline. Therefore, the Arduino UNO WiFi Rev 2 is the easiest point of entry to basic IoT."
     },
+    {
+        title: "PMS7003",
+        overview: "PMS7003 is one type of digital universal particle concentration sensor manufactured by Plantower. This particulate matter sensor can be used to obtain the number of suspended particles in the air, including dust in the air. The module is small, slim, easy to use, and it can generally be used with a microcontroller to drive. It has UART communication. This sensor detects particles from 0 to 500 μg/m³, and the particle sizes detected are PM 1.0, PM 2.5, and PM 10. The smallest detectable particle size is 0.3 μm. The unit of the resulting from PMS7003 is micrograms per cubic meter (μg/m³)"
+    },
+    {
+        title: "BME680",
+        overview: "BME680 is an integrated environmental sensor manufactured by Bosch Sensortec. This module is developed to use for mobile applications and wearable devices where small dimensions and low power consumption are the main requirements. The BME680 is a digital 4-in-1 sensor, as it consists of 4 sensors that are integrated as a BME 680, which are gas, pressure, humidity, and temperature sensors, into 8-pin metal-lid 3.0 x 3.0 x 0.93 mm³ LGA package."
+    },
+    {
+        title: "MQ-9",
+        overview: "MQ-9 is a semiconductor sensor for carbon monoxide (CO) and combustible gas manufactured by Henan Hanwei Electronics Co., Ltd. The MQ-9 gas sensor is highly sensitive to CO, methane (CH4), and flammable gas. This module can be used to detect various gases containing CO and combustible gases, which are low-cost and suitable for different applications. The MQ-9 gas sensor contains a sensitive material, Cassiterite (SnO2), which has a lower conductivity than in fresh air."
+    }
     ],
 }
 
