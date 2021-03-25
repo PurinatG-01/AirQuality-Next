@@ -45,13 +45,23 @@ export default function Information() {
         <InfoCard info={e}></InfoCard>
     )))
 
-    const listDeviceCards = (infos) => (infos.map((e)=>(
+    const listDeviceCards = (infos) => (infos.map((e) => (
         <DeviceCard info={e}></DeviceCard>
-    ) ))
+    )))
 
     return (
         <InformationWrapper>
-            <motion.h1 style={{ fontSize: 24, textAlign: "center", color: THEME2.primary, fontWeight: 400, marginBottom: 24 }}>Information</motion.h1>
+            <motion.h1
+                style={{
+                    fontSize: 24,
+                    textAlign: "center",
+                    color: THEME2.primary,
+                    fontWeight: 400,
+                    marginBottom: 24
+                }}
+            >
+                Information
+            </motion.h1>
             <CategoryTitle>
                 Factors
             </CategoryTitle>
