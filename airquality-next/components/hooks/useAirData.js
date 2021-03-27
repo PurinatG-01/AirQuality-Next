@@ -77,7 +77,7 @@ export default function useAirData() {
 export const useHistoricalData = () => {
   const getHistoricalData = async (deviceID, fileName, limit) => {
     try {
-      const historicalData = await axios.get(`http://${data_server_address}:8081/api/airdata/rawData/getHistoricalByDeviceId/${deviceID}?limit=1000`)
+      const historicalData = await axios.get(`http://${data_server_address}:8081/api/airdata/rawData/getHistoricalByDeviceId/${deviceID}`)
       fileDownload(historicalData.data, fileName)
     } catch (error) {
       console.error(`> error : ${error}`);
