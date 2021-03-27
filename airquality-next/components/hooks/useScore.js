@@ -13,25 +13,44 @@ const getScores = async (devices) => {
     })
     return await axios.all(requests)
 }
+
+
+
 export default function useScore() {
 
     const [device, setDevice] = useState([])
+    const [isOffline, setIsOffline] = useState('-')
     const [deviceScore, setDeviceScore] = useState()
+    const [retrieveData, setRetrieveData] = useState(false)
 
     useEffect(() => {
         const interval = setInterval(() => {
-            getScore(device.key)
+            axios.get(`http://${data_server_address}:8081/api/airdata/getDeviceStatus/${device.key}`)
                 .then((response) => {
-                    // console.log(response.data[0])
-                    setDeviceScore({ ...response.data[0], name: device.name })
+                    if (response.data || retrieveData) {
+                        setIsOffline('online')
+                        getScore(device.key)
+                            .then((response) => {
+                                // console.log(response.data[0])
+                                setDeviceScore({ ...response.data[0], name: device.name })
+                            }).catch((error) => {
+                                console.log("> error : ", error)
+                            })
+                    } else {
+                        setIsOffline('offline')
+                    }   
                 }).catch((error) => {
                     console.log("> error : ", error)
                 })
+
         }, 5000)
         return () => clearInterval(interval)
     }, [device])
 
     return {
+        setIsScoreOffline: setIsOffline, 
+        setRetrieveScoreData: setRetrieveData,
+        isOffline,
         setScoreDevice: setDevice,
         deviceScore,
         resetScore: () => {

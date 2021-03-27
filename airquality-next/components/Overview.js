@@ -257,12 +257,12 @@ const RawDataLabel = styled(motion.span)`
 `
 
 export default function Overview(props) {
-    
+
     const { setPage, PAGE } = props
     const matches = useMediaQuery(`(min-width: ${THEME2.breakpointL}px)`);
     const matches2 = useMediaQuery(`(min-width: ${THEME2.breakpointM}px)`);
     const { devicesData } = useUsers()
-    const { setAuthToken, airData } = useAirData()
+    const { setAuthToken, airData, setRetrieveAirData } = useAirData()
 
     const [overallScore, setOverallScore] = useState({ score: "-", level: "good" })
     const [isFactorInfoDialogOpen, setIsFactorInfoDialogOpen] = useState(false)
@@ -272,8 +272,15 @@ export default function Overview(props) {
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
 
     // Score of selected device
-    const { setScoreDevice, deviceScore, resetScore } = useScore()
+    const { setScoreDevice, deviceScore, resetScore, setRetrieveScoreData } = useScore()
     const { setScoreDevices, devicesScores } = useMultipleScores()
+
+    useEffect(() => {
+        // Manually get data even it offline
+        setRetrieveAirData(true)
+        setRetrieveScoreData(true)
+    }, [])
+
 
     // Waiting for getting devicesData
     useEffect(() => {
@@ -416,43 +423,43 @@ export default function Overview(props) {
                         (<BarWrapper>
                             {deviceScore ? (
                                 <>
-                                {/* CO */}
+                                    {/* CO */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[0]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.co}
-                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "co")).AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e) => (e.name == "co")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.co}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "co")).AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e) => (e.name == "co")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-                                {/* Temperature */}
+                                    {/* Temperature */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[1]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.temp}
-                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "temperature")).AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e) => (e.name == "temperature")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.temp}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                                {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "temperature")).AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e) => (e.name == "temperature")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-                                {/* Humidity */}
+                                    {/* Humidity */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[2]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.humidity}
-                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "humidity")).AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e) => (e.name == "humidity")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.humidity}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "humidity")).AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e) => (e.name == "humidity")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-                                {/* VOC */}
+                                    {/* VOC */}
                                     {/* <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.voc}
@@ -464,27 +471,27 @@ export default function Overview(props) {
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore> */}
-                                {/* PM 2.5 */}
+                                    {/* PM 2.5 */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[3]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.pm}
-                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm2_5")).AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e) => (e.name == "pm2_5")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.pm}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm2_5")).AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e) => (e.name == "pm2_5")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>
-                                {/* PM 10.0 */}
+                                    {/* PM 10.0 */}
                                     <FactorScore onClick={() => { setIsFactorInfoDialogOpen(true); setFactorDisplayInfo(INFO.factors[4]); }}
                                         whileHover={{ y: -8 }}
                                         color={THEME2.factors.pm}
-                                        score={Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm10_0")).AQI) ?? 0}
+                                        score={Math.round(deviceScore?.factors_score.find((e) => (e.name == "pm10_0")).AQI) ?? 0}
                                     >
                                         <FactorBarScore color={THEME2.factors.pm}>
                                             <FactorTextScore matches={matches} matches2={matches2}>
-                                            {Math.round(deviceScore?.factors_score.find((e)=>(e.name == "pm10_0")).AQI) ?? 0}
+                                                {Math.round(deviceScore?.factors_score.find((e) => (e.name == "pm10_0")).AQI) ?? 0}
                                             </FactorTextScore>
                                         </FactorBarScore>
                                     </FactorScore>

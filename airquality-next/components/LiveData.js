@@ -10,6 +10,7 @@ import useUsers from "./hooks/useUsers"
 import useScore from './hooks/useScore';
 import Loading from "./Loading"
 import axios from 'axios'
+import Offline from './Offline'
 
 const ItemGrid = styled(motion.div)`
     ${(props) => props.width && `width : ${props.width}`};
@@ -77,10 +78,9 @@ export default function LiveData(props) {
     const { getHistoricalData } = useHistoricalData()
 
     const { airData, setAuthToken, resetAirData } = useAirData()
-    const { setScoreDevice, deviceScore, resetScore } = useScore()
+    const { setScoreDevice, deviceScore, resetScore, isOffline, setIsScoreOffline } = useScore()
 
     const [selectedDevice, setSelectedDevice] = useState({ name: "", key: "" })
-    const [isDeviceOnline, setIsDeviceOnline] = useState(false)
 
     useEffect(() => {
         setAuthToken(selectedDevice.key)
@@ -112,6 +112,7 @@ export default function LiveData(props) {
         if (devicesData.length >= 1) {
             setScoreDevice(selectedDevice)
             setAuthToken(selectedDevice?.key ?? "")
+            setIsScoreOffline('-')
             // Clear all data in hook
             resetScore()
             resetAirData()
@@ -141,7 +142,7 @@ export default function LiveData(props) {
                         Device Score
             </motion.h2>
                     <TopWrapper>
-                        {!isDeviceOnline ? (<div>Device offline</div>) :
+                        {
                             deviceScore ? (
                                 <ItemGrid width="100%" height="500px" margin="0">
                                     <LineChart
@@ -153,7 +154,7 @@ export default function LiveData(props) {
                                     />
                                 </ItemGrid>
                             ) :
-                                (<Loading />)
+                                (isOffline == 'offline' ? <Offline>Device Offline</Offline> : <Loading />)
                         }
 
 
@@ -193,7 +194,7 @@ export default function LiveData(props) {
                     </motion.h2>
 
                     <BottomWrapper>
-                        {!isDeviceOnline ? (<div>Device offline</div>) :
+                        {
                             airData ? (
                                 <>
                                     <ItemGrid width="300px" height="240px">
@@ -270,7 +271,7 @@ export default function LiveData(props) {
                                         ></LineChart>
                                     </ItemGrid>
                                 </>
-                            ) : <Loading />
+                            ) : (isOffline == 'offline' ? <Offline>Device Offline</Offline> : <Loading />)
                         }
                     </BottomWrapper>
 

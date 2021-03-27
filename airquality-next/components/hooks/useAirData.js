@@ -37,27 +37,24 @@ const getAirData = async (authToken, setData) => {
 
 export default function useAirData() {
   const [authToken, setAuthToken] = useState("")
-
   const [dataState, setDataState] = useState();
-  // default data
-  // {
-  //   v0: 0,
-  //   v1: 0,
-  //   v2: 0,
-  //   v3: 0,
-  //   v4: 0,
-  //   v5: 0,
-  //   v6: 0,
-  //   v7: 0,
-  //   resCheck: false,
-  //   resApp: false,
-  // }
+  const [retrieveData, setRetrieveData] = useState(false)
 
   useEffect(() => {
     if (authToken != "") {
       getAirData(setDataState, authToken)
       const interval = setInterval(() => {
-        getAirData(authToken, setDataState)
+        axios.get(`http://${data_server_address}:8081/api/airdata/getDeviceStatus/${authToken}`)
+          .then((response) => {
+            if (response.data || retrieveData) {
+              getAirData(authToken, setDataState)
+            } else {
+              setDataState(undefined)
+            }
+          }).catch((error) => {
+            console.log("> error : ", error)
+          })
+
       }, 5000)
       return () => clearInterval(interval)
     }
@@ -65,6 +62,7 @@ export default function useAirData() {
   }, [authToken])
 
   return {
+    setRetrieveAirData: setRetrieveData,
     airData: dataState,
     setAuthToken,
     authToken,
