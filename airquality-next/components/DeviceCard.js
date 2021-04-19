@@ -7,7 +7,7 @@ import DeviceDialog from './DeviceDialog'
 const CardWrapper = styled(motion.div)`
 
     width: 200px;
-    height: 300px;
+    min-height: 200px;
     border-radius: 30px ;
     display: flex;
     // background: black;
@@ -15,6 +15,7 @@ const CardWrapper = styled(motion.div)`
     flex-direction: column;
     align-items: center;
     border: 1px solid ${THEME2.dividerColor};
+    overflow: hidden;
 
 `
 
@@ -50,12 +51,16 @@ const InfoDescription = styled(motion.p)`
 
 const InfoTitle = styled(motion.h6)`
 
-    font-size: 16px;
-    font-weight:400;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 4px;
     color: ${THEME2.primary};
     text-align : center;
-    margin: 8px auto;
+    margin: 8px;
     margin-top: 16px;
+    padding-bottom: 16px;
+    width: 100%;
+    border-bottom: 0.5px solid ${THEME2.dividerColor};
 
 `
 
@@ -67,9 +72,6 @@ export default function InfoCard(props) {
     return (
         <>
         <CardWrapper whileHover={{ y: -8}} onClick={()=>{setIsOpen(true)}}>
-            <IconWrapper>
-                
-            </IconWrapper>
             <InfoTitle>
                 {info.title}
                 </InfoTitle>

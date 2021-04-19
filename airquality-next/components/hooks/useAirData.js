@@ -7,7 +7,6 @@ const data_server_address = "139.59.126.32"
 
 
 // Current hook for get air data
-
 const getAirData = async (authToken, setData) => {
 
   axios
