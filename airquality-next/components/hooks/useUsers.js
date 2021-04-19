@@ -6,11 +6,14 @@ export const defaultError = { message: null }
 
 const checkExistName = (name, devices) => {
     let result;
-    devices.forEach((e) => {
-        if (e.name == name) {
-            result = true
-        }
-    })
+    if(devices){
+        devices.forEach((e) => {
+            if (e.name == name) {
+                result = true
+            }
+        })
+    }
+    
 
     return result ?? false
 }
