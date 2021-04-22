@@ -387,14 +387,6 @@ export default function Overview(props) {
                                     <FactorCircle color={THEME2.factors.humidity} />
                                     Humidity
                                 </motion.div>
-                                <motion.div style={{ color: THEME2.factors.pressure, display: "flex", alignItems: "center", marginBottom: 16 }}>
-                                    <FactorCircle color={THEME2.factors.pressure} />
-                                    Pressure
-                                </motion.div>
-                                {/* <motion.div style={{ color: THEME2.factors.voc, display: "flex", alignItems: "center", marginBottom: 16 }}>
-                                    <FactorCircle color={THEME2.factors.voc} />
-                                    VOC
-                                </motion.div> */}
                                 <motion.div style={{ color: THEME2.factors.pm, display: "flex", alignItems: "center", marginBottom: 16 }}>
                                     <FactorCircle color={THEME2.factors.pm} />
                                     PM

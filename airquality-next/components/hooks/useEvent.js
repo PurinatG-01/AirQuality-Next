@@ -18,12 +18,15 @@ export default function useEvent() {
     const [events, setEvents] = useState([])
 
     useEffect(() => {
-        getEvents(devices)
+        const interval = setInterval(() => {
+            getEvents(devices)
             .then((response) => {
                 setEvents(response.data)
             }).catch((error) => {
                 console.log("> error : ", error)
             })
+        }, 5000)
+        return () => clearInterval(interval)
     }, [devices])
 
     return { setDevices, events }
