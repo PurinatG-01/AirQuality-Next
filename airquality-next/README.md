@@ -1,5 +1,5 @@
 
-## Airadar
+# Airadar Web Application
 
 This is project for The Senior Project from faculty of ICT, Mahidol University.
 The project goal is to develops a web application system to determine the air quality from IoT device which also involve in the projects as smart home device.
