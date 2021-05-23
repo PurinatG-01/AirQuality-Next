@@ -23,4 +23,6 @@ yarn build
 ```
 The build command will generate static pages for using in hosting platform like heroku, netlify etc. The distination folder is `public`.
 
+__23/05/2021__
+
 
